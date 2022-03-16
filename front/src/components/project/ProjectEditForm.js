@@ -1,14 +1,19 @@
 import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import React, {useEffect, useState} from 'react'
 import * as Api from '../../api'
+import DatePicker from "react-datepicker";
 
 function ProjectEditForm({setIsEditing}){
     const [description,setDescription]=useState("")
     const [title,setTitle]=useState("")
-    const [from_date,setFrom_date]=useState(new Date().toISOString().substring(0, 10))
-    const [to_date,setTo_date]=useState(new Date().toISOString().substring(0, 10))
+    const [from_date,setFrom_date]=useState(new Date())
+    const [to_date,setTo_date]=useState(new Date())
 
-    useEffect(()=>{console.log(from_date)},[from_date])
+    useEffect(()=>{
+      console.log(from_date.toISOString().substring(0, 10))
+      console.log(to_date.toISOString().substring(0, 10))
+
+    },[from_date,to_date])
     const handleSubmit = async (e) => {
         e.preventDefault();
     }
@@ -35,20 +40,14 @@ function ProjectEditForm({setIsEditing}){
             />
           </Form.Group>
 
-          <Form.Group className='mb-3'>
-          <Form.Control
-              type='date'
-              placeholder='from_date'
-              value={from_date}
-              onChange={(e) => setFrom_date(e.target.value)}
-            />  
-            <Form.Control
-              type='date'
-              placeholder='end_date'
-              value={to_date}
-              onChange={(e) => setTo_date(e.target.value)}
-            />                
-        </Form.Group>
+          <Form.Group className='mt-3 row'>
+          <Col className="col-auto"> 
+            <DatePicker selected={from_date}  onChange={(date) => setFrom_date(date)}/>
+          </Col>
+          <Col className="col-auto">
+          <DatePicker selected={to_date}  onChange={(date) => setTo_date(date)}/>
+          </Col>
+          </Form.Group>
 
           <Form.Group as={Row} className='mt-3 text-center'>
             <Col sm={{ span: 20 }}>
