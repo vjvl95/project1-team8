@@ -20,7 +20,7 @@ awardRouter.post("/award/create", async function (req, res, next) {
     const description = req.body.description;
 
     // 위 데이터를 유저 db에 추가하기
-    const newAward = await awardAuthService.addAward({
+    const newAward = await awardService.addAward({
       user_id,
       title,
       description,
@@ -82,7 +82,7 @@ awardRouter.get(
   async function (req, res, next) {
     try {
       // URI로부터 user_id를 추출함.
-      const user_Id = req.params.user_id;
+      const user_id = req.params.user_id;
       // 해당 user의 전체 수상내역 목록을 얻음
       const awards = await awardService.getAwardList({ user_id });
       res.status(200).send(awards);
