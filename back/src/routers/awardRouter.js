@@ -31,4 +31,24 @@ awardRouter.post("/award/create", async function (req, res, next) {
   }
 });
 
+awardRouter.get(
+  "/award/:id",
+  async function (req, res, next) {
+    try {
+      const awardId = req.params.id;
+      const award = await awardService.getAward({ awardId });
+
+      if (award.errorMessage) {
+        throw new Error(award.errorMessage);
+      }
+
+      res.status(200).send(award);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+
+
 export { awardRouter };
