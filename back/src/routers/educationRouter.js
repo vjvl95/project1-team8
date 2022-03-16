@@ -51,4 +51,31 @@ educationRouter.get('/educations/:id', async (req, res, next) => {
     next(error);
   }
 })
+
+educationRouter.put('/educations/:id', async (req, res, next) => {
+  const { id } = req.params
+  try {
+    const foundEdu = await educationService.getEdu({ id })
+    if (foundEdu.errorMessage) {
+      throw new Error(foundEdu.errorMessage);
+    }
+    const school = req.body.school ?? null;
+    const major = req.body.major ?? null;
+    const position = req.body.position ?? null;
+
+    const toUpdate = { school, major, position };
+
+    const updatedEdu = await educationService.setEdu({ id, toUpdate });
+
+    if (updatedEdu.errorMessage) {
+      throw new Error(updatedEdu.errorMessage);
+    }
+
+    res.status(200).json(updatedEdu);
+
+  } catch (error) {
+    next(error);
+  }
+})
+
 export { educationRouter };
