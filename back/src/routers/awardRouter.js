@@ -4,6 +4,7 @@ import { login_required } from "../middlewares/login_required";
 import { awardService } from "../services/awardService";
 
 const awardRouter = Router();
+awardRouter.use(login_required);
 
 awardRouter.post("/award/create", async function (req, res, next) {
   try {
@@ -49,6 +50,30 @@ awardRouter.get(
   }
 );
 
+awardRouter.put(
+  "/award/:id",
+  async function (req, res, next) {
+    try {
+      // URI로부터 사용자 id를 추출함.
+      const awardId = req.params.id;
+      // body data 로부터 업데이트할 사용자 정보를 추출함.
+      const title = req.body.title ?? null;
+      const description = req.body.description ?? null;
 
+      const toUpdate = { title, description };
+
+      // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
+      const updatedAward = await awardService.setAward({ awardId, toUpdate });
+
+      if (updatedAward.errorMessage) {
+        throw new Error(updatedAward.errorMessage);
+      }
+
+      res.status(200).json(updatedAward);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { awardRouter };
