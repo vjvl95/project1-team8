@@ -2,10 +2,10 @@ import { Schema, model } from "mongoose";
 
 const EducationSchema = new Schema(
   {
-    id: [{
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    }],
+    id: {
+        type: String,
+        required: true,
+      },
     school: {
       type: String,
       required: true,
@@ -18,6 +18,10 @@ const EducationSchema = new Schema(
       type: String,
       required: true,
     },
+    user_id : [{
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      }],
   },
 );
 
