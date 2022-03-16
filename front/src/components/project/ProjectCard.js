@@ -1,17 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { Card, Row, Button, Col } from "react-bootstrap";
+import ProjectList from "./ProjectList"
 
-
-function ProjectCard({setIsEditing,project,isEditable}){
+function ProjectCard({setIsEditing,projectList,isEditable}){
 
 
     return <Card >
     <Card.Body>
         <Card.Title>프로젝트</Card.Title>
-        <Card.Body>
+        {/* <ProjectList projectList={projectList} isEditable={isEditable}/> */}
           <button type="button" class="btn btn-primary" onClick={()=>setIsEditing(true)}>+</button>
-        </Card.Body>
-        
+
     </Card.Body>
   </Card>
 }

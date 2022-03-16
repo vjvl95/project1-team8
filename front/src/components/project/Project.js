@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 import ProjectCard from "./ProjectCard"
-import ProjectEdit from "./ProjectEdit";
+import ProjectEditForm from "./ProjectEditForm";
 import { Card, Row, Button, Col } from "react-bootstrap";
 import * as Api from '../../api';
 
@@ -22,10 +22,10 @@ function Project({portfolioOwnerId,isEditable}){
     />
 
     {isEditing && (
-        <ProjectEdit
-        projectList={projectList}
-          setIsEditing={setIsEditing}
+        <ProjectEditForm
           setProjectList={setProjectList}
+          projectList={projectList}
+          setIsEditing={setIsEditing}
         />
       )}
     </Card>
