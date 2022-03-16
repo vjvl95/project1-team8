@@ -33,9 +33,10 @@ awardRouter.post("/award/create", async function (req, res, next) {
 });
 
 awardRouter.get(
-  "/award/:id",
+  "/awards/:id",
   async function (req, res, next) {
     try {
+      // URI로부터 awardId를 추출함.
       const awardId = req.params.id;
       const award = await awardService.getAward({ awardId });
 
@@ -51,10 +52,10 @@ awardRouter.get(
 );
 
 awardRouter.put(
-  "/award/:id",
+  "/awards/:id",
   async function (req, res, next) {
     try {
-      // URI로부터 사용자 id를 추출함.
+      // URI로부터 awardId를 추출함.
       const awardId = req.params.id;
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const title = req.body.title ?? null;
@@ -70,6 +71,21 @@ awardRouter.put(
       }
 
       res.status(200).json(updatedAward);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+awardRouter.get(
+  "/awardlist/:user_id",
+  async function (req, res, next) {
+    try {
+      // URI로부터 user_id를 추출함.
+      const user_Id = req.params.user_id;
+      // 해당 user의 전체 수상내역 목록을 얻음
+      const awards = await awardService.getAwardList({ user_id });
+      res.status(200).send(awards);
     } catch (error) {
       next(error);
     }
