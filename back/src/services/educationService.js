@@ -25,13 +25,8 @@ class educationService {
         "잘못된 접근입니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
-
-    const foundEducation = {
-      ...education,
-      errorMessage: null,
-    };
-
-    return foundEducation;
+    education.errorMessage = null;
+    return education;
   }
 
   static async getEduList({ user_id }) {
