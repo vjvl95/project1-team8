@@ -6,24 +6,27 @@ import { Card } from 'react-bootstrap';
 
 function Award({ portfolioOwnerId, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [user, setUser] = useState(null);
+  const [awardList, setAwardList] = useState(null);
 
   useEffect(() => {
-    Api.get('users', portfolioOwnerId).then((res) => setUser(res.data));
+    Api.get('awardlist', portfolioOwnerId).then((res) =>
+      setAwardList(res.data)
+    );
   }, [portfolioOwnerId]);
 
   return (
-    <Card className='mb-2 ms-3 mr-5' style={{}}>
+    <Card>
       <AwardCard
-        user={user}
+        awardList={awardList}
         setIsEditing={setIsEditing}
         isEditable={isEditable}
       />
       {isEditing && (
         <AwardEditForm
-          user={user}
+          awardList={awardList}
           setIsEditing={setIsEditing}
-          setUser={setUser}
+          setAwardList={setAwardList}
+          isForListItem={false}
         />
       )}
     </Card>
