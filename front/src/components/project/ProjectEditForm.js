@@ -3,26 +3,26 @@ import React, {useEffect, useState} from 'react'
 import * as Api from '../../api'
 import DatePicker from "react-datepicker";
 
-function ProjectEditForm({setIsEditing}){
+function ProjectEditForm({user,setIsEditing,portfolioOwnerId}){
     const [description,setDescription]=useState("")
     const [title,setTitle]=useState("")
     const [from_date,setFrom_date]=useState(new Date())
     const [to_date,setTo_date]=useState(new Date())
 
-    useEffect(()=>{
-      console.log(from_date.toISOString().substring(0, 10))
-      console.log(to_date.toISOString().substring(0, 10))
-
-    },[from_date,to_date])
+   
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(portfolioOwnerId)
+        const res = await Api.put(`project/${portfolioOwnerId}`, {
+          description,
+        });
     }
 
 
     return <>
     <Card.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId='useEditName' className='mb-3'>
+          <Form.Group controlId='userEditTitle' className='mb-3'>
             <Form.Control
               type='text'
               placeholder='프로젝트 제목'
@@ -31,7 +31,7 @@ function ProjectEditForm({setIsEditing}){
             />
           </Form.Group>
 
-          <Form.Group controlId='userEditEmail' className='mb-3'>
+          <Form.Group controlId='userEditdescription' className='mb-3'>
             <Form.Control
               type='description'
               placeholder='상세내역'
@@ -51,7 +51,7 @@ function ProjectEditForm({setIsEditing}){
 
           <Form.Group as={Row} className='mt-3 text-center'>
             <Col sm={{ span: 20 }}>
-              <Button variant='primary' type='submit' className='me-3'>
+              <Button variant='primary' type='submit'  className='me-3'>
                 확인
               </Button>
               <Button variant='secondary' onClick={() => setIsEditing(false)}>

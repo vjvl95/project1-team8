@@ -14,11 +14,12 @@ function Project({portfolioOwnerId,isEditable}){
         Api.get('projectlist',portfolioOwnerId).then((res)=>setProjectList(res.data))
     },[portfolioOwnerId])
 
-    return <Card className='mb-2 ms-3 mr-5' style={{}}>
+    return <Card className='mb-2 ms-3 mr-5'>
     <ProjectCard
     setIsEditing={setIsEditing}
     projectList={projectList}
     isEditable={isEditable}
+    portfolioOwnerId={portfolioOwnerId}
     />
 
     {isEditing && (
@@ -26,6 +27,7 @@ function Project({portfolioOwnerId,isEditable}){
           setProjectList={setProjectList}
           projectList={projectList}
           setIsEditing={setIsEditing}
+          portfolioOwnerId={portfolioOwnerId}
         />
       )}
     </Card>
