@@ -1,16 +1,14 @@
 import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import React, {useEffect, useState} from 'react'
 import * as Api from '../../api'
-import DetePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-function ProjectEditForm({setIsEditing}){
 
+function ProjectEditForm({setIsEditing}){
     const [description,setDescription]=useState("")
     const [title,setTitle]=useState("")
-    const [from_date,setFrom_date]=useState(new Date())
-    const [to_date,setTo_date]=useState(new Date())
+    const [from_date,setFrom_date]=useState(new Date().toISOString().substring(0, 10))
+    const [to_date,setTo_date]=useState(new Date().toISOString().substring(0, 10))
 
-    useEffect(()=>{console.log(from_date)},[])
+    useEffect(()=>{console.log(from_date)},[from_date])
     const handleSubmit = async (e) => {
         e.preventDefault();
     }
