@@ -19,7 +19,8 @@ const EducationSchema = new Schema(
       required: true,
     },
     user_id : [{
-        type: Schema.Types.ObjectId,
+        type: String,
+        required: true,
         ref: "User",
       }],
   },
