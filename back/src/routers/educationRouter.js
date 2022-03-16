@@ -4,8 +4,9 @@ import { login_required } from "../middlewares/login_required";
 import { educationService } from "../services/educationService";
 
 const educationRouter = Router();
+educationRouter.use(login_required)
 
-educationRouter.post("/education/create", login_required, async function (req, res, next) {
+educationRouter.post("/education/create", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -37,5 +38,17 @@ educationRouter.post("/education/create", login_required, async function (req, r
   }
 });
 
+educationRouter.get('/educations/:id', async (req, res, next) => {
+  const { id } = req.params
+  try {
+    const foundEdu = await educationService.getEdu({ id })
+    if (foundEdu.errorMessage) {
+      throw new Error(foundEdu.errorMessage);
+    }
 
+    res.status(200).json(foundEdu);
+  } catch (error) {
+    next(error);
+  }
+})
 export { educationRouter };
