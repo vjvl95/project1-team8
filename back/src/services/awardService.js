@@ -2,7 +2,7 @@ import { Award } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트�
 import { v4 as uuidv4 } from "uuid";
 
 class awardService {
-  static async addUser({ user_id, title, description }) {  
+  static async addAward({ user_id, title, description }) {  
     // id 는 유니크 값 부여
     const id = uuidv4();
     const newAward = { id, user_id, title, description };
