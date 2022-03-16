@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { Card } from "react-bootstrap";
 // import * as Api from "../../api";
 import EducationCard from "./EducationCard";
 import EducationEditForm from "./EducationEditForm";
@@ -16,19 +17,21 @@ const Education = ({ portfolioOwnerId, isEditable }) => {
 
   return (
     <>
-      {isEditing ? (
-        <EducationEditForm
-          // user={user}
-          setIsEditing={setIsEditing}
-          // setUser={setUser}
-        />
-      ) : (
+      <Card>
         <EducationCard
           // user={user}
           setIsEditing={setIsEditing}
           isEditable={isEditable}
         />
-      )}
+
+        {isEditing && (
+          <EducationEditForm
+            // user={user}
+            setIsEditing={setIsEditing}
+            // setUser={setUser}
+          />
+        )}
+      </Card>
     </>
   );
 };
