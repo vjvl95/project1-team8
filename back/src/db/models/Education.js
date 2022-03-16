@@ -3,7 +3,6 @@ import { EducationModel } from "../schemas/education";
 class Education {
   static async create({ newEducation }) {
     const createdNewEducation = await EducationModel.create(newEducation);
-    createdNewEducation = await EducationModel.findOne({ id: newEducation.id }).populate('User')
     return createdNewEducation;
   }
 

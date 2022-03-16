@@ -18,11 +18,10 @@ const EducationSchema = new Schema(
       type: String,
       required: true,
     },
-    user_id : [{
+    user_id : {
         type: String,
         required: true,
-        ref: "User",
-      }],
+      },
   },
 );
 
