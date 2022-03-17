@@ -24,7 +24,6 @@ const AwardListItem = ({ id, title, description, isEditable }) => {
       {isEditing ? (
         <AwardEditForm
           setIsEditing={setIsEditing}
-          isForListItem={true}
           itemId={id}
           itemTitle={newTitle}
           itemDescription={newDescription}

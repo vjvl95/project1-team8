@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AwardEditForm from './AwardEditForm';
 import AwardCard from './AwardCard';
 import { Card } from 'react-bootstrap';
@@ -12,11 +12,11 @@ function Award({ portfolioOwnerId, isEditable }) {
         setIsEditing={setIsEditing}
         isEditable={isEditable}
         portfolioOwnerId={portfolioOwnerId}
+        isEditing={isEditing}
       />
       {isEditing && (
         <AwardEditForm
           setIsEditing={setIsEditing}
-          isForListItem={false}
           portfolioOwnerId={portfolioOwnerId}
         />
       )}

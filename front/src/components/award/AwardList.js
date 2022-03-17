@@ -2,14 +2,17 @@ import { useState, useEffect } from 'react';
 import * as Api from '../../api';
 import AwardListItem from './AwardListItem';
 
-const AwardList = ({ isEditable, portfolioOwnerId }) => {
+const AwardList = ({ isEditing, isEditable, portfolioOwnerId }) => {
   const [awardList, setAwardList] = useState(null);
 
   useEffect(() => {
-    Api.get(`awardlist/${portfolioOwnerId}`).then((res) =>
-      setAwardList(res.data)
-    );
-  }, [portfolioOwnerId]);
+    Api.get(`awardlist/${portfolioOwnerId}`).then((res) => {
+      const { data } = res;
+      if (JSON.stringify(data) !== JSON.stringify(awardList)) {
+        setAwardList(data);
+      }
+    });
+  }, [portfolioOwnerId, isEditing, awardList]);
 
   const awardListArray = awardList?.map((item) => {
     return (

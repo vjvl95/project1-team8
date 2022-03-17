@@ -5,7 +5,6 @@ import * as Api from '../../api';
 function AwardEditForm({
   portfolioOwnerId,
   setIsEditing,
-  isForListItem,
   itemId,
   itemTitle,
   itemDescription,
@@ -29,7 +28,7 @@ function AwardEditForm({
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
     try {
-      await Api.post(`award/create/`, {
+      await Api.post(`award/create`, {
         user_id: portfolioOwnerId,
         title,
         description,

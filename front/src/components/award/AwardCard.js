@@ -1,12 +1,13 @@
 import { Card, Row, Button, Col } from 'react-bootstrap';
 import AwardList from './AwardList';
 
-function AwardCard({ setIsEditing, isEditable, portfolioOwnerId }) {
+function AwardCard({ isEditing, setIsEditing, isEditable, portfolioOwnerId }) {
   return (
     <>
       <Card.Body>
         <Card.Title>수상이력</Card.Title>
         <AwardList
+          isEditing={isEditing}
           isEditable={isEditable}
           portfolioOwnerId={portfolioOwnerId}
         />
@@ -16,7 +17,7 @@ function AwardCard({ setIsEditing, isEditable, portfolioOwnerId }) {
               <Button
                 variant='primary'
                 size='sm'
-                onClick={() => setIsEditing(true)}
+                onClick={() => setIsEditing((state) => !state)}
               >
                 +
               </Button>
