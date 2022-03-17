@@ -1,11 +1,14 @@
 
 import { Card,Col} from "react-bootstrap";
+import {useEffect, useState} from 'react'
+import ProjectEditForm from "./ProjectEditForm";
 
-
-function ProjectItem({title,description,from_date,to_date,setIsEditing})
+function ProjectItem({id,title,description,from_date,to_date,portfolioOwnerId})
 {
+    const [isAdding,setIsAdding]=useState(false)
     return <>
-        <Card.Text>
+        {isAdding? <div><ProjectEditForm id={id} portfolioOwnerId={portfolioOwnerId} isAdding={isAdding} setIsAdding={setIsAdding}/></div>
+        :(<Card.Text>
         <div class="justify-content-between align-items-left mb-2 row" style={{textAlign:"left"}}>
             <Col>
                 {title} <br/>
@@ -14,11 +17,13 @@ function ProjectItem({title,description,from_date,to_date,setIsEditing})
             </Col>
 
             <div class="col-lg-1 col">
-            <button type="button" class="mr-3 btn btn-outline-info btn-sm" onClick={()=>setIsEditing(true)}>편집</button>
+            <button type="button" class="mr-3 btn btn-outline-info btn-sm" onClick={()=>setIsAdding(true)}>편집</button>
             </div>
         </div>
 
-        </Card.Text>       
+        </Card.Text>
+        )
+}       
     </>
 }
 

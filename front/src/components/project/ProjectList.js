@@ -8,11 +8,13 @@ function ProjectList({projectList,portfolioOwnerId,setIsEditing}){
    return <>
     {projectList.map((project)=> {
        return( 
-       <ProjectItem key={project.id} title={project.title} 
+       <ProjectItem
+        id={project.id} 
+        title={project.title} 
         description={project.description} 
         from_date={project.from_date} 
         to_date={project.to_date}
-        setIsEditing={setIsEditing}
+        portfolioOwnerId={portfolioOwnerId}
         />
        )
     })

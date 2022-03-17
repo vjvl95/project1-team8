@@ -3,36 +3,46 @@ import React, {useEffect, useState} from 'react'
 import * as Api from '../../api'
 import DatePicker from "react-datepicker";
 
-function ProjectEditForm({setIsEditing,portfolioOwnerId,setProjectList})
+function ProjectEditForm({id,setIsEditing,portfolioOwnerId,setProjectList,isAdding,setIsAdding})
 {
     const [description,setDescription]=useState("")
     const [title,setTitle]=useState("")
     const [from_date,setFrom_date]=useState(new Date())
     const [to_date,setTo_date]=useState(new Date())
-
-   
-    const handleSubmit = async (e) => {
+    const [thisProject,setThisProject]=useState("")
+    const  handleSubmit = (isAdding,portfolioOwnerId,e) => {
         e.preventDefault();
-        console.log(portfolioOwnerId)
-        const res = await Api.post(`project/create`, {
-          user_id:portfolioOwnerId,
-          title,
-          description,
-          from_date : from_date.toISOString().substring(0, 10),
-          to_date : to_date.toISOString().substring(0, 10)
-        });
+        console.log(isAdding)
 
-        Api.get("projectlist", portfolioOwnerId).then((res) => setProjectList(res.data));
+        if(isAdding===true)
+        {
+          Api.put(`projects/${id}`, {
+            title,
+            description,
+            from_date : from_date.toISOString().substring(0, 10),
+            to_date : to_date.toISOString().substring(0, 10)
+          })     
+          Api.get(`projects`,id).then((res) => setThisProject(res.data))   
+          setIsAdding(false)
+        }
 
-        // 해당 유저 정보로 user을 세팅함.
-        // isEditing을 false로 세팅함.
-        setIsEditing(false);
+        else{
+          Api.post(`project/create`, {
+            user_id:portfolioOwnerId,
+            title,
+            description,
+            from_date : from_date.toISOString().substring(0, 10),
+            to_date : to_date.toISOString().substring(0, 10)
+          })
+          Api.get("projectlist",portfolioOwnerId).then((res) => setProjectList(res.data))
+          setIsEditing(false)
+        }   
     }
 
 
     return <>
     <Card.Body>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={(e) => {handleSubmit(isAdding,portfolioOwnerId,e)}}>
           <Form.Group controlId='userEditTitle' className='mb-3'>
             <Form.Control
               type='text'
@@ -61,14 +71,17 @@ function ProjectEditForm({setIsEditing,portfolioOwnerId,setProjectList})
           </Form.Group>
 
           <Form.Group as={Row} className='mt-3 text-center'>
-            <Col sm={{ span: 20 }}>
-              <Button variant='primary' type='submit'  className='me-3'>
+          <Col sm={{ span: 20 }}>
+                <Button variant='primary' type='submit'  className='me-3'>
                 확인
               </Button>
-              <Button variant='secondary' onClick={() => setIsEditing(false)}>
-                취소
-              </Button>
-            </Col>
+              {
+              isAdding
+              ?(<Button variant='secondary' onClick={() => setIsAdding(false)}>취소</Button>)
+              :(<Button variant='secondary' onClick={() => setIsEditing(false)}>취소</Button>)
+              }
+          </Col>
+
           </Form.Group>
         </Form>
       </Card.Body>
