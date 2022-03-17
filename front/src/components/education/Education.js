@@ -7,9 +7,7 @@ import EducationEditForm from "./EducationEditForm";
 const Education = ({ portfolioOwnerId, isEditable }) => {
   // useState 훅을 통해 isEditing 상태를 생성함.
   const [isEditing, setIsEditing] = useState(false);
-  useEffect(() => {
-    console.log(portfolioOwnerId);
-  }, [portfolioOwnerId]);
+
   return (
     <>
       <Card>

@@ -49,9 +49,9 @@ function Portfolio() {
     }
   }, [params, userState, navigate]);
 
-  useEffect(() => {
-    console.log(portfolioOwner?.id);
-  }, [portfolioOwner]);
+  // useEffect(() => {
+  //   console.log(portfolioOwner?.id);
+  // }, [portfolioOwner]);
 
   if (!isFetchCompleted) {
     return "loading...";
