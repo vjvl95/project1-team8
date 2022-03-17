@@ -13,7 +13,7 @@ const EducationList = ({ portfolioOwnerId }) => {
     Api.get("educationlist", portfolioOwnerId).then((res) =>
       setEducations(res.data)
     );
-  }, []);
+  }, [educations]);
 
   return (
     <>

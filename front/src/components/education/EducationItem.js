@@ -1,36 +1,34 @@
 import { Card, Col, Row, Button } from "react-bootstrap";
 import React, { useState } from "react";
+import EducationItemForm from "./EducationItemForm";
 
-const EducationItem = ({ school, major, position }) => {
-  const [editing, setEditing] = useState(false);
-
-  const Test = () => {
-    return <h>hi</h>;
-  };
+const EducationItem = ({ id, school, major, position }) => {
+  const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <Row>
-      {editing ? (
-        <Test />
+    <>
+      {isEditing ? (
+        <EducationItemForm id={id} setIsEditing={setIsEditing} />
       ) : (
-        <Col>
-          <Card.Text className="mb-1">{school}</Card.Text>
-          <Card.Text className="mb-4 text-muted">
-            {major} ({position})
-          </Card.Text>
-        </Col>
+        <Row>
+          <Col>
+            <Card.Text className="mb-1">{school}</Card.Text>
+            <Card.Text className="mb-4 text-muted">
+              {major} ({position})
+            </Card.Text>
+          </Col>
+          <Col>
+            <Button
+              variant="outline-info"
+              size="sm"
+              onClick={() => setIsEditing(true)}
+            >
+              편집
+            </Button>
+          </Col>
+        </Row>
       )}
-
-      <Col>
-        <Button
-          variant="outline-info"
-          size="sm"
-          onClick={() => setEditing(true)}
-        >
-          편집
-        </Button>
-      </Col>
-    </Row>
+    </>
   );
 };
 

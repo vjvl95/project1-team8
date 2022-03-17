@@ -2,26 +2,36 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-const EducationItemForm = ({ portfolioOwnerId, setIsEditing }) => {
+const EducationItemForm = ({ id, setIsEditing }) => {
   const [school, setSchool] = useState("");
   const [major, setMajor] = useState("");
   const [position, setPosition] = useState("");
-  const [data, setData] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // "education/create" 엔드포인트로 POST 요청함.
-    const res = await Api.post("education/create", {
-      user_id: portfolioOwnerId,
+    console.log(id);
+    //"educations/:id" 엔드포인트로 PUT 요청함.
+    await Api.put(`educations/${id}`, {
       school,
       major,
       position,
     });
 
-    // isEditing을 false로 세팅함.
+    //isEditing을 false로 세팅함.
     setIsEditing(false);
   };
+
+  useEffect(() => {
+    const educationData = async () => {
+      const res = await Api.get("educations", id);
+      const education = res.data;
+
+      setSchool(education.school);
+      setMajor(education.major);
+      setPosition(education.position);
+    };
+    educationData();
+  }, []);
 
   return (
     <Card.Body>
