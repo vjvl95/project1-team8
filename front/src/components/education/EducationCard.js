@@ -1,12 +1,10 @@
 import { Card, Row, Button, Col } from "react-bootstrap";
 import EducationList from "./EducationList";
 
-const EducationCard = ({ setIsEditing, isEditable }) => {
+const EducationCard = ({ portfolioOwnerId, setIsEditing, isEditable }) => {
   return (
     <Card.Body>
-      <Card.Title>학력</Card.Title>
-      <Card.Subtitle>ㅇㅇ대학교</Card.Subtitle>
-      <Card.Text className="text-muted">ㅇㅇ전공</Card.Text>
+      <EducationList portfolioOwnerId={portfolioOwnerId} />
 
       {isEditable && (
         <Col>
