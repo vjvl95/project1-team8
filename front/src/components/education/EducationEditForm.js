@@ -1,29 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-const EducationEditForm = ({ setIsEditing }) => {
+const EducationEditForm = ({ portfolioOwnerId, setIsEditing }) => {
   const [school, setSchool] = useState("");
   const [major, setMajor] = useState("");
   const [position, setPosition] = useState("");
+  const [data, setData] = useState("");
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  //   // "education/create" 엔드포인트로 POST 요청함.
-  //   const res = await Api.post(`education/create`, {
-  //     school,
-  //     major,
-  //     position,
-  //   });
-  //   // 유저 정보는 response의 data임.
-  //   const updatedUser = res.data;
-  //   // 해당 유저 정보로 user을 세팅함.
-  //   setUser(updatedUser);
+    // "education/create" 엔드포인트로 POST 요청함.
+    const res = await Api.post("education/create", {
+      user_id: portfolioOwnerId,
+      school,
+      major,
+      position,
+    });
 
-  //   // isEditing을 false로 세팅함.
-  //   setIsEditing(false);
-  // };
+    // isEditing을 false로 세팅함.
+    setIsEditing(false);
+  };
+
   return (
     <Card.Body>
       <Form onSubmit={handleSubmit}>
