@@ -36,6 +36,25 @@ certificateRouter.post(
     }
 });
 
+certificateRouter.get(
+  "/certificates/:id",
+  async function (req, res, next) {
+    try {
+      // URI로부터 certificateId를 추출함.
+      const certificateId = req.params.id;
+      const certificate = await certificateService.getCertificate({ certificateId });
+
+      if (certificate.errorMessage) {
+        throw new Error(certificate.errorMessage);
+      }
+
+      res.status(200).send(certificate);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 
 
 export { certificateRouter };
