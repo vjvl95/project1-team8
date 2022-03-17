@@ -5,25 +5,25 @@ import * as Api from "../../api";
 const EducationEditForm = ({ setIsEditing }) => {
   const [school, setSchool] = useState("");
   const [major, setMajor] = useState("");
-  const [description, setDescription] = useState("");
-  console.log(description);
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const [position, setPosition] = useState("");
 
-    // // "users/유저id" 엔드포인트로 PUT 요청함.
-    // const res = await Api.put(`users/${user.id}`, {
-    //   name,
-    //   email,
-    //   description,
-    // });
-    // // 유저 정보는 response의 data임.
-    // const updatedUser = res.data;
-    // // 해당 유저 정보로 user을 세팅함.
-    // setUser(updatedUser);
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    // isEditing을 false로 세팅함.
-    setIsEditing(false);
-  };
+  //   // "education/create" 엔드포인트로 POST 요청함.
+  //   const res = await Api.post(`education/create`, {
+  //     school,
+  //     major,
+  //     position,
+  //   });
+  //   // 유저 정보는 response의 data임.
+  //   const updatedUser = res.data;
+  //   // 해당 유저 정보로 user을 세팅함.
+  //   setUser(updatedUser);
+
+  //   // isEditing을 false로 세팅함.
+  //   setIsEditing(false);
+  // };
   return (
     <Card.Body>
       <Form onSubmit={handleSubmit}>
@@ -53,7 +53,7 @@ const EducationEditForm = ({ setIsEditing }) => {
               name="group1"
               type={type}
               value="재학중"
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => setPosition(e.target.value)}
               id={`inline-${type}-1`}
             />
             <Form.Check
@@ -62,7 +62,7 @@ const EducationEditForm = ({ setIsEditing }) => {
               name="group1"
               type={type}
               value="학사졸업"
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => setPosition(e.target.value)}
               id={`inline-${type}-2`}
             />
             <Form.Check
@@ -71,7 +71,7 @@ const EducationEditForm = ({ setIsEditing }) => {
               name="group1"
               type={type}
               value="석사졸업"
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => setPosition(e.target.value)}
               id={`inline-${type}-3`}
             />
             <Form.Check
@@ -80,7 +80,7 @@ const EducationEditForm = ({ setIsEditing }) => {
               name="group1"
               type={type}
               value="박사졸업"
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => setPosition(e.target.value)}
               id={`inline-${type}-4`}
             />
           </div>
