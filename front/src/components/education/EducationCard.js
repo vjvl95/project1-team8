@@ -1,4 +1,5 @@
 import { Card, Row, Button, Col } from "react-bootstrap";
+import EducationList from "./EducationList";
 
 const EducationCard = ({ setIsEditing, isEditable }) => {
   return (
