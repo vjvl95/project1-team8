@@ -55,6 +55,33 @@ certificateRouter.get(
   }
 );
 
+certificateRouter.put(
+  "/certificates/:id",
+  async function (req, res, next) {
+    try {
+      // URI로부터 certificateId를 추출함.
+      const certificateId = req.params.id;
+      // body data 로부터 업데이트할 사용자 정보를 추출함.
+      const title = req.body.title ?? null;
+      const description = req.body.description ?? null;
+      const when_date = req.body.when_date ?? null;
+
+      const toUpdate = { title, description, when_date };
+
+      // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
+      const updatedCertificate = await certificateService.setCertificate({ certificateId, toUpdate });
+
+      if (updatedCertificate.errorMessage) {
+        throw new Error(updatedCertificate.errorMessage);
+      }
+
+      res.status(200).json(updatedCertificate);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 
 
 export { certificateRouter };
