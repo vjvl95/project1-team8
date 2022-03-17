@@ -1,12 +1,15 @@
 import { Card, Row, Button, Col } from 'react-bootstrap';
 import AwardList from './AwardList';
 
-function AwardCard({ awardList, setIsEditing, isEditable, isNetwork }) {
+function AwardCard({ setIsEditing, isEditable, portfolioOwnerId }) {
   return (
     <>
       <Card.Body>
         <Card.Title>수상이력</Card.Title>
-        <AwardList awardList={awardList} isEditable={isEditable} />
+        <AwardList
+          isEditable={isEditable}
+          portfolioOwnerId={portfolioOwnerId}
+        />
         {isEditable && (
           <Row className='mt-3 text-center text-info'>
             <Col sm={{ span: 20 }}>

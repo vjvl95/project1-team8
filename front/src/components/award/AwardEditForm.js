@@ -2,33 +2,53 @@ import React, { useState } from 'react';
 import { Button, Form, Card, Col, Row } from 'react-bootstrap';
 import * as Api from '../../api';
 
-function AwardEditForm({ user, setIsEditing, setUser, isForListItem }) {
-  const [award, setAward] = useState(user.award);
-  const [description, setDescription] = useState(user.description);
+function AwardEditForm({
+  portfolioOwnerId,
+  setIsEditing,
+  isForListItem,
+  itemId,
+  itemTitle,
+  itemDescription,
+}) {
+  const [title, setAward] = useState(itemTitle || '');
+  const [description, setDescription] = useState(itemDescription || '');
 
-  const handleSubmit = async (e) => {
+  const handlePutSubmit = async (e) => {
     e.preventDefault();
+    try {
+      await Api.put(`awards/${itemId}`, {
+        title,
+        description,
+      });
+      setIsEditing(false);
+    } catch (err) {
+      console.log('수상내역을 수정하는데 실패하였습니다', err);
+    }
+  };
 
-    const res = await Api.put(`awards/${user.id}`, {
-      award,
-      description,
-    });
-
-    const updatedUser = res.data;
-
-    setUser(updatedUser);
-    setIsEditing(false);
+  const handleCreateSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await Api.post(`award/create/`, {
+        user_id: portfolioOwnerId,
+        title,
+        description,
+      });
+      setIsEditing(false);
+    } catch (err) {
+      console.log('수상내역을 입력하는데 실패하였습니다', err);
+    }
   };
 
   return (
     <>
       <Card.Body>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={itemId ? handlePutSubmit : handleCreateSubmit}>
           <Form.Group controlId='useEditName' className='mb-3'>
             <Form.Control
               type='text'
               placeholder='수상내역'
-              value={award}
+              value={title}
               onChange={(e) => setAward(e.target.value)}
             />
           </Form.Group>

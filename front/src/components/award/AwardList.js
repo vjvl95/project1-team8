@@ -1,34 +1,28 @@
-import { useState } from 'react';
-import { Button } from 'react-bootstrap';
-import AwardEditForm from './AwardEditForm';
+import { useState, useEffect } from 'react';
+import * as Api from '../../api';
+import AwardListItem from './AwardListItem';
 
-const AwardList = ({ isEditable }) => {
-  const test = [1, 2, 3, 4];
-  const [isEditing, setIsEditing] = useState(false);
+const AwardList = ({ isEditable, portfolioOwnerId }) => {
+  const [awardList, setAwardList] = useState(null);
 
-  const awardListItem = test.map((item) => {
+  useEffect(() => {
+    Api.get(`awardlist/${portfolioOwnerId}`).then((res) =>
+      setAwardList(res.data)
+    );
+  }, [portfolioOwnerId]);
+
+  const awardListArray = awardList?.map((item) => {
     return (
-      <li key={item}>
-        {isEditing ? (
-          <AwardEditForm setIsEditing={setIsEditing} />
-        ) : (
-          <>
-            {item}
-            {isEditable && (
-              <Button
-                variant='outline-info'
-                size='sm'
-                onClick={() => setIsEditing(true)}
-              >
-                편집
-              </Button>
-            )}
-          </>
-        )}
-      </li>
+      <AwardListItem
+        key={item.id}
+        id={item.id}
+        title={item.title}
+        description={item.description}
+        isEditable={isEditable}
+      />
     );
   });
-  return <>{awardListItem}</>;
+  return <>{awardListArray}</>;
 };
 
 export default AwardList;
