@@ -3,7 +3,8 @@ import React, {useEffect, useState} from 'react'
 import * as Api from '../../api'
 import DatePicker from "react-datepicker";
 
-function ProjectEditForm({user,setIsEditing,portfolioOwnerId,setProjectList}){
+function ProjectEditForm({setIsEditing,portfolioOwnerId,setProjectList})
+{
     const [description,setDescription]=useState("")
     const [title,setTitle]=useState("")
     const [from_date,setFrom_date]=useState(new Date())
@@ -21,10 +22,9 @@ function ProjectEditForm({user,setIsEditing,portfolioOwnerId,setProjectList}){
           to_date : to_date.toISOString().substring(0, 10)
         });
 
-        const updatedProfiles = res.data;
+        Api.get("projectlist", portfolioOwnerId).then((res) => setProjectList(res.data));
+
         // 해당 유저 정보로 user을 세팅함.
-        setProjectList(updatedProfiles);
-    
         // isEditing을 false로 세팅함.
         setIsEditing(false);
     }

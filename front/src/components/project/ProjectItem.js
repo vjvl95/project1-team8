@@ -2,7 +2,7 @@
 import { Card,Col} from "react-bootstrap";
 
 
-function ProjectItem({title,description,from_date,to_date})
+function ProjectItem({title,description,from_date,to_date,setIsEditing})
 {
     return <>
         <Card.Text>
@@ -14,13 +14,12 @@ function ProjectItem({title,description,from_date,to_date})
             </Col>
 
             <div class="col-lg-1 col">
-            <button type="button" class="mr-3 btn btn-outline-info btn-sm">편집</button>
+            <button type="button" class="mr-3 btn btn-outline-info btn-sm" onClick={()=>setIsEditing(true)}>편집</button>
             </div>
         </div>
 
         </Card.Text>       
     </>
-
 }
 
 export default ProjectItem
