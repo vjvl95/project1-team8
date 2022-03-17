@@ -1,7 +1,7 @@
 import { Card, Row, Button, Col } from "react-bootstrap";
 import React from "react";
 
-consst = () => {
+const EducationList = () => {
   return;
 };
 
