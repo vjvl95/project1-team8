@@ -5,7 +5,10 @@ const EducationCard = ({ portfolioOwnerId, setIsEditing, isEditable }) => {
   return (
     <Card.Body>
       <Card.Title className="mb-3">학력</Card.Title>
-      <EducationList portfolioOwnerId={portfolioOwnerId} />
+      <EducationList
+        portfolioOwnerId={portfolioOwnerId}
+        isEditable={isEditable}
+      />
 
       {isEditable && (
         <Col>

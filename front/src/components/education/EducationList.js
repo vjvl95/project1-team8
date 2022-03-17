@@ -17,14 +17,19 @@ const EducationList = ({ portfolioOwnerId }) => {
 
   return (
     <>
-      {educations.map((education) => (
-        <EducationItem
-          key={education.id}
-          school={education.school}
-          major={education.major}
-          position={education.position}
-        />
-      ))}
+      {educations.map((education) => {
+        return (
+          <Container>
+            <EducationItem
+              key={education.id}
+              school={education.school}
+              major={education.major}
+              position={education.position}
+              id={education.id}
+            />
+          </Container>
+        );
+      })}
     </>
   );
 };
