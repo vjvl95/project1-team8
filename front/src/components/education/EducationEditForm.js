@@ -5,7 +5,8 @@ import * as Api from "../../api";
 const EducationEditForm = ({ setIsEditing }) => {
   const [school, setSchool] = useState("");
   const [major, setMajor] = useState("");
-
+  const [description, setDescription] = useState("");
+  console.log(description);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,6 +52,8 @@ const EducationEditForm = ({ setIsEditing }) => {
               label="재학중"
               name="group1"
               type={type}
+              value="재학중"
+              onChange={(e) => setDescription(e.target.value)}
               id={`inline-${type}-1`}
             />
             <Form.Check
@@ -58,6 +61,8 @@ const EducationEditForm = ({ setIsEditing }) => {
               label="학사졸업"
               name="group1"
               type={type}
+              value="학사졸업"
+              onChange={(e) => setDescription(e.target.value)}
               id={`inline-${type}-2`}
             />
             <Form.Check
@@ -65,6 +70,8 @@ const EducationEditForm = ({ setIsEditing }) => {
               label="석사졸업"
               name="group1"
               type={type}
+              value="석사졸업"
+              onChange={(e) => setDescription(e.target.value)}
               id={`inline-${type}-3`}
             />
             <Form.Check
@@ -72,6 +79,8 @@ const EducationEditForm = ({ setIsEditing }) => {
               label="박사졸업"
               name="group1"
               type={type}
+              value="박사졸업"
+              onChange={(e) => setDescription(e.target.value)}
               id={`inline-${type}-4`}
             />
           </div>
