@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
 import * as Api from '../../api'
 import DatePicker from "react-datepicker";
 
-function ProjectEditForm({user,setIsEditing,portfolioOwnerId}){
+function ProjectEditForm({user,setIsEditing,portfolioOwnerId,setProjectList}){
     const [description,setDescription]=useState("")
     const [title,setTitle]=useState("")
     const [from_date,setFrom_date]=useState(new Date())
@@ -13,9 +13,20 @@ function ProjectEditForm({user,setIsEditing,portfolioOwnerId}){
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(portfolioOwnerId)
-        const res = await Api.put(`project/${portfolioOwnerId}`, {
+        const res = await Api.post(`project/create`, {
+          user_id:portfolioOwnerId,
+          title,
           description,
+          from_date : from_date.toISOString().substring(0, 10),
+          to_date : to_date.toISOString().substring(0, 10)
         });
+
+        const updatedProfiles = res.data;
+        // 해당 유저 정보로 user을 세팅함.
+        setProjectList(updatedProfiles);
+    
+        // isEditing을 false로 세팅함.
+        setIsEditing(false);
     }
 
 
