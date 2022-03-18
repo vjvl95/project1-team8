@@ -3,7 +3,7 @@ import * as Api from "../../api"
 import ProjectItem from "./ProjectItem"
 
 
-function ProjectList({setProjectList,projectList,portfolioOwnerId,setIsEditing}){   
+function ProjectList({setProjectList,projectList,portfolioOwnerId,isEditable}){   
     
    return <>
     {projectList.map((project)=> {
@@ -18,6 +18,7 @@ function ProjectList({setProjectList,projectList,portfolioOwnerId,setIsEditing})
         portfolioOwnerId={portfolioOwnerId}
         projectList={projectList}
         setProjectList={setProjectList}
+        isEditable={isEditable}
         />
        )
     })
