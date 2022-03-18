@@ -5,7 +5,7 @@ import * as Api from "../../api";
 
 import EducationItem from "./EducationItem";
 
-const EducationList = ({ portfolioOwnerId }) => {
+const EducationList = ({ portfolioOwnerId, isEditable }) => {
   const [educations, setEducations] = useState([]);
 
   useEffect(() => {
@@ -26,6 +26,7 @@ const EducationList = ({ portfolioOwnerId }) => {
               major={education.major}
               position={education.position}
               id={education.id}
+              isEditable={isEditable}
             />
           </Container>
         );
