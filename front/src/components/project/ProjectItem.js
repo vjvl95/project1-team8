@@ -6,8 +6,10 @@ import ProjectEditForm from "./ProjectEditForm";
 function ProjectItem({id,title,description,from_date,to_date,portfolioOwnerId})
 {
     const [isAdding,setIsAdding]=useState(false)
+    const [thisProject,setThisProject]=useState({id,title,description,from_date,to_date})
+    
     return <>
-        {isAdding? <div><ProjectEditForm id={id} portfolioOwnerId={portfolioOwnerId} isAdding={isAdding} setIsAdding={setIsAdding}/></div>
+        {isAdding? <div><ProjectEditForm setThisProject={setThisProject}thisProject ={thisProject} id={id} portfolioOwnerId={portfolioOwnerId} isAdding={isAdding} setIsAdding={setIsAdding}/></div>
         :(<Card.Text>
         <div class="justify-content-between align-items-left mb-2 row" style={{textAlign:"left"}}>
             <Col>
