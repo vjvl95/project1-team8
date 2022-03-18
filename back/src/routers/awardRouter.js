@@ -92,4 +92,23 @@ awardRouter.post("/award/create", async function (req, res, next) {
     }
   );
 
+  awardRouter.delete(
+    "/awards/:id",
+    async function (req, res, next) {
+      try {
+        // URI로부터 awardId를 추출함.
+        const awardId = req.params.id;
+        const deletedResult = await awardService.deleteAward({ awardId });
+  
+        if (!deletedResult) {
+          throw new Error(deletedResult.errorMessage);
+        }
+  
+        res.status(200).send("삭제되었습니다.");
+      } catch (error) {
+        next(error);
+      }
+    }
+  );
+
 export { awardRouter };
