@@ -4,12 +4,13 @@ import * as Api from '../../api';
 
 function AwardEditForm({
   portfolioOwnerId,
-  setIsEditing,
   itemId,
   itemTitle,
   itemDescription,
   setNewDescription,
   setNewTitle,
+  setIsEditing,
+  getAwardList,
 }) {
   const [title, setAward] = useState(itemTitle || '');
   const [description, setDescription] = useState(itemDescription || '');
@@ -37,7 +38,7 @@ function AwardEditForm({
         title,
         description,
       });
-      setIsEditing(false);
+      getAwardList();
     } catch (err) {
       console.log('수상내역을 입력하는데 실패하였습니다', err);
     }
