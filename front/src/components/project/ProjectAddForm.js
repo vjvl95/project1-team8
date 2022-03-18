@@ -28,6 +28,7 @@ function ProjectAddForm({setIsAdding,portfolioOwnerId,setProjectList})
           setIsAdding(false)
 
         const res=await Api.get("projectlist",portfolioOwnerId)
+        console.log(35134)
         setProjectList(res.data)
     }
 

@@ -11,7 +11,7 @@ function Project({portfolioOwnerId,isEditable}){
     const [projectList,setProjectList]=useState([])
 
     useEffect(()=>{
-      Api.get("projectlist", portfolioOwnerId).then((res) => setProjectList(res.data) );
+      Api.get("projectlist", portfolioOwnerId).then((res) =>setProjectList(res.data));
     },[])
     
 

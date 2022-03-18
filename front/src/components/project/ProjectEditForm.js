@@ -3,7 +3,9 @@ import React, {useState,useEffect} from 'react'
 import * as Api from '../../api'
 import DatePicker from "react-datepicker";
 
+
 function ProjectEditForm({thisProject,setThisProject,id,setIsEditing,portfolioOwnerId,setProjectList})
+
 {
   
     const [edit_from_date,setEdit_from_date]=useState(new Date(thisProject.from_date))
@@ -11,7 +13,6 @@ function ProjectEditForm({thisProject,setThisProject,id,setIsEditing,portfolioOw
 
     const  handleSubmit = async (portfolioOwnerId,e) => {
         e.preventDefault();
-        
            try
            { await Api.put(`projects/${id}`, {
             title:thisProject.title,
@@ -27,7 +28,6 @@ function ProjectEditForm({thisProject,setThisProject,id,setIsEditing,portfolioOw
         const res=await Api.get("projectlist",portfolioOwnerId)
         setProjectList(res.data)
         setIsEditing(false)
-
     }
 
     return <>
@@ -63,7 +63,7 @@ function ProjectEditForm({thisProject,setThisProject,id,setIsEditing,portfolioOw
           </Form.Group>
           <Form.Group as={Row} className='mt-3 text-center'>
           <Col sm={{ span: 20 }}>
-                <Button variant='primary' type='submit'  className='me-3'>
+               <Button variant='primary' type='submit'  className='me-3'>
                 확인
               </Button>
               <Button variant='secondary' onClick={() => setIsEditing(false)}>취소</Button>
