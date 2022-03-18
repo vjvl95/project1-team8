@@ -20,6 +20,7 @@ const EducationItem = ({ id, school, major, position, isEditable }) => {
           {isEditable && (
             <Col>
               <Button
+                className="mt-3"
                 variant="outline-info"
                 size="sm"
                 onClick={() => setIsEditing(true)}
