@@ -1,20 +1,22 @@
 
-import { Card,Col} from "react-bootstrap";
-import {useEffect, useState} from 'react'
+import { Col} from "react-bootstrap";
+import { useState,useEffect} from 'react'
 import ProjectEditForm from "./ProjectEditForm";
 
-function ProjectItem({isEditable,setProjectList,projectList,id,title,description,from_date,to_date,portfolioOwnerId})
+function ProjectItem({isEditable,setProjectList,project,portfolioOwnerId})
 {
     const [isEditing,setIsEditing]=useState(false)
-    const [thisProject,setThisProject]=useState({id,title,description,from_date,to_date})
+    const [thisProject,setThisProject]=useState(project)
+
+    useEffect(()=>{console.log(thisProject)},[])
     return <>
-        {isEditing? <div><ProjectEditForm setIsEditing={setIsEditing} setProjectList={setProjectList}projectList={projectList} setThisProject={setThisProject} thisProject ={thisProject} id={id} portfolioOwnerId={portfolioOwnerId}/></div>
+        {isEditing? <div><ProjectEditForm setIsEditing={setIsEditing} setProjectList={setProjectList} setThisProject={setThisProject} thisProject ={thisProject} id={project.id} portfolioOwnerId={portfolioOwnerId}/></div>
         :(<>
         <div className="justify-content-between align-items-left mb-2 row" style={{textAlign:"left"}}>
             <Col>
-                {title} <br/>
-                <span className="text-muted">{description}</span><br/>
-                <span className="text-muted">{from_date} ~ {to_date}</span>
+                {project.title} <br/>
+                <span className="text-muted">{project.description}</span><br/>
+                <span className="text-muted">{project.from_date} ~ {project.to_date}</span>
             </Col>
 
             {isEditable &&

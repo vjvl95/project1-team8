@@ -1,17 +1,17 @@
 import { Button, Form, Card, Col, Row } from 'react-bootstrap';
-import React, {useEffect, useState} from 'react'
+import React, {useState,useEffect} from 'react'
 import * as Api from '../../api'
 import DatePicker from "react-datepicker";
 
 function ProjectEditForm({thisProject,setThisProject,id,setIsEditing,portfolioOwnerId,setProjectList})
 {
-    const [edit_from_date,setEdit_from_date]=useState(new Date(thisProject?.from_date))
-    const [edit_to_date,setEdit_to_date]=useState(new Date(thisProject?.to_date))
+  
+    const [edit_from_date,setEdit_from_date]=useState(new Date(thisProject.from_date))
+    const [edit_to_date,setEdit_to_date]=useState(new Date(thisProject.to_date))
 
     const  handleSubmit = async (portfolioOwnerId,e) => {
         e.preventDefault();
         
-      
            try
            { await Api.put(`projects/${id}`, {
             title:thisProject.title,
