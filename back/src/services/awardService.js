@@ -14,7 +14,7 @@ class awardService {
   }
 
   static async getAward({ awardId }) {
-    // 이메일 db에 존재 여부 확인
+    // awardId db에 존재 여부 확인
     const award = await Award.findByAwardId({ awardId });
     if (!award) {
       const errorMessage =
@@ -55,6 +55,19 @@ class awardService {
     }
 
     return award;
+  }
+
+  static async deleteAward({ awardId }) {
+    // awardId db에 존재 여부 확인
+
+    const deletedResult = await Award.deleteByAwardId({ awardId })
+    if (!deletedResult) {
+      const errorMessage =
+        "해당하는 수상내역이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    return deletedResult;
   }
 }
 
