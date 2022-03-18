@@ -63,7 +63,7 @@ const EducationItemForm = ({ id, setIsEditing, getEducationList }) => {
               name="group1"
               type={type}
               value={position}
-              checked={position == "재학중"}
+              checked={position === "재학중"}
               onChange={(e) => setPosition(e.target.value)}
               id={`inline-${type}-1`}
             />
@@ -73,7 +73,7 @@ const EducationItemForm = ({ id, setIsEditing, getEducationList }) => {
               name="group1"
               type={type}
               value={position}
-              checked={position == "학사졸업"}
+              checked={position === "학사졸업"}
               onChange={(e) => setPosition(e.target.value)}
               id={`inline-${type}-2`}
             />
@@ -83,7 +83,7 @@ const EducationItemForm = ({ id, setIsEditing, getEducationList }) => {
               name="group1"
               type={type}
               value={position}
-              checked={position == "석사졸업"}
+              checked={position === "석사졸업"}
               onChange={(e) => setPosition(e.target.value)}
               id={`inline-${type}-3`}
             />
@@ -93,7 +93,7 @@ const EducationItemForm = ({ id, setIsEditing, getEducationList }) => {
               name="group1"
               type={type}
               value={position}
-              checked={position == "박사졸업"}
+              checked={position === "박사졸업"}
               onChange={(e) => setPosition(e.target.value)}
               id={`inline-${type}-4`}
             />
