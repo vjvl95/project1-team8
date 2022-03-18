@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-const EducationEditForm = ({
+const EducationAddForm = ({
   portfolioOwnerId,
   setIsEditing,
   getEducationList,
@@ -103,4 +103,4 @@ const EducationEditForm = ({
   );
 };
 
-export default EducationEditForm;
+export default EducationAddForm;
