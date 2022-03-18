@@ -29,6 +29,12 @@ class Education {
     );
     return updatedEducation;
   }
+
+  static async delete({ id }) {
+
+    const result = await EducationModel.deleteOne({ id: id });
+    return result;
+  }
 }
 
 export { Education };

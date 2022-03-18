@@ -67,5 +67,21 @@ class educationService {
 
     return education;
   }
+
+  static async deleteEdu({ id }) {
+
+    // id가 education db에 존재 여부 확인
+    let education = await Education.findById({ id });
+    if (!education) {
+      const errorMessage =
+        "잘못된 접근입니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+    education.errorMessage = null;
+
+    const result = await Education.delete({ id });
+    return result;
+  }
+
 }
 export { educationService };

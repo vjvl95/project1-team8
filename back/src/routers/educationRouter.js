@@ -90,4 +90,16 @@ educationRouter.get('/educationlist/:user_id', async (req, res, next) => {
   }
 })
 
+educationRouter.delete('/educations/:id', async (req, res, next) => {
+  const { id } = req.params
+  try {
+    const deletedResult = await educationService.deleteEdu({ id })
+
+    res.status(200).json(deletedResult);
+
+  } catch (error) {
+    next(error);
+  }
+})
+
 export { educationRouter };
