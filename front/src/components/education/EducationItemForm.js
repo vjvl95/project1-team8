@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-const EducationItemForm = ({ id, setIsEditing }) => {
+const EducationItemForm = ({ id, setIsEditing, getEducationList }) => {
   const [school, setSchool] = useState("");
   const [major, setMajor] = useState("");
   const [position, setPosition] = useState("");
@@ -17,6 +17,7 @@ const EducationItemForm = ({ id, setIsEditing }) => {
       position,
     });
 
+    getEducationList();
     //isEditing을 false로 세팅함.
     setIsEditing(false);
   };

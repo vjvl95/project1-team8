@@ -2,13 +2,24 @@ import { Card, Col, Row, Button } from "react-bootstrap";
 import React, { useState } from "react";
 import EducationItemForm from "./EducationItemForm";
 
-const EducationItem = ({ id, school, major, position, isEditable }) => {
+const EducationItem = ({
+  id,
+  school,
+  major,
+  position,
+  isEditable,
+  getEducationList,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
     <>
       {isEditing ? (
-        <EducationItemForm id={id} setIsEditing={setIsEditing} />
+        <EducationItemForm
+          id={id}
+          setIsEditing={setIsEditing}
+          getEducationList={getEducationList}
+        />
       ) : (
         <Row>
           <Col>
