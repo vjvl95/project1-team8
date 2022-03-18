@@ -8,6 +8,8 @@ function AwardEditForm({
   itemId,
   itemTitle,
   itemDescription,
+  setNewDescription,
+  setNewTitle,
 }) {
   const [title, setAward] = useState(itemTitle || '');
   const [description, setDescription] = useState(itemDescription || '');
@@ -19,6 +21,8 @@ function AwardEditForm({
         title,
         description,
       });
+      setNewTitle(title);
+      setNewDescription(description);
       setIsEditing(false);
     } catch (err) {
       console.log('수상내역을 수정하는데 실패하였습니다', err);

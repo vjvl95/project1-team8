@@ -1,6 +1,6 @@
 // import AwardEditForm from './AwardEditForm';
 import { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Col, Row, Card } from 'react-bootstrap';
 import AwardEditForm from './AwardEditForm';
 import * as Api from '../../api';
 
@@ -9,43 +9,51 @@ const AwardListItem = ({ id, title, description, isEditable }) => {
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
 
-  useEffect(() => {
-    Api.get(`awards/${id}`).then((res) => {
-      const { title, description } = res.data;
-      if (newTitle !== title || newDescription !== description) {
-        setNewTitle(title);
-        setNewDescription(description);
-      }
-    });
-  }, [isEditing, id, newDescription, newTitle]);
+  // useEffect(() => {
+  //   Api.get(`awards/${id}`).then((res) => {
+  //     const { title, description } = res.data;
+  //     if (newTitle !== title || newDescription !== description) {
+  //       setNewTitle(title);
+  //       setNewDescription(description);
+  //     }
+  //   });
+  // }, [isEditing, id, newDescription, newTitle]);
 
   return (
-    <div>
+    <Card.Text>
       {isEditing ? (
         <AwardEditForm
           setIsEditing={setIsEditing}
           itemId={id}
           itemTitle={newTitle}
           itemDescription={newDescription}
+          setNewTitle={setNewTitle}
+          setNewDescription={setNewDescription}
         />
       ) : (
-        <div>
-          <p>{newTitle}</p>
-          <p>{newDescription}</p>
+        <Row className='align-items-center'>
+          <Col>
+            <span>{newTitle}</span>
+            <br />
+            <span className='text-muted'>{newDescription}</span>
+          </Col>
+
           {isEditable && (
-            <Button
-              variant='outline-info'
-              size='sm'
-              onClick={() => {
-                setIsEditing(true);
-              }}
-            >
-              편집
-            </Button>
+            <Col className='col-lg-1'>
+              <Button
+                variant='outline-info'
+                size='sm'
+                onClick={() => {
+                  setIsEditing(true);
+                }}
+              >
+                편집
+              </Button>
+            </Col>
           )}
-        </div>
+        </Row>
       )}
-    </div>
+    </Card.Text>
   );
 };
 
