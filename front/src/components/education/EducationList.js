@@ -14,10 +14,7 @@ const EducationList = ({
         return (
           <EducationItem
             key={education.id}
-            school={education.school}
-            major={education.major}
-            position={education.position}
-            id={education.id}
+            education={education}
             isEditable={isEditable}
             getEducationList={getEducationList}
           />

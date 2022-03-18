@@ -2,16 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-const EducationItemForm = ({ id, setIsEditing, getEducationList }) => {
-  const [school, setSchool] = useState("");
-  const [major, setMajor] = useState("");
-  const [position, setPosition] = useState("");
+const EducationItemForm = ({ education, setIsEditing, getEducationList }) => {
+  const [school, setSchool] = useState(education.school);
+  const [major, setMajor] = useState(education.major);
+  const [position, setPosition] = useState(education.position);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(id);
     //"educations/:id" 엔드포인트로 PUT 요청함.
-    await Api.put(`educations/${id}`, {
+    await Api.put(`educations/${education.id}`, {
       school,
       major,
       position,
@@ -22,17 +21,17 @@ const EducationItemForm = ({ id, setIsEditing, getEducationList }) => {
     setIsEditing(false);
   };
 
-  useEffect(() => {
-    const educationData = async () => {
-      const res = await Api.get("educations", id);
-      const education = res.data;
+  // useEffect(() => {
+  //   const educationData = async () => {
+  //     const res = await Api.get("educations", education.id);
+  //     const educationData = res.data;
 
-      setSchool(education.school);
-      setMajor(education.major);
-      setPosition(education.position);
-    };
-    educationData();
-  }, []);
+  //     setSchool(educationData.school);
+  //     setMajor(educationData.major);
+  //     setPosition(educationData.position);
+  //   };
+  //   educationData();
+  // }, []);
 
   return (
     <Card.Body>
@@ -62,7 +61,7 @@ const EducationItemForm = ({ id, setIsEditing, getEducationList }) => {
               label="재학중"
               name="group1"
               type={type}
-              value={position}
+              value="재학중"
               checked={position === "재학중"}
               onChange={(e) => setPosition(e.target.value)}
               id={`inline-${type}-1`}
@@ -72,7 +71,7 @@ const EducationItemForm = ({ id, setIsEditing, getEducationList }) => {
               label="학사졸업"
               name="group1"
               type={type}
-              value={position}
+              value="학사졸업"
               checked={position === "학사졸업"}
               onChange={(e) => setPosition(e.target.value)}
               id={`inline-${type}-2`}
@@ -82,7 +81,7 @@ const EducationItemForm = ({ id, setIsEditing, getEducationList }) => {
               label="석사졸업"
               name="group1"
               type={type}
-              value={position}
+              value="석사졸업"
               checked={position === "석사졸업"}
               onChange={(e) => setPosition(e.target.value)}
               id={`inline-${type}-3`}
@@ -92,7 +91,7 @@ const EducationItemForm = ({ id, setIsEditing, getEducationList }) => {
               label="박사졸업"
               name="group1"
               type={type}
-              value={position}
+              value="박사졸업"
               checked={position === "박사졸업"}
               onChange={(e) => setPosition(e.target.value)}
               id={`inline-${type}-4`}

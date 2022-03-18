@@ -3,12 +3,10 @@ import React, { useState } from "react";
 import EducationItemForm from "./EducationItemForm";
 
 const EducationItem = ({
-  id,
-  school,
-  major,
-  position,
+  education,
   isEditable,
   getEducationList,
+  portfolioOwnerId,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -16,16 +14,16 @@ const EducationItem = ({
     <>
       {isEditing ? (
         <EducationItemForm
-          id={id}
           setIsEditing={setIsEditing}
           getEducationList={getEducationList}
+          education={education}
         />
       ) : (
         <Row>
           <Col>
-            <Card.Text className="mb-1">{school}</Card.Text>
+            <Card.Text className="mb-1">{education.school}</Card.Text>
             <Card.Text className="mb-4 text-muted">
-              {major} ({position})
+              {education.major} ({education.position})
             </Card.Text>
           </Col>
           {isEditable && (
