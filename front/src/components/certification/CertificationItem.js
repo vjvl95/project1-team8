@@ -9,7 +9,7 @@ function CertificationItem({isEditable,setCertificateList,certification,portfoli
     const [ThisCertification,setThisCertification]=useState(certification)
 
     return <>
-        {isEditing? <div><CertificationEditForm setIsEditing={setIsEditing} setCertificateList={setCertificateList} setThisCertification={setThisCertification} ThisCertification ={ThisCertification} id={project.id} portfolioOwnerId={portfolioOwnerId}/></div>
+        {isEditing? <div><CertificationEditForm setIsEditing={setIsEditing} setCertificateList={setCertificateList} setThisCertification={setThisCertification} ThisCertification ={ThisCertification} id={certification.id} portfolioOwnerId={portfolioOwnerId}/></div>
         :(<>
         <div className="justify-content-between align-items-left mb-2 row" style={{textAlign:"left"}}>
             <Col>
