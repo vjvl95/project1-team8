@@ -12,6 +12,7 @@ function Project({portfolioOwnerId,isEditable}){
 
     useEffect(()=>{
       Api.get("projectlist", portfolioOwnerId).then((res) => setProjectList(res.data) );
+      console.log("durl")
     },[])
     
 

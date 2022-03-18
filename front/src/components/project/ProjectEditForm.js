@@ -11,37 +11,42 @@ function ProjectEditForm({thisProject,setThisProject,id,setIsEditing,portfolioOw
     const [to_date,setTo_date]=useState(new Date())
     const [edit_from_date,setEdit_from_date]=useState(new Date(thisProject?.from_date))
     const [edit_to_date,setEdit_to_date]=useState(new Date(thisProject?.to_date))
-      
-    useEffect(()=>{
 
-    },[thisProject.from_date,thisProject.to_date])
-    const  handleSubmit = (isAdding,portfolioOwnerId,e) => {
+    const  handleSubmit = async (isAdding,portfolioOwnerId,e) => {
         e.preventDefault();
         
         if(isAdding===true)
         {
-          Api.put(`projects/${id}`, {
-            title,
-            description,
+           try{
+            await Api.put(`projects/${id}`, {
+            title:thisProject.title,
+            description:thisProject.description,
             from_date : edit_from_date.toISOString().substring(0, 10),
             to_date : edit_to_date.toISOString().substring(0, 10)
           })     
-          Api.get(`projects`,id).then((res) => setThisProject(res.data))   
-
+        }
+        catch(e){
+          console.log("수정에 실패했습니다")
+        }
           setIsAdding(false)
         }
 
         else{
-          Api.post(`project/create`, {
+          try{
+            await Api.post(`project/create`, {
             user_id:portfolioOwnerId,
             title,
             description,
             from_date : from_date.toISOString().substring(0, 10),
             to_date : to_date.toISOString().substring(0, 10)
           })
-          Api.get("projectlist",portfolioOwnerId).then((res) => setProjectList(res.data))
+        }
+          catch(e){
+          }
           setIsEditing(false)
-        }   
+        }  
+        const res=await Api.get("projectlist",portfolioOwnerId)
+        setProjectList(res.data)
     }
 
 
@@ -55,7 +60,8 @@ function ProjectEditForm({thisProject,setThisProject,id,setIsEditing,portfolioOw
               type='text'
               placeholder='프로젝트 제목'
               value={thisProject.title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => setThisProject({...thisProject,
+                title:e.target.value})}
             />
             :<Form.Control
               type='text'
@@ -71,7 +77,8 @@ function ProjectEditForm({thisProject,setThisProject,id,setIsEditing,portfolioOw
             type='description'
             placeholder='상세내역'
             value={thisProject.description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => setThisProject({...thisProject,
+              description:e.target.value})}
           />
             : <Form.Control
               type='description'
@@ -83,7 +90,7 @@ function ProjectEditForm({thisProject,setThisProject,id,setIsEditing,portfolioOw
 
           <Form.Group className='mt-3 row'>
           <Col className="col-auto"> 
-            {isAdding?<DatePicker selected={edit_from_date}  onChange={(date) => setEdit_from_date(date)}/>
+            {isAdding?<DatePicker selected={edit_from_date} onChange={(date) => setEdit_from_date(date)}/>
             :<DatePicker selected={from_date}  onChange={(date) => setFrom_date(date)}/>
             }
           </Col>
