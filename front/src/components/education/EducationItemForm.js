@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
@@ -17,6 +17,7 @@ const EducationItemForm = ({ education, setIsEditing, getEducationList }) => {
     });
 
     getEducationList();
+
     //isEditing을 false로 세팅함.
     setIsEditing(false);
   };

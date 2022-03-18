@@ -2,12 +2,7 @@ import { Card, Col, Row, Button } from "react-bootstrap";
 import React, { useState } from "react";
 import EducationItemForm from "./EducationItemForm";
 
-const EducationItem = ({
-  education,
-  isEditable,
-  getEducationList,
-  portfolioOwnerId,
-}) => {
+const EducationItem = ({ education, isEditable, getEducationList }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   return (

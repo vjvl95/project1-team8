@@ -1,7 +1,9 @@
-import React, { useCallback, useState, useEffect } from "react";
-import * as Api from "../../api";
+import React, { useCallback, useState, useLayoutEffect } from "react";
 import { Card } from "react-bootstrap";
+
 // import * as Api from "../../api";
+import * as Api from "../../api";
+
 import EducationCard from "./EducationCard";
 import EducationEditForm from "./EducationEditForm";
 
@@ -18,7 +20,7 @@ const Education = ({ portfolioOwnerId, isEditable }) => {
     });
   }, [portfolioOwnerId]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getEducationList();
   }, [getEducationList]);
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
@@ -10,7 +10,6 @@ const EducationEditForm = ({
   const [school, setSchool] = useState("");
   const [major, setMajor] = useState("");
   const [position, setPosition] = useState("");
-  const [data, setData] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();

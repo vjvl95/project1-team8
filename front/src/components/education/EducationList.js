@@ -2,12 +2,7 @@ import React from "react";
 
 import EducationItem from "./EducationItem";
 
-const EducationList = ({
-  portfolioOwnerId,
-  isEditable,
-  educations,
-  getEducationList,
-}) => {
+const EducationList = ({ isEditable, educations, getEducationList }) => {
   return (
     <>
       {educations.map((education) => {
