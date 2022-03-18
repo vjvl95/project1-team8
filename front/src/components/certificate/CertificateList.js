@@ -1,14 +1,14 @@
-import CertificationItem from "./CertificationItem"
+import CertificateItem from "./CertificateItem"
 
 
-function CertificationList({setCertificateList,certificateList,portfolioOwnerId,isEditable}){   
+function CertificateList({setCertificateList,certificateList,portfolioOwnerId,isEditable}){   
     
    return <>
     {certificateList.map((certificate)=> {
        return( 
-       <CertificationItem
+       <CertificateItem
         key={certificate.id}
-        project={certificate}
+        certificate={certificate}
         portfolioOwnerId={portfolioOwnerId}
         certificateList={certificateList}
         setCertificateList={setCertificateList}
@@ -20,4 +20,4 @@ function CertificationList({setCertificateList,certificateList,portfolioOwnerId,
     </>
 }
 
-export default CertificationList
+export default CertificateList

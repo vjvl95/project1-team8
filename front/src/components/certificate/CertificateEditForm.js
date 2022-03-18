@@ -4,18 +4,18 @@ import * as Api from '../../api'
 import DatePicker from "react-datepicker";
 
 
-function CertificationEditForm({setIsEditing,setCertificateList,setThisCertification,ThisCertification,id,portfolioOwnerId})
+function CertificateEditForm({setIsEditing,setCertificateList,setThisCertificate,ThisCertificate,id,portfolioOwnerId})
 
 {
   
-    const [edit_when_date,setEdit_from_date]=useState(new Date(ThisCertification.from_date))
+    const [edit_when_date,setEdit_when_date]=useState(new Date(ThisCertificate.when_date))
 
     const  handleSubmit = async (portfolioOwnerId,e) => {
         e.preventDefault();
            try
-           { await Api.put(`projects/${id}`, {
-            title:ThisCertification.title,
-            description:ThisCertification.description,
+           { await Api.put(`certificates/${id}`, {
+            title:ThisCertificate.title,
+            description:ThisCertificate.description,
             when_date : edit_when_date.toISOString().substring(0, 10),
           })     
            }
@@ -35,8 +35,8 @@ function CertificationEditForm({setIsEditing,setCertificateList,setThisCertifica
            <Form.Control
               type='text'
               placeholder='프로젝트 제목'
-              value={ThisCertification.title}
-              onChange={(e) => setThisCertification({...ThisCertification,
+              value={ThisCertificate.title}
+              onChange={(e) => setThisCertificate({...ThisCertificate,
                 title:e.target.value})}
             />
           </Form.Group>
@@ -45,15 +45,15 @@ function CertificationEditForm({setIsEditing,setCertificateList,setThisCertifica
             <Form.Control
             type='description'
             placeholder='상세내역'
-            value={ThisCertification.description}
-            onChange={(e) => setThisCertification({...ThisCertification,
+            value={ThisCertificate.description}
+            onChange={(e) => setThisCertificate({...ThisCertificate,
               description:e.target.value})}
           />
           </Form.Group>
 
           <Form.Group className='mt-3 row'>
           <Col className="col-auto">
-         <DatePicker selected={edit_when_date}  onChange={(date) => setEdit_from_date(date)}/>
+         <DatePicker selected={edit_when_date}  onChange={(date) => setEdit_when_date(date)}/>
           </Col>
           </Form.Group>
           <Form.Group as={Row} className='mt-3 text-center'>
@@ -69,4 +69,4 @@ function CertificationEditForm({setIsEditing,setCertificateList,setThisCertifica
     </>
 }
 
-export default CertificationEditForm
+export default CertificateEditForm

@@ -1,11 +1,11 @@
 import {useEffect, useState} from 'react'
-import CertificationCard from "./CertificationCard"
-import CertificationAddForm from "./CertificationAddForm";
+import CertificateCard from "./CertificateCard"
+import CertificateAddForm from "./CertificateAddForm";
 import { Card} from "react-bootstrap";
 import * as Api from "../../api";
 
 
-function Certification({portfolioOwnerId,isEditable}){
+function Certificate({portfolioOwnerId,isEditable}){
     const [IsAdding, setIsAdding] = useState(false);
     // useState 훅을 통해 user 상태를 생성함.
     const [certificateList,setCertificateList]=useState([])
@@ -17,7 +17,7 @@ function Certification({portfolioOwnerId,isEditable}){
 
 
     return <Card className='mb-2 ms-3 mr-5'>
-    <CertificationCard
+    <Certificate
     setIsAdding={setIsAdding}
     isEditable={isEditable}
     portfolioOwnerId={portfolioOwnerId}
@@ -26,7 +26,7 @@ function Certification({portfolioOwnerId,isEditable}){
     />
 
     {IsAdding && (
-        <CertificationAddForm
+        <CertificateAddForm
           setIsAdding={setIsAdding}
           portfolioOwnerId={portfolioOwnerId}
           setCertificateList={setCertificateList}
@@ -36,4 +36,4 @@ function Certification({portfolioOwnerId,isEditable}){
 
 }
 
-export default Certification
+export default Certificate

@@ -3,7 +3,7 @@ import React, { useState} from 'react'
 import * as Api from '../../api'
 import DatePicker from "react-datepicker";
 
-function CertificationAddForm(setIsAdding,portfolioOwnerId,setCertificateList){
+function CertificateAddForm({setIsAdding,portfolioOwnerId,setCertificateList}){
     const [description,setDescription]=useState("")
     const [title,setTitle]=useState("")
     const [when_date,setWhen_date]=useState(new Date())
@@ -12,7 +12,7 @@ function CertificationAddForm(setIsAdding,portfolioOwnerId,setCertificateList){
         e.preventDefault();
        
           try{
-            await Api.post(`project/create`, {
+            await Api.post(`certificate/create`, {
             user_id:portfolioOwnerId,
             title,
             description,
@@ -21,8 +21,8 @@ function CertificationAddForm(setIsAdding,portfolioOwnerId,setCertificateList){
         }
           catch(e){
           }
-          setIsAdding(false)
 
+        setIsAdding(false)
         const res=await Api.get("certificatelist",portfolioOwnerId)
         setCertificateList(res.data)
     }
@@ -34,7 +34,7 @@ function CertificationAddForm(setIsAdding,portfolioOwnerId,setCertificateList){
           <Form.Group controlId='userEditTitle' className='mb-3'>
             <Form.Control
               type='text'
-              placeholder='프로젝트 제목'
+              placeholder='자격증이름'
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
@@ -73,4 +73,4 @@ function CertificationAddForm(setIsAdding,portfolioOwnerId,setCertificateList){
 
 }
 
-export default CertificationAddForm
+export default CertificateAddForm
