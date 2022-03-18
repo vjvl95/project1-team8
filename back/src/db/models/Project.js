@@ -29,6 +29,12 @@ class Project {
     );
     return updatedProject;
   }
+
+  static async delete({ id }) {
+
+    const result = await ProjectModel.deleteOne({ id: id });
+    return result;
+  }
 }
 
 export { Project };

@@ -73,5 +73,20 @@ class projectService {
 
     return project;
   }
+  
+  static async deleteProject({ id }) {
+
+    // id가 project db에 존재 여부 확인
+    let project = await Project.findById({ id });
+    if (!project) {
+      const errorMessage =
+        "잘못된 접근입니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+    project.errorMessage = null;
+
+    const result = await Project.delete({ id });
+    return result;
+  }
 }
 export { projectService };

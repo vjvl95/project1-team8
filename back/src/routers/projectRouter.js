@@ -93,4 +93,16 @@ projectRouter.get('/projectlist/:user_id', async (req, res, next) => {
   }
 })
 
+projectRouter.delete('/projects/:id', async (req, res, next) => {
+  const { id } = req.params
+  try {
+    const deletedResult = await projectService.deleteProject({ id })
+
+    res.status(200).json(deletedResult);
+
+  } catch (error) {
+    next(error);
+  }
+})
+
 export { projectRouter };
