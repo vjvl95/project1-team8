@@ -11,11 +11,11 @@ const EducationAddForm = ({
   const [major, setMajor] = useState("");
   const [position, setPosition] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     // "education/create" 엔드포인트로 POST 요청함.
-    const res = await Api.post("education/create", {
+    Api.post("education/create", {
       user_id: portfolioOwnerId,
       school,
       major,
