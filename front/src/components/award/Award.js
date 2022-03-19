@@ -34,7 +34,6 @@ function Award({ portfolioOwnerId, isEditable }) {
             <Col sm={{ span: 20 }}>
               <Button
                 variant='primary'
-                size='sm'
                 onClick={() => setIsEditing((state) => !state)}
               >
                 +
