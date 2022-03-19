@@ -7,6 +7,8 @@ import * as Api from '../api';
 import User from './user/User';
 import Award from './award/Award';
 
+import Education from "./education/Education";
+
 function Portfolio() {
   const navigate = useNavigate();
   const params = useParams();
@@ -36,6 +38,10 @@ function Portfolio() {
     }
   }, [params, userState, navigate]);
 
+  // useEffect(() => {
+  //   console.log(portfolioOwner?.id);
+  // }, [portfolioOwner]);
+
   if (!isFetchCompleted) {
     return 'loading...';
   }
@@ -50,7 +56,14 @@ function Portfolio() {
           />
         </Col>
         <Col>
-          <Award
+
+          <Award  portfolioOwnerId={portfolioOwner.id}
+            isEditable={portfolioOwner.id === userState.user?.id}
+          />
+
+
+          <Education
+
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
