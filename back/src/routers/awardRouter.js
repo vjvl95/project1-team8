@@ -1,16 +1,16 @@
-import is from '@sindresorhus/is';
-import { Router } from 'express';
-import { login_required } from '../middlewares/login_required';
-import { awardService } from '../services/awardService';
+import is from "@sindresorhus/is";
+import { Router } from "express";
+import { login_required } from "../middlewares/login_required";
+import { awardService } from "../services/awardService";
 
 const awardRouter = Router();
 awardRouter.use(login_required);
 
-awardRouter.post('/award/create', async function (req, res, next) {
+awardRouter.post("/award/create", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        'headers의 Content-Type을 application/json으로 설정해주세요'
+        "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
 
@@ -25,7 +25,6 @@ awardRouter.post('/award/create', async function (req, res, next) {
       title,
       description,
     });
-    console.log(newAward);
 
     res.status(201).json(newAward);
   } catch (error) {
@@ -33,7 +32,7 @@ awardRouter.post('/award/create', async function (req, res, next) {
   }
 });
 
-awardRouter.get('/awards/:id', async function (req, res, next) {
+awardRouter.get("/awards/:id", async function (req, res, next) {
   try {
     // URI로부터 awardId를 추출함.
     const awardId = req.params.id;
@@ -49,7 +48,7 @@ awardRouter.get('/awards/:id', async function (req, res, next) {
   }
 });
 
-awardRouter.put('/awards/:id', async function (req, res, next) {
+awardRouter.put("/awards/:id", async function (req, res, next) {
   try {
     // URI로부터 awardId를 추출함.
     const awardId = req.params.id;
@@ -72,13 +71,29 @@ awardRouter.put('/awards/:id', async function (req, res, next) {
   }
 });
 
-awardRouter.get('/awardlist/:user_id', async function (req, res, next) {
+awardRouter.get("/awardlist/:user_id", async function (req, res, next) {
   try {
     // URI로부터 user_id를 추출함.
     const user_id = req.params.user_id;
     // 해당 user의 전체 수상내역 목록을 얻음
     const awards = await awardService.getAwardList({ user_id });
     res.status(200).send(awards);
+  } catch (error) {
+    next(error);
+  }
+});
+
+awardRouter.delete("/awards/:id", async function (req, res, next) {
+  try {
+    // URI로부터 awardId를 추출함.
+    const awardId = req.params.id;
+    const deletedResult = await awardService.deleteAward({ awardId });
+
+    if (!deletedResult) {
+      throw new Error(deletedResult.errorMessage);
+    }
+
+    res.status(200).send("삭제되었습니다.");
   } catch (error) {
     next(error);
   }
