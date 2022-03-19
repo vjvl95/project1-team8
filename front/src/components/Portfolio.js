@@ -6,8 +6,9 @@ import { UserStateContext } from '../App';
 import * as Api from '../api';
 import User from './user/User';
 import Award from './award/Award';
-
-import Education from "./education/Education";
+import Education from './education/Education';
+import Project from './project/Project';
+import Certificate from './certificate/Certificate';
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -56,7 +57,19 @@ function Portfolio() {
           />
         </Col>
         <Col>
+          <Education
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={portfolioOwner.id === userState.user?.id}
+          />
           <Award
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={portfolioOwner.id === userState.user?.id}
+          />
+          <Project
+            portfolioOwnerId={portfolioOwner.id}
+            isEditable={portfolioOwner.id === userState.user?.id}
+          />
+          <Certificate
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
