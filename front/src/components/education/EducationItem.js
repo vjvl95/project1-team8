@@ -1,6 +1,6 @@
 import { Card, Col, Row, Button } from "react-bootstrap";
 import React, { useState } from "react";
-import EducationItemForm from "./EducationItemForm";
+import EducationEditForm from "./EducationEditForm";
 
 const EducationItem = ({ education, isEditable, getEducationList }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -8,7 +8,7 @@ const EducationItem = ({ education, isEditable, getEducationList }) => {
   return (
     <>
       {isEditing ? (
-        <EducationItemForm
+        <EducationEditForm
           setIsEditing={setIsEditing}
           getEducationList={getEducationList}
           education={education}
@@ -22,7 +22,7 @@ const EducationItem = ({ education, isEditable, getEducationList }) => {
             </Card.Text>
           </Col>
           {isEditable && (
-            <Col>
+            <Col xs lg="1">
               <Button
                 className="mt-3"
                 variant="outline-info"
