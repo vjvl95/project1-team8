@@ -11,17 +11,19 @@ const EducationAddForm = ({
   const [major, setMajor] = useState("");
   const [position, setPosition] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // "education/create" 엔드포인트로 POST 요청함.
-    Api.post("education/create", {
+    const res = await Api.post("education/create", {
       user_id: portfolioOwnerId,
       school,
       major,
       position,
     });
+
     getEducationList();
+
     // isEditing을 false로 세팅함.
     setIsEditing(false);
   };

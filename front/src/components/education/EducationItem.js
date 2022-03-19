@@ -4,21 +4,27 @@ import EducationEditForm from "./EducationEditForm";
 
 const EducationItem = ({ education, isEditable, getEducationList }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [fetchSchool, setfetchSchool] = useState(education.school);
+  const [fetchMajor, setFetchMajor] = useState(education.major);
+  const [fetchPosition, setFetchPosition] = useState(education.position);
 
   return (
     <>
       {isEditing ? (
         <EducationEditForm
           setIsEditing={setIsEditing}
-          getEducationList={getEducationList}
           education={education}
+          setfetchSchool={setfetchSchool}
+          setFetchMajor={setFetchMajor}
+          setFetchPosition={setFetchPosition}
+          getEducationList={getEducationList}
         />
       ) : (
         <Row>
           <Col>
-            <Card.Text className="mb-1">{education.school}</Card.Text>
+            <Card.Text className="mb-1">{fetchSchool}</Card.Text>
             <Card.Text className="mb-4 text-muted">
-              {education.major} ({education.position})
+              {fetchMajor} ({fetchPosition})
             </Card.Text>
           </Col>
           {isEditable && (

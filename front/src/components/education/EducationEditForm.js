@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-const EducationEditForm = ({ education, setIsEditing, getEducationList }) => {
+const EducationEditForm = ({
+  education,
+  setIsEditing,
+  setfetchSchool,
+  setFetchMajor,
+  setFetchPosition,
+  getEducationList = { getEducationList },
+}) => {
   const [school, setSchool] = useState(education.school);
   const [major, setMajor] = useState(education.major);
   const [position, setPosition] = useState(education.position);
@@ -16,23 +23,15 @@ const EducationEditForm = ({ education, setIsEditing, getEducationList }) => {
       position,
     });
 
+    setfetchSchool(school);
+    setFetchMajor(major);
+    setFetchPosition(position);
+
     getEducationList();
 
     //isEditing을 false로 세팅함.
     setIsEditing(false);
   };
-
-  // useEffect(() => {
-  //   const educationData = async () => {
-  //     const res = await Api.get("educations", education.id);
-  //     const educationData = res.data;
-
-  //     setSchool(educationData.school);
-  //     setMajor(educationData.major);
-  //     setPosition(educationData.position);
-  //   };
-  //   educationData();
-  // }, []);
 
   return (
     <Card.Body>

@@ -25,35 +25,34 @@ const Education = ({ portfolioOwnerId, isEditable }) => {
   }, [getEducationList]);
 
   return (
-    <>
-      <Card>
-        <Card.Body>
-          <Card.Title className="mb-3">학력</Card.Title>
-          <EducationList
-            portfolioOwnerId={portfolioOwnerId}
-            isEditable={isEditable}
-            educations={educations}
-            getEducationList={getEducationList}
-          />
+    <Card>
+      <Card.Body>
+        <Card.Title className="mb-3">학력</Card.Title>
+        <EducationList
+          portfolioOwnerId={portfolioOwnerId}
+          isEditable={isEditable}
+          educations={educations}
+          getEducationList={getEducationList}
+        />
 
-          {isEditable && (
-            <Row className="mt-3 text-center mb-4">
-              <Col sm={{ span: 20 }}>
-                <Button onClick={() => setIsEditing(true)}>+</Button>
-              </Col>
-            </Row>
-          )}
-        </Card.Body>
-
-        {isEditing && (
-          <EducationAddForm
-            portfolioOwnerId={portfolioOwnerId}
-            setIsEditing={setIsEditing}
-            getEducationList={getEducationList}
-          />
+        {isEditable && (
+          <Row className="mt-3 text-center mb-4">
+            <Col sm={{ span: 20 }}>
+              <Button onClick={() => setIsEditing(true)}>+</Button>
+            </Col>
+          </Row>
         )}
-      </Card>
-    </>
+      </Card.Body>
+
+      {isEditing && (
+        <EducationAddForm
+          portfolioOwnerId={portfolioOwnerId}
+          setIsEditing={setIsEditing}
+          setEducations={setEducations}
+          getEducationList={getEducationList}
+        />
+      )}
+    </Card>
   );
 };
 
