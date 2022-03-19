@@ -23,6 +23,9 @@ const EducationSchema = new Schema(
         required: true,
       },
   },
+  {
+    timestamps: true,
+  }
 );
 
 const EducationModel = model("Education", EducationSchema);
