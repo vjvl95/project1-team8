@@ -17,7 +17,7 @@ function Certificate({portfolioOwnerId,isEditable}){
 
 
     return <Card className='mb-2 ms-3 mr-5'>
-    <Certificate
+    <CertificateCard
     setIsAdding={setIsAdding}
     isEditable={isEditable}
     portfolioOwnerId={portfolioOwnerId}
