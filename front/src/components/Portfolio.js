@@ -5,6 +5,10 @@ import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
 import Project from "./project/Project"
+import Certificate from "./certificate/Certificate"
+
+
+
 function Portfolio() {
   const navigate = useNavigate();
   const params = useParams();
@@ -63,6 +67,10 @@ function Portfolio() {
           <div style={{ textAlign: "center" }}>
       <Project portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}/>
+      <Certificate portfolioOwnerId={portfolioOwner.id}
+            isEditable={portfolioOwner.id === userState.user?.id}/>
+         
+
           </div>
 
         </Col>
