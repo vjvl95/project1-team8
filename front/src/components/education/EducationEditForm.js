@@ -10,7 +10,7 @@ function EducationEditForm({
   itemPosition,
   setNewMajor,
   setNewSchool,
-  setPosition,
+  setNewPosition,
   setIsEditing,
   getEducationList,
 }) {
@@ -28,6 +28,7 @@ function EducationEditForm({
       });
       setNewSchool(school);
       setNewMajor(major);
+      setNewPosition(position);
       setIsEditing(false);
     } catch (err) {
       console.log("수상내역을 수정하는데 실패하였습니다", err);

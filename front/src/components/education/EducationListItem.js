@@ -19,7 +19,7 @@ const EducationListItem = ({ id, school, major, position, isEditable }) => {
           itemPosition={newPosition}
           setNewSchool={setNewSchool}
           setNewMajor={setNewMajor}
-          setNewPostion={setNewPostion}
+          setNewPosition={setNewPostion}
         />
       ) : (
         <Row className="align-items-center">

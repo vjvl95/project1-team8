@@ -2,7 +2,7 @@ import React, { useCallback, useState, useLayoutEffect } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import * as Api from "../../api";
 import EducationList from "./EducationList";
-import EducationAddForm from "./EducationAddForm";
+import EducationEditForm from "./EducationEditForm";
 
 const Education = ({ portfolioOwnerId, isEditable }) => {
   // useState 훅을 통해 isEditing 상태를 생성함.
@@ -14,6 +14,7 @@ const Education = ({ portfolioOwnerId, isEditable }) => {
     Api.get(`educationlist/${portfolioOwnerId}`).then((res) => {
       const { data } = res;
       setEducationList(data);
+      setIsEditing(false);
     });
   }, [portfolioOwnerId]);
 
@@ -41,7 +42,7 @@ const Education = ({ portfolioOwnerId, isEditable }) => {
       </Card.Body>
 
       {isEditing && (
-        <EducationAddForm
+        <EducationEditForm
           portfolioOwnerId={portfolioOwnerId}
           setIsEditing={setIsEditing}
           getEducationList={getEducationList}
