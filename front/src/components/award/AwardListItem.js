@@ -1,7 +1,7 @@
-// import AwardEditForm from './AwardEditForm';
-import { useState } from 'react';
-import { Button, Col, Row, Card } from 'react-bootstrap';
-import AwardEditForm from './AwardEditForm';
+// import AwardEditForm from "./AwardEditForm";
+import { useState } from "react";
+import { Button, Col, Row, Card } from "react-bootstrap";
+import AwardEditForm from "./AwardEditForm";
 
 const AwardListItem = ({ id, title, description, isEditable }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -20,18 +20,18 @@ const AwardListItem = ({ id, title, description, isEditable }) => {
           setNewDescription={setNewDescription}
         />
       ) : (
-        <Row className='align-items-center'>
+        <Row className="align-items-center">
           <Col>
             <span>{newTitle}</span>
             <br />
-            <span className='text-muted'>{newDescription}</span>
+            <span className="text-muted">{newDescription}</span>
           </Col>
 
           {isEditable && (
-            <Col className='col-lg-1'>
+            <Col className="col-lg-1">
               <Button
-                variant='outline-info'
-                size='sm'
+                variant="outline-info"
+                size="sm"
                 onClick={() => {
                   setIsEditing(true);
                 }}
