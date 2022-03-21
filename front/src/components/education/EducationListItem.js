@@ -16,6 +16,7 @@ const EducationListItem = ({ id, school, major, position, isEditable }) => {
           itemId={id}
           itemSchool={newSchool}
           itemMajor={newMajor}
+          itemPosition={newPosition}
           setNewSchool={setNewSchool}
           setNewMajor={setNewMajor}
           setNewPostion={setNewPostion}

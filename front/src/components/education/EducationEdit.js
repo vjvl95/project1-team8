@@ -1,57 +1,41 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function EducationEditForm({
-  portfolioOwnerId,
-  itemId,
-  itemSchool,
-  itemMajor,
-  itemPosition,
-  setNewMajor,
-  setNewSchool,
-  setPosition,
+const EducationEdit = ({
+  education,
   setIsEditing,
-  getEducationList,
-}) {
-  const [school, setSchool] = useState(itemSchool || "");
-  const [major, setMajor] = useState(itemMajor || "");
-  const [position, setPosition] = useState(itemPosition || "");
+  setfetchSchool,
+  setFetchMajor,
+  setFetchPosition,
+  getEducationList = { getEducationList },
+}) => {
+  const [school, setSchool] = useState(education.school);
+  const [major, setMajor] = useState(education.major);
+  const [position, setPosition] = useState(education.position);
 
-  const handlePutSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await Api.put(`educations/${itemId}`, {
-        school,
-        major,
-        position,
-      });
-      setNewSchool(school);
-      setNewMajor(major);
-      setIsEditing(false);
-    } catch (err) {
-      console.log("수상내역을 수정하는데 실패하였습니다", err);
-    }
-  };
+    //"educations/:id" 엔드포인트로 PUT 요청함.
+    await Api.put(`educations/${education.id}`, {
+      school,
+      major,
+      position,
+    });
 
-  const handleCreateSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await Api.post(`education/create`, {
-        user_id: portfolioOwnerId,
-        school,
-        major,
-        position,
-      });
-      getEducationList();
-    } catch (err) {
-      console.log("수상내역을 입력하는데 실패하였습니다", err);
-    }
+    setfetchSchool(school);
+    setFetchMajor(major);
+    setFetchPosition(position);
+
+    getEducationList();
+
+    //isEditing을 false로 세팅함.
+    setIsEditing(false);
   };
 
   return (
     <Card.Body>
-      <Form onSubmit={itemId ? handlePutSubmit : handleCreateSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlId="useEditName" className="mb-3">
           <Form.Control
             type="text"
@@ -128,6 +112,6 @@ function EducationEditForm({
       </Form>
     </Card.Body>
   );
-}
+};
 
-export default EducationEditForm;
+export default EducationEdit;
