@@ -45,4 +45,4 @@ const EducationItem = ({ education, isEditable, getEducationList }) => {
   );
 };
 
-export default EducationItem;
+export default EducationListItem;
