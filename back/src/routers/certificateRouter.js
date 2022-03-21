@@ -97,4 +97,23 @@ certificateRouter.get(
   }
 );
 
+certificateRouter.delete(
+  "/certificates/:id",
+  async function (req, res, next) {
+    try {
+      // URI로부터 certificateId를 추출함.
+      const certificateId = req.params.id;
+      const result = await certificateService.deleteCertificate({ certificateId });
+
+      if (result.deletedCount !== 1) {
+        throw new Error(result.errorMessage);
+      }
+
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export { certificateRouter };
