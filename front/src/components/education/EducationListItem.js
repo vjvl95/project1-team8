@@ -1,39 +1,43 @@
-import { Card, Col, Row, Button } from "react-bootstrap";
-import React, { useState } from "react";
+import { useState } from "react";
+import { Button, Col, Row, Card } from "react-bootstrap";
 import EducationEditForm from "./EducationEditForm";
 
-const EducationItem = ({ education, isEditable, getEducationList }) => {
+const EducationListItem = ({ id, school, major, position, isEditable }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [fetchSchool, setfetchSchool] = useState(education.school);
-  const [fetchMajor, setFetchMajor] = useState(education.major);
-  const [fetchPosition, setFetchPosition] = useState(education.position);
+  const [newSchool, setNewSchool] = useState(school);
+  const [newMajor, setNewMajor] = useState(major);
+  const [newPosition, setNewPostion] = useState(position);
 
   return (
-    <>
+    <Card.Text>
       {isEditing ? (
         <EducationEditForm
           setIsEditing={setIsEditing}
-          education={education}
-          setfetchSchool={setfetchSchool}
-          setFetchMajor={setFetchMajor}
-          setFetchPosition={setFetchPosition}
-          getEducationList={getEducationList}
+          itemId={id}
+          itemSchool={newSchool}
+          itemMajor={newMajor}
+          setNewSchool={setNewSchool}
+          setNewMajor={setNewMajor}
+          setNewPostion={setNewPostion}
         />
       ) : (
-        <Row>
+        <Row className="align-items-center">
           <Col>
-            <Card.Text className="mb-1">{fetchSchool}</Card.Text>
-            <Card.Text className="mb-4 text-muted">
-              {fetchMajor} ({fetchPosition})
-            </Card.Text>
+            <span>{newSchool}</span>
+            <br />
+            <span className="text-muted">
+              {newMajor} ({newPosition})
+            </span>
           </Col>
+
           {isEditable && (
-            <Col xs lg="1">
+            <Col className="col-lg-1">
               <Button
-                className="mt-3"
                 variant="outline-info"
                 size="sm"
-                onClick={() => setIsEditing(true)}
+                onClick={() => {
+                  setIsEditing(true);
+                }}
               >
                 편집
               </Button>
@@ -41,7 +45,7 @@ const EducationItem = ({ education, isEditable, getEducationList }) => {
           )}
         </Row>
       )}
-    </>
+    </Card.Text>
   );
 };
 
