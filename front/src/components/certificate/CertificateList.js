@@ -6,9 +6,7 @@ const CertificateList = ({ certificateList, isEditable }) => {
       <CertificateListItem
         key={item.id}
         id={item.id}
-        title={item.title}
-        description={item.description}
-        whenDate={item.when_date}
+        item={item}
         isEditable={isEditable}
       />
     );

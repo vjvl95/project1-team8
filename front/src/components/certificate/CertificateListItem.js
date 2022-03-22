@@ -1,12 +1,12 @@
-import { Col, Button, Care, Row } from "react-bootstrap";
+import { Col, Button, Card, Row } from "react-bootstrap";
 import { useState } from "react";
 import CertificateEditForm from "./CertificateEditForm";
 
-function CertificateListItem({ id, isEditable, title, description, whenDate }) {
+function CertificateListItem({ id, isEditable, item }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [newTitle, setNewTitle] = useState(title);
-  const [newDescription, setNewDescription] = useState(description);
-  const [newWhenDate, setNewWenDate] = useState(whenDate);
+  const [newTitle, setNewTitle] = useState(item.title);
+  const [newDescription, setNewDescription] = useState(item.description);
+  const [newWhenDate, setNewWenDate] = useState(new Date(item.when_date));
 
   return (
     <Card.Text>
@@ -28,7 +28,9 @@ function CertificateListItem({ id, isEditable, title, description, whenDate }) {
             <br />
             <span className="text-muted">{newDescription}</span>
             <br />
-            <span className="text-muted">{newWhenDate}</span>
+            <span className="text-muted">
+              {newWhenDate.toISOString().substring(0, 10)}
+            </span>
           </Col>
 
           {isEditable && (
