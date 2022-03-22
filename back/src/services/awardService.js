@@ -26,8 +26,8 @@ class awardService {
   }
 
   static async getAwardList({ user_id }) {
-    const awards = await Award.findByUserId({ user_id });
-    return awards;
+    const awardList = await Award.findByUserId({ user_id });
+    return awardList;
   }
 
   static async setAward({ awardId, toUpdate }) {

@@ -28,7 +28,6 @@ class projectService {
 
   static async getProjectList({ user_id }) {
     const projectList = await Project.findByUserId({ user_id });
-
     return projectList;
   }
 
@@ -80,7 +79,7 @@ class projectService {
 
     return deletedResult;
   }
-  
+
   static async searchProjectList({ searchOpt }) {
     const projectList = await Project.findBySearchWord({ searchOpt });
     return projectList;
