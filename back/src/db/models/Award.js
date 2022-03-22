@@ -35,11 +35,6 @@ class Award {
     return deletedResult;
   }
 
-  static async findBySearchWord({arr}) {
-    const awards = await AwardModel.find({arr});
-    return awards;
-  }
-
 }
 
 export { Award };
