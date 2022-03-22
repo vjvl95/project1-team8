@@ -30,9 +30,9 @@ class educationService {
   }
 
   static async getEduList({ user_id }) {
-    const educationlist = await Education.findByUserId({ user_id });
+    const educationList = await Education.findByUserId({ user_id });
 
-    return educationlist;
+    return educationList;
   }
 
   static async setEdu({ id, toUpdate }) {
@@ -69,8 +69,8 @@ class educationService {
   }
 
   static async searchEduList({ searchOpt }) {
-    const educations = await Education.findBySearchWord({ searchOpt });
-    return educations;
+    const educationList = await Education.findBySearchWord({ searchOpt });
+    return educationList;
   }
 }
 export { educationService };

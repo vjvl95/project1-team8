@@ -12,8 +12,8 @@ class Certificate {
   }
 
   static async findByUserId({ user_id }) {
-    const certificates = await CertificateModel.find({ user_id });
-    return certificates;
+    const certificateList = await CertificateModel.find({ user_id });
+    return certificateList;
   }
 
   static async update({ certificateId, fieldToUpdate, newValue }) {
@@ -30,8 +30,8 @@ class Certificate {
   }
 
   static async findBySearchWord({ searchOpt }) {
-    const certificates = await CertificateModel.find({ $or: searchOpt });
-    return certificates;
+    const certificateList = await CertificateModel.find({ $or: searchOpt });
+    return certificateList;
   }
 }
 

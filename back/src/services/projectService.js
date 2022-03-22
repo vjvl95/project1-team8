@@ -30,9 +30,9 @@ class projectService {
   }
 
   static async getProjectList({ user_id }) {
-    const projectlist = await Project.findByUserId({ user_id });
+    const projectList = await Project.findByUserId({ user_id });
 
-    return projectlist;
+    return projectList;
   }
 
   static async setProject({ id, toUpdate }) {
@@ -75,8 +75,8 @@ class projectService {
   }
 
   static async searchProjectList({ searchOpt }) {
-    const projectlist = await Project.findBySearchWord({ searchOpt });
-    return projectlist;
+    const projectList = await Project.findBySearchWord({ searchOpt });
+    return projectList;
   }
 }
 export { projectService };

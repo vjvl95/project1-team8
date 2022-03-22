@@ -107,8 +107,8 @@ projectRouter.get(
         return arr
       })
 
-      const projectlist = await projectService.searchProjectList({ searchOpt });
-      res.status(200).send(projectlist);
+      const foundList = await projectService.searchProjectList({ searchOpt });
+      res.status(200).send(foundList);
     } catch (error) {
       next(error);
     }

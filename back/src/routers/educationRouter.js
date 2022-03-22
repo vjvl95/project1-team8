@@ -102,8 +102,8 @@ educationRouter.get(
         return arr
       })
 
-      const educations = await educationService.searchEduList({ searchOpt });
-      res.status(200).send(educations);
+      const foundList = await educationService.searchEduList({ searchOpt });
+      res.status(200).send(foundList);
     } catch (error) {
       next(error);
     }

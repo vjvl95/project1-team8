@@ -12,8 +12,8 @@ class Award {
   }
 
   static async findByUserId({ user_id }) {
-    const awards = await AwardModel.find({ user_id });
-    return awards;
+    const awardList = await AwardModel.find({ user_id });
+    return awardList;
   }
 
   static async update({ awardId, fieldToUpdate, newValue }) {
@@ -36,8 +36,8 @@ class Award {
   }
 
   static async findBySearchWord({ searchOpt }) {
-    const awards = await AwardModel.find({ $or: searchOpt });
-    return awards;
+    const awardList = await AwardModel.find({ $or: searchOpt });
+    return awardList;
   }
 }
 

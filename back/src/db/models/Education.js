@@ -7,8 +7,8 @@ class Education {
   }
 
   static async findByUserId({ user_id }) {
-    const educationlist = await EducationModel.find({ user_id: user_id });
-    return educationlist;
+    const educationList = await EducationModel.find({ user_id: user_id });
+    return educationList;
   }
 
   static async findById({ id }) {
@@ -31,8 +31,8 @@ class Education {
   }
 
   static async findBySearchWord({ searchOpt }) {
-    const educations = await EducationModel.find({ $or: searchOpt });
-    return educations;
+    const educationList = await EducationModel.find({ $or: searchOpt });
+    return educationList;
   }
 }
 

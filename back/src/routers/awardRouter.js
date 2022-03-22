@@ -84,8 +84,8 @@ awardRouter.post("/award/create", async function (req, res, next) {
         // URI로부터 user_id를 추출함.
         const user_id = req.params.user_id;
         // 해당 user의 전체 수상내역 목록을 얻음
-        const awards = await awardService.getAwardList({ user_id });
-        res.status(200).send(awards);
+        const foundList = await awardService.getAwardList({ user_id });
+        res.status(200).send(foundList);
       } catch (error) {
         next(error);
       }
@@ -128,8 +128,8 @@ awardRouter.post("/award/create", async function (req, res, next) {
         })
         // console.log("mapping 후 : ", searchOpt)
 
-        const awards = await awardService.searchAwardList({ searchOpt });
-        res.status(200).send(awards);
+        const foundList = await awardService.searchAwardList({ searchOpt });
+        res.status(200).send(foundList);
       } catch (error) {
         next(error);
       }

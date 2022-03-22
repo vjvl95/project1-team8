@@ -89,8 +89,8 @@ certificateRouter.get(
       // URI로부터 user_id를 추출함.
       const user_id = req.params.user_id;
       // 해당 user의 전체 수상내역 목록을 얻음
-      const certificates = await certificateService.getCertificateList({ user_id });
-      res.status(200).send(certificates);
+      const foundList = await certificateService.getCertificateList({ user_id });
+      res.status(200).send(foundList);
     } catch (error) {
       next(error);
     }
@@ -114,8 +114,8 @@ certificateRouter.get(
       })
       // console.log("mapping 후 : ", searchOpt)
 
-      const certificates = await certificateService.searchCertificateList({ searchOpt });
-      res.status(200).send(certificates);
+      const foundList = await certificateService.searchCertificateList({ searchOpt });
+      res.status(200).send(foundList);
     } catch (error) {
       next(error);
     }

@@ -26,8 +26,8 @@ class certificateService {
   }
 
   static async getCertificateList({ user_id }) {
-    const certificate = await Certificate.findByUserId({ user_id });
-    return certificate;
+    const certificateList = await Certificate.findByUserId({ user_id });
+    return certificateList;
   }
 
   static async setCertificate({ certificateId, toUpdate }) {
@@ -64,8 +64,8 @@ class certificateService {
   }
 
   static async searchCertificateList({ searchOpt }) {
-    const certificates = await Certificate.findBySearchWord({ searchOpt });
-    return certificates;
+    const certificateList = await Certificate.findBySearchWord({ searchOpt });
+    return certificateList;
   }
 }
 

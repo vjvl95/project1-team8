@@ -7,13 +7,13 @@ class Project {
   }
 
   static async findByUserId({ user_id }) {
-    const projectlist = await ProjectModel.find({ user_id: user_id });
-    return projectlist;
+    const projectList = await ProjectModel.find({ user_id: user_id });
+    return projectList;
   }
 
   static async findById({ id }) {
-    const Project = await ProjectModel.findOne({ id: id });
-    return Project;
+    const project = await ProjectModel.findOne({ id: id });
+    return project;
   }
 
 
@@ -31,8 +31,8 @@ class Project {
   }
 
   static async findBySearchWord({ searchOpt }) {
-    const projectlist = await ProjectModel.find({ $or: searchOpt });
-    return projectlist;
+    const projectList = await ProjectModel.find({ $or: searchOpt });
+    return projectList;
   }
 }
 
