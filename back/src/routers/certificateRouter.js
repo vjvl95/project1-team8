@@ -37,13 +37,13 @@ certificateRouter.post(
     }
 });
 
-certificateRouter.get(
-  "/certificates/:id",
-  async function (req, res, next) {
+certificateRouter.get("/certificates/:id", async function (req, res, next) {
     try {
       // URI로부터 certificateId를 추출함.
       const certificateId = req.params.id;
-      const certificate = await certificateService.getCertificate({ certificateId });
+      const certificate = await certificateService.getCertificate({
+        certificateId
+      });
 
       if (certificate.errorMessage) {
         throw new Error(certificate.errorMessage);
@@ -56,9 +56,7 @@ certificateRouter.get(
   }
 );
 
-certificateRouter.put(
-  "/certificates/:id",
-  async function (req, res, next) {
+certificateRouter.put("/certificates/:id", async function (req, res, next) {
     try {
       // URI로부터 certificateId를 추출함.
       const certificateId = req.params.id;
@@ -90,8 +88,8 @@ certificateRouter.get(
       // URI로부터 user_id를 추출함.
       const user_id = req.params.user_id;
       // 해당 user의 전체 수상내역 목록을 얻음
-      const foundList = await certificateService.getCertificateList({ user_id });
-      res.status(200).send(foundList);
+      const certificates = await certificateService.getCertificateList({ user_id });
+      res.status(200).send(certificates);
     } catch (error) {
       next(error);
     }

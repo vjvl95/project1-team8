@@ -33,108 +33,98 @@ awardRouter.post("/awards/award", async function (req, res, next) {
     }
   });
   
-  awardRouter.get(
-    "/awards/:id",
-    async function (req, res, next) {
-      try {
-        // URI로부터 awardId를 추출함.
-        const awardId = req.params.id;
-        const award = await awardService.getAward({ awardId });
-  
-        if (award.errorMessage) {
-          throw new Error(award.errorMessage);
-        }
-  
-        res.status(200).send(award);
-      } catch (error) {
-        next(error);
-      }
-    }
-  );
-  
-  awardRouter.put(
-    "/awards/:id",
-    async function (req, res, next) {
-      try {
-        // URI로부터 awardId를 추출함.
-        const awardId = req.params.id;
-        // body data 로부터 업데이트할 사용자 정보를 추출함.
-        const title = req.body.title ?? null;
-        const description = req.body.description ?? null;
-  
-        const toUpdate = { title, description };
-  
-        // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-        const updatedAward = await awardService.setAward({ awardId, toUpdate });
-  
-        if (updatedAward.errorMessage) {
-          throw new Error(updatedAward.errorMessage);
-        }
-  
-        res.status(200).json(updatedAward);
-      } catch (error) {
-        next(error);
-      }
-    }
-  );
-  
-  awardRouter.get(
-    "/awardlist/:user_id",
-    async function (req, res, next) {
-      try {
-        // URI로부터 user_id를 추출함.
-        const user_id = req.params.user_id;
-        // 해당 user의 전체 수상내역 목록을 얻음
-        const foundList = await awardService.getAwardList({ user_id });
-        res.status(200).send(foundList);
-      } catch (error) {
-        next(error);
-      }
-    }
-  );
+awardRouter.get("/awards/:id", async function (req, res, next) {
+    try {
+      // URI로부터 awardId를 추출함.
+      const awardId = req.params.id;
+      const award = await awardService.getAward({ awardId });
 
-  awardRouter.delete(
-    "/awards/:id",
-    async function (req, res, next) {
-      try {
-        // URI로부터 awardId를 추출함.
-        const awardId = req.params.id;
-        const deletedResult = await awardService.deleteAward({ awardId });
-  
-        if (deletedResult.errorMessage) {
-          throw new Error(deletedResult.errorMessage);
-        }
-  
-        res.status(200).end();
-      } catch (error) {
-        next(error);
+      if (award.errorMessage) {
+        throw new Error(award.errorMessage);
       }
+
+      res.status(200).send(award);
+    } catch (error) {
+      next(error);
     }
-  );
+  }
+);
 
-  awardRouter.get(
-    "/awardlist",
-    async function (req, res, next) {
-      try {
-        // URI로부터 user_id를 추출함.
-        const { findKey, findWord } = req.query;
-        // 해당 user의 전체 수상내역 목록을 얻음
-        
-        const keyOptions = findKey.split(" ")
-        // console.log("mapping전:", keyOptions)
-        const searchOpt = keyOptions.map(v => {
-          const arr = {}
-          arr[v] = {$regex: findWord, '$options': "i"}
-          return arr
-        })
-        // console.log("mapping 후 : ", searchOpt)
+awardRouter.put("/awards/:id", async function (req, res, next) {
+    try {
+      // URI로부터 awardId를 추출함.
+      const awardId = req.params.id;
+      // body data 로부터 업데이트할 사용자 정보를 추출함.
+      const title = req.body.title ?? null;
+      const description = req.body.description ?? null;
 
-        const foundList = await awardService.searchAwardList({ searchOpt });
-        res.status(200).send(foundList);
-      } catch (error) {
-        next(error);
+      const toUpdate = { title, description };
+
+      // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
+      const updatedAward = await awardService.setAward({ awardId, toUpdate });
+
+      if (updatedAward.errorMessage) {
+        throw new Error(updatedAward.errorMessage);
       }
+
+      res.status(200).json(updatedAward);
+    } catch (error) {
+      next(error);
     }
-  );
+  }
+);
+
+awardRouter.get("/awardlist/:user_id", async function (req, res, next) {
+    try {
+      // URI로부터 user_id를 추출함.
+      const user_id = req.params.user_id;
+      // 해당 user의 전체 수상내역 목록을 얻음
+      const foundList = await awardService.getAwardList({ user_id });
+      res.status(200).send(foundList);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+awardRouter.delete("/awards/:id", async function (req, res, next) {
+    try {
+      // URI로부터 awardId를 추출함.
+      const awardId = req.params.id;
+      const deletedResult = await awardService.deleteAward({ awardId });
+
+      if (deletedResult.errorMessage) {
+        throw new Error(deletedResult.errorMessage);
+      }
+
+      res.status(200).end();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+awardRouter.get("/awardlist", async function (req, res, next) {
+    try {
+      // URI로부터 user_id를 추출함.
+      const { findKey, findWord } = req.query;
+      // 해당 user의 전체 수상내역 목록을 얻음
+      
+      const keyOptions = findKey.split(" ")
+      // console.log("mapping전:", keyOptions)
+      const searchOpt = keyOptions.map(v => {
+        const arr = {}
+        arr[v] = {$regex: findWord, '$options': "i"}
+        return arr
+      })
+      // console.log("mapping 후 : ", searchOpt)
+
+      const foundList = await awardService.searchAwardList({ searchOpt });
+      res.status(200).send(foundList);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { awardRouter };

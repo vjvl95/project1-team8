@@ -17,9 +17,9 @@ class projectService {
     return createdNewProject;
   }
 
-  static async getProject({ id }) {
+  static async getProject({ projectId }) {
     // id가 project db에 존재 여부 확인
-    const project = await Project.findById({ id });
+    const project = await Project.findByProjectId({ projectId });
     if (!project) {
       const errorMessage = findError("프로젝트")
       return { errorMessage };
@@ -34,10 +34,9 @@ class projectService {
     return projectList;
   }
 
-  static async setProject({ id, toUpdate }) {
-
+  static async setProject({ projectId, toUpdate }) {
     // id가 project db에 존재 여부 확인
-    let project = await Project.findById({ id });
+    let project = await Project.findByProjectId({ projectId });
     if (!project) {
       const errorMessage = findError("프로젝트")
       return { errorMessage };

@@ -42,9 +42,9 @@ projectRouter.post("/projects/project", async (req, res, next) => {
 });
 
 projectRouter.get('/projects/:id', async (req, res, next) => {
-  const { id } = req.params
+  const projectId = req.params.id;
   try {
-    const foundProject = await projectService.getProject({ id })
+    const foundProject = await projectService.getProject({ projectId })
     if (foundProject.errorMessage) {
       throw new Error(foundProject.errorMessage);
     }
@@ -56,9 +56,9 @@ projectRouter.get('/projects/:id', async (req, res, next) => {
 })
 
 projectRouter.put('/projects/:id', async (req, res, next) => {
-  const { id } = req.params
+  const projectId = req.params.id;
   try {
-    const foundProject = await projectService.getProject({ id })
+    const foundProject = await projectService.getProject({ projectId })
     if (foundProject.errorMessage) {
       throw new Error(foundProject.errorMessage);
     }
@@ -94,9 +94,7 @@ projectRouter.get('/projectlist/:user_id', async (req, res, next) => {
   }
 })
 
-projectRouter.get(
-  "/projectlist",
-  async function (req, res, next) {
+projectRouter.get("/projectlist", async function (req, res, next) {
     try {
       // URI로부터 user_id를 추출함.
       const { findKey, findWord } = req.query;

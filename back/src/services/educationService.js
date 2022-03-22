@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { findError } from "../utils/errorMessages"
 
 class educationService {
-  static async addEdu({ user_id, school, major, position }) {
+  static async addEducation({ user_id, school, major, position }) {
 
 
     // id 는 유니크 값 부여
@@ -17,9 +17,9 @@ class educationService {
     return createdNewEducation;
   }
 
-  static async getEdu({ id }) {
+  static async getEducation({ educationId }) {
     // id가 education db에 존재 여부 확인
-    const education = await Education.findById({ id });
+    const education = await Education.findById({ educationId });
     if (!education) {
       const errorMessage = findError("학력")
       return { errorMessage };
@@ -28,16 +28,16 @@ class educationService {
     return education;
   }
 
-  static async getEduList({ user_id }) {
+  static async getEducationList({ user_id }) {
     const educationList = await Education.findByUserId({ user_id });
 
     return educationList;
   }
 
-  static async setEdu({ id, toUpdate }) {
+  static async setEducation({ id, toUpdate }) {
 
     // id가 education db에 존재 여부 확인
-    let education = await Education.findById({ id });
+    let education = await Education.findByEducationId({ id });
     if (!education) {
       const errorMessage = findError("학력")
       return { errorMessage };
@@ -66,7 +66,7 @@ class educationService {
     return education;
   }
 
-  static async searchEduList({ searchOpt }) {
+  static async searchEducationList({ searchOpt }) {
     const educationList = await Education.findBySearchWord({ searchOpt });
     return educationList;
   }
