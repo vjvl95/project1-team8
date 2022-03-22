@@ -34,6 +34,11 @@ class Award {
     const deletedResult = (result.deletedCount == 1) //Boolean
     return deletedResult;
   }
+
+  static async deleteByUserId({ user_id }) {
+    const result = await AwardModel.deleteMany({ user_id });
+    return result;
+  }
 }
 
 export { Award };

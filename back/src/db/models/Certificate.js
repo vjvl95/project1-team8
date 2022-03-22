@@ -34,6 +34,11 @@ class Certificate {
     const deletedResult = (result.deletedCount == 1) //Boolean
     return deletedResult;
   }
+  
+  static async deleteByUserId({ user_id }) {
+    const result = await CertificateModel.deleteMany({ user_id });
+    return result;
+  }
 }
 
 export { Certificate };

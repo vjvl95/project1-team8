@@ -35,6 +35,11 @@ class Education {
     const deletedResult = (result.deletedCount == 1) //Boolean
     return deletedResult;
   }
+
+  static async deleteByUserId({ user_id }) {
+    const result = await EducationModel.deleteMany({ user_id });
+    return result;
+  }
 }
 
 export { Education };
