@@ -1,5 +1,6 @@
-import { Education } from '../db'; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
-import { v4 as uuidv4 } from 'uuid';
+import { Education } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { v4 as uuidv4 } from "uuid";
+import { findError } from "../utils/errorMessages"
 
 class educationService {
   static async addEducation({ user_id, school, major, position }) {
@@ -26,16 +27,17 @@ class educationService {
   }
 
   static async getEducationList({ user_id }) {
-    const educationlist = await Education.findByUserId({ user_id });
+    const educationList = await Education.findByUserId({ user_id });
 
-    return educationlist;
+    return educationList;
   }
 
-  static async setEducation({ educationId, toUpdate }) {
+  static async setEducation({ id, toUpdate }) {
+
     // id가 education db에 존재 여부 확인
-    let education = await Education.findByEducationId({ educationId });
+    let education = await Education.findByEducationId({ id });
     if (!education) {
-      const errorMessage = '잘못된 접근입니다. 다시 한 번 확인해 주세요.';
+      const errorMessage = findError("학력")
       return { errorMessage };
     }
     education.errorMessage = null;
@@ -84,6 +86,11 @@ class educationService {
     }
 
     return deletedResult;
+  }
+  
+  static async searchEducationList({ searchOpt }) {
+    const educationList = await Education.findBySearchWord({ searchOpt });
+    return educationList;
   }
 }
 export { educationService };

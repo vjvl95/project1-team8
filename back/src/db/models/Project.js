@@ -7,13 +7,13 @@ class Project {
   }
 
   static async findByUserId({ user_id }) {
-    const Projectlist = await ProjectModel.find({ user_id: user_id });
-    return Projectlist;
+    const projectList = await ProjectModel.find({ user_id: user_id });
+    return projectList;
   }
 
   static async findByProjectId({ projectId }) {
-    const Project = await ProjectModel.findOne({ id: projectId });
-    return Project;
+    const project = await ProjectModel.findOne({ id: projectId });
+    return project;
   }
 
 
@@ -39,6 +39,11 @@ class Project {
   static async deleteByUserId({ user_id }) {
     const result = await ProjectModel.deleteMany({ user_id });
     return result;
+  }
+  
+  static async findBySearchWord({ searchOpt }) {
+    const projectList = await ProjectModel.find({ $or: searchOpt });
+    return projectList;
   }
 }
 

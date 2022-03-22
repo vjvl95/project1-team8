@@ -1,18 +1,19 @@
-import is from '@sindresorhus/is';
-import { Router } from 'express';
-import { login_required } from '../middlewares/login_required';
-import { certificateService } from '../services/certificateService';
+import is from "@sindresorhus/is";
+import { Router } from "express";
+import { login_required } from "../middlewares/login_required";
+import { certificateService } from "../services/certificateService";
+import { headerError } from "../utils/errorMessages"
 
 const certificateRouter = Router();
 certificateRouter.use(login_required);
 
 certificateRouter.post(
-  '/certificates/certificate',
+  "/certificates/certificate", 
   async function (req, res, next) {
     try {
       if (is.emptyObject(req.body)) {
         throw new Error(
-          'headers의 Content-Type을 application/json으로 설정해주세요'
+          headerError
         );
       }
 
@@ -30,7 +31,7 @@ certificateRouter.post(
         when_date,
       });
 
-      res.status(201).json(newCertificate);
+      res.status(201).end();
     } catch (error) {
       next(error);
     }
@@ -55,7 +56,7 @@ certificateRouter.get('/certificates/:id', async function (req, res, next) {
   }
 });
 
-certificateRouter.put('/certificates/:id', async function (req, res, next) {
+certificateRouter.put("/certificates/:id", async function (req, res, next) {
   try {
     // URI로부터 certificateId를 추출함.
     const certificateId = req.params.id;
@@ -83,7 +84,7 @@ certificateRouter.put('/certificates/:id', async function (req, res, next) {
 });
 
 certificateRouter.get(
-  '/certificatelist/:user_id',
+  "/certificatelist/:user_id",
   async function (req, res, next) {
     try {
       // URI로부터 user_id를 추출함.
@@ -116,5 +117,30 @@ certificateRouter.delete('/certificates/:id', async function (req, res, next) {
     next(error);
   }
 });
+
+certificateRouter.get(
+  "/certificatelist",
+  async function (req, res, next) {
+    try {
+      // URI로부터 user_id를 추출함.
+      const { findKey, findWord } = req.query;
+      // 해당 user의 전체 수상내역 목록을 얻음
+      
+      const keyOptions = findKey.split(" ")
+      // console.log("mapping전:", keyOptions)
+      const searchOpt = keyOptions.map(v => {
+        const arr = {}
+        arr[v] = {$regex: findWord, '$options': "i"}
+        return arr
+      })
+      // console.log("mapping 후 : ", searchOpt)
+
+      const foundList = await certificateService.searchCertificateList({ searchOpt });
+      res.status(200).send(foundList);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { certificateRouter };

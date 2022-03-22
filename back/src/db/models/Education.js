@@ -7,8 +7,8 @@ class Education {
   }
 
   static async findByUserId({ user_id }) {
-    const educationlist = await EducationModel.find({ user_id: user_id });
-    return educationlist;
+    const educationList = await EducationModel.find({ user_id: user_id });
+    return educationList;
   }
 
   static async findByEducationId({ educationId }) {
@@ -39,6 +39,11 @@ class Education {
   static async deleteByUserId({ user_id }) {
     const result = await EducationModel.deleteMany({ user_id });
     return result;
+  }
+  
+  static async findBySearchWord({ searchOpt }) {
+    const educationList = await EducationModel.find({ $or: searchOpt });
+    return educationList;
   }
 }
 
