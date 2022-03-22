@@ -102,8 +102,10 @@ userAuthRouter.put(
       const email = req.body.email ?? null;
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
+      const bookMarkList = null;
+      const bookMarked = null;
 
-      const toUpdate = { name, email, password, description };
+      const toUpdate = { name, email, password, description, bookMarkList, bookMarked };
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
       const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
@@ -146,5 +148,66 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
       `안녕하세요 ${req.currentUserId}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
     );
 });
+
+userAuthRouter.put("/user/bookmark", login_required, async function (req, res, next) {
+  try {
+    const me = req.currentUserId
+    const { target, toggle } = req.body
+    
+    const name = null;
+    const email = null;
+    const password = null;
+    const description = null;
+    const bookMarkList = target;
+    const bookMarked = toggle;
+
+    const result = await userAuthService.setUser({
+      user_id: me,
+      toUpdate: { name, email, password, description, bookMarkList, bookMarked }
+    })
+
+    if (result.errorMessage) {
+      throw new Error(result.errorMessage);
+    }
+
+    res.status(200).end();
+    
+  } catch (error) {
+    next(error);
+  }
+});
+
+userAuthRouter.get("/user/bookmarklist", login_required, async function (req, res, next) {
+  try {
+    const user_id = req.currentUserId
+
+    const User = await userAuthService.getUserInfo({ user_id });
+    const bookMarkList = User.bookMarkList;
+    res.status(200).json(bookMarkList);
+  } catch (error) {
+    next(error);
+  }
+})
+
+userAuthRouter.get("/users/:id/bookmarkcount", login_required, async function (req, res, next) {
+  try {
+    const user_id = req.params.id
+
+    const User = await userAuthService.getUserInfo({ user_id });
+    const bookMarkCount = User.bookMarked;
+    res.status(200).json(bookMarkCount);
+  } catch (error) {
+    next(error);
+  }
+})
+
+userAuthRouter.get("/user/bookmarktop3", login_required, async function (req, res, next) {
+  try {
+    const result = await userAuthService.getTop3();
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+})
 
 export { userAuthRouter };
