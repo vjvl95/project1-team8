@@ -39,6 +39,15 @@ class User {
     const deletedResult = (result.deletedCount == 1) //Boolean
     return deletedResult;
   }
+  
+  static async sort({ fieldToSort, sortType }) {
+    const sortBy = {}
+    for (let i = 0; i < fieldToSort.length; i++) {
+      sortBy[fieldToSort[i]]=sortType[i]
+    }
+    const sortedUsers = await UserModel.find({}).sort(sortBy);
+    return sortedUsers;
+  }
 }
 
 export { User };
