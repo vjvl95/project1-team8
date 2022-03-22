@@ -9,7 +9,7 @@ const EducationListItem = ({ id, school, major, position, isEditable }) => {
   const [newPosition, setNewPostion] = useState(position);
 
   return (
-    <Card.Text>
+    <>
       {isEditing ? (
         <EducationEditForm
           setIsEditing={setIsEditing}
@@ -22,7 +22,7 @@ const EducationListItem = ({ id, school, major, position, isEditable }) => {
           setNewPosition={setNewPostion}
         />
       ) : (
-        <Row className="align-items-center">
+        <Row className="align-items-center mb-3">
           <Col>
             <span>{newSchool}</span>
             <br />
@@ -46,7 +46,7 @@ const EducationListItem = ({ id, school, major, position, isEditable }) => {
           )}
         </Row>
       )}
-    </Card.Text>
+    </>
   );
 };
 

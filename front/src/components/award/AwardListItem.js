@@ -9,7 +9,7 @@ const AwardListItem = ({ id, title, description, isEditable }) => {
   const [newDescription, setNewDescription] = useState(description);
 
   return (
-    <Card.Text>
+    <>
       {isEditing ? (
         <AwardEditForm
           setIsEditing={setIsEditing}
@@ -20,7 +20,7 @@ const AwardListItem = ({ id, title, description, isEditable }) => {
           setNewDescription={setNewDescription}
         />
       ) : (
-        <Row className="align-items-center">
+        <Row className="align-items-center mb-3">
           <Col>
             <span>{newTitle}</span>
             <br />
@@ -42,7 +42,7 @@ const AwardListItem = ({ id, title, description, isEditable }) => {
           )}
         </Row>
       )}
-    </Card.Text>
+    </>
   );
 };
 

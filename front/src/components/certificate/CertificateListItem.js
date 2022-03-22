@@ -9,7 +9,7 @@ function CertificateListItem({ id, isEditable, item }) {
   const [newWhenDate, setNewWenDate] = useState(new Date(item.when_date));
 
   return (
-    <Card.Text>
+    <>
       {isEditing ? (
         <CertificateEditForm
           setIsEditing={setIsEditing}
@@ -22,7 +22,7 @@ function CertificateListItem({ id, isEditable, item }) {
           setNewWenDate={setNewWenDate}
         />
       ) : (
-        <Row className="align-items-center">
+        <Row className="align-items-center mb-3">
           <Col>
             <span>{newTitle}</span>
             <br />
@@ -48,7 +48,7 @@ function CertificateListItem({ id, isEditable, item }) {
           )}
         </Row>
       )}
-    </Card.Text>
+    </>
   );
 }
 
