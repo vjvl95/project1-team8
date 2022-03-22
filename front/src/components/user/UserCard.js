@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { Card, Row, Button, Col } from "react-bootstrap";
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork,num }) {
+function UserCard({ user, setIsEditing, isEditable, isNetwork,num ,color}) {
   const navigate = useNavigate();
   return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
+    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem",backgroundColor:color }}>
       <Card.Title style={{fontWeight:"bolder",textAlign:"center", marginTop:"10px"}} >{num}</Card.Title>
       <Card.Body>
         <Row className="justify-content-md-center">
@@ -37,12 +37,10 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork,num }) {
     
         {isNetwork && (
           <Card.Link
-            className="mt-3"
-            href="#"
+            className="mt-3 stretched-link"
+            href=""
             onClick={() => navigate(`/users/${user.id}`)}
           >
-            포트폴리오
-
           </Card.Link>
         )}
       </Card.Body>

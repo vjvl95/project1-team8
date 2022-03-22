@@ -17,7 +17,7 @@ function Project({portfolioOwnerId,isEditable}){
 
 
     return <Card>
-    <ProjectCard
+    <ProjectCard className="mr-3"
     setIsAdding={setIsAdding}
     isEditable={isEditable}
     portfolioOwnerId={portfolioOwnerId}
