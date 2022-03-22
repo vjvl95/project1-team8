@@ -32,10 +32,10 @@ class educationService {
     return educationList;
   }
 
-  static async setEducation({ id, toUpdate }) {
+  static async setEducation({ educationId, toUpdate }) {
 
     // id가 education db에 존재 여부 확인
-    let education = await Education.findByEducationId({ id });
+    let education = await Education.findByEducationId({ educationId });
     if (!education) {
       const errorMessage = findError("학력")
       return { errorMessage };
@@ -87,7 +87,7 @@ class educationService {
 
     return deletedResult;
   }
-  
+
   static async searchEducationList({ searchOpt }) {
     const educationList = await Education.findBySearchWord({ searchOpt });
     return educationList;
