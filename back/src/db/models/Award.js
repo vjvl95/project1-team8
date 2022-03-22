@@ -34,6 +34,12 @@ class Award {
     const deletedResult = (result.deletedCount == 1) //Boolean
     return deletedResult;
   }
+
+  static async findBySearchWord({arr}) {
+    const awards = await AwardModel.find({arr});
+    return awards;
+  }
+
 }
 
 export { Award };

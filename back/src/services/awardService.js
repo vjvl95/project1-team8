@@ -56,7 +56,6 @@ class awardService {
   }
 
   static async deleteAward({ awardId }) {
-    // awardId db에 존재 여부 확인
 
     const deletedResult = await Award.deleteByAwardId({ awardId })
     if (!deletedResult) {
@@ -66,5 +65,11 @@ class awardService {
 
     return deletedResult;
   }
+
+  static async searchAwardList({arr}) {
+    const awards = await Award.findBySearchWord({arr});
+    return awards;
+  }
+
 }
 export { awardService };

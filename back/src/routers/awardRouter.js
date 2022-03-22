@@ -112,4 +112,22 @@ awardRouter.post("/awards/award", async function (req, res, next) {
     }
   );
 
+  awardRouter.get(
+    "/awardlist",
+    async function (req, res, next) {
+      try {
+        // query parameter로부터 를 추출함.
+        const { find_key, find_word } = req.query;
+        const arr = {}
+        arr[find_key] = `/${find_word}/`
+        console.log(arr)
+        // 해당 user의 전체 수상내역 목록을 얻음
+        const awards = await awardService.searchAwardList(arr);
+        res.status(200).send(awards);
+      } catch (error) {
+        next(error);
+      }
+    }
+  );
+
 export { awardRouter };
