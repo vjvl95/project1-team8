@@ -73,5 +73,10 @@ class projectService {
 
     return project;
   }
+
+  static async searchProjectList({ searchOpt }) {
+    const projectlist = await Project.findBySearchWord({ searchOpt });
+    return projectlist;
+  }
 }
 export { projectService };

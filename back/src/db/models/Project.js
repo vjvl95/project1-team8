@@ -7,8 +7,8 @@ class Project {
   }
 
   static async findByUserId({ user_id }) {
-    const Projectlist = await ProjectModel.find({ user_id: user_id });
-    return Projectlist;
+    const projectlist = await ProjectModel.find({ user_id: user_id });
+    return projectlist;
   }
 
   static async findById({ id }) {
@@ -28,6 +28,11 @@ class Project {
       option
     );
     return updatedProject;
+  }
+
+  static async findBySearchWord({ searchOpt }) {
+    const projectlist = await ProjectModel.find({ $or: searchOpt });
+    return projectlist;
   }
 }
 

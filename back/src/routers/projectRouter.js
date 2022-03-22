@@ -93,4 +93,26 @@ projectRouter.get('/projectlist/:user_id', async (req, res, next) => {
   }
 })
 
+projectRouter.get(
+  "/projectlist",
+  async function (req, res, next) {
+    try {
+      // URI로부터 user_id를 추출함.
+      const { findKey, findWord } = req.query;
+      
+      const keyOptions = findKey.split(" ")
+      const searchOpt = keyOptions.map(v => {
+        const arr = {}
+        arr[v] = {$regex: findWord, '$options': "i"}
+        return arr
+      })
+
+      const projectlist = await projectService.searchProjectList({ searchOpt });
+      res.status(200).send(projectlist);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export { projectRouter };
