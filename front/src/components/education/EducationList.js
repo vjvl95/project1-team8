@@ -1,22 +1,19 @@
-import React from "react";
+import EducationListItem from "./EducationListItem";
 
-import EducationItem from "./EducationItem";
-
-const EducationList = ({ isEditable, educations, getEducationList }) => {
-  return (
-    <>
-      {educations.map((education) => {
-        return (
-          <EducationItem
-            key={education.id}
-            education={education}
-            isEditable={isEditable}
-            getEducationList={getEducationList}
-          />
-        );
-      })}
-    </>
-  );
+const EducationList = ({ educationList, isEditable }) => {
+  const educationListArray = educationList?.map((item) => {
+    return (
+      <EducationListItem
+        key={item.id}
+        id={item.id}
+        school={item.school}
+        major={item.major}
+        position={item.position}
+        isEditable={isEditable}
+      />
+    );
+  });
+  return <>{educationListArray}</>;
 };
 
 export default EducationList;
