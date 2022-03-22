@@ -1,24 +1,17 @@
+import ProjectListItem from "./ProjectListItem";
 
-import ProjectItem from "./ProjectItem"
-
-
-function ProjectList({setProjectList,projectList,portfolioOwnerId,isEditable}){   
-    
-   return <>
-    {projectList.map((project)=> {
-       return( 
-       <ProjectItem
-        key={project.id}
-        project={project}
-        portfolioOwnerId={portfolioOwnerId}
-        projectList={projectList}
-        setProjectList={setProjectList}
+const ProjectList = ({ projectList, isEditable }) => {
+  const projectListArray = projectList?.map((item) => {
+    return (
+      <ProjectListItem
+        key={item.id}
+        id={item.id}
+        item={item}
         isEditable={isEditable}
-        />
-       )
-    })
-}
-    </>
-}
+      />
+    );
+  });
+  return <>{projectListArray}</>;
+};
 
-export default ProjectList
+export default ProjectList;
