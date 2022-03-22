@@ -62,6 +62,11 @@ class certificateService {
 
     return certificate;
   }
+
+  static async searchCertificateList({ searchOpt }) {
+    const certificates = await Certificate.findBySearchWord({ searchOpt });
+    return certificates;
+  }
 }
 
 export { certificateService };

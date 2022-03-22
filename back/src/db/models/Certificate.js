@@ -28,6 +28,11 @@ class Certificate {
     );
     return updatedCertificate;
   }
+
+  static async findBySearchWord({ searchOpt }) {
+    const certificates = await CertificateModel.find({ $or: searchOpt });
+    return certificates;
+  }
 }
 
 export { Certificate };
