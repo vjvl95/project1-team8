@@ -1,24 +1,26 @@
-// import AwardEditForm from "./AwardEditForm";
-import { useState } from "react";
 import { Col, Row } from "react-bootstrap";
-import AwardEditForm from "./AwardEditForm";
+import { useState } from "react";
+import CertificateEditForm from "./CertificateEditForm";
 import EditButton from "../EditButton";
 
-const AwardListItem = ({ id, title, description, isEditable }) => {
+function CertificateListItem({ id, isEditable, item }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [newTitle, setNewTitle] = useState(title);
-  const [newDescription, setNewDescription] = useState(description);
+  const [newTitle, setNewTitle] = useState(item.title);
+  const [newDescription, setNewDescription] = useState(item.description);
+  const [newWhenDate, setNewWhenDate] = useState(new Date(item.when_date));
 
   return (
     <>
       {isEditing ? (
-        <AwardEditForm
+        <CertificateEditForm
           setIsEditing={setIsEditing}
           itemId={id}
           itemTitle={newTitle}
           itemDescription={newDescription}
+          itemWhenDate={newWhenDate}
           setNewTitle={setNewTitle}
           setNewDescription={setNewDescription}
+          setNewWhenDate={setNewWhenDate}
         />
       ) : (
         <Row className="align-items-center mb-3">
@@ -26,6 +28,10 @@ const AwardListItem = ({ id, title, description, isEditable }) => {
             <span>{newTitle}</span>
             <br />
             <span className="text-muted">{newDescription}</span>
+            <br />
+            <span className="text-muted">
+              {newWhenDate.toISOString().substring(0, 10)}
+            </span>
           </Col>
 
           {isEditable && (
@@ -37,6 +43,6 @@ const AwardListItem = ({ id, title, description, isEditable }) => {
       )}
     </>
   );
-};
+}
 
-export default AwardListItem;
+export default CertificateListItem;

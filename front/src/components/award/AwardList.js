@@ -1,4 +1,4 @@
-import AwardListItem from './AwardListItem';
+import AwardListItem from "./AwardListItem";
 
 const AwardList = ({ awardList, isEditable }) => {
   const awardListArray = awardList?.map((item) => {
