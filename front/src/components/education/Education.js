@@ -1,8 +1,9 @@
 import React, { useCallback, useState, useLayoutEffect } from "react";
-import { Card, Row, Col, Button } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import EducationList from "./EducationList";
 import EducationEditForm from "./EducationEditForm";
+import PlusButton from "../PlusButton";
 
 const Education = ({ portfolioOwnerId, isEditable }) => {
   // useState 훅을 통해 isEditing 상태를 생성함.
@@ -35,7 +36,7 @@ const Education = ({ portfolioOwnerId, isEditable }) => {
         {isEditable && (
           <Row className="mt-3 text-center mb-4">
             <Col sm={{ span: 20 }}>
-              <Button onClick={() => setIsEditing((state) => !state)}>+</Button>
+              <PlusButton setIsEditing={setIsEditing} />
             </Col>
           </Row>
         )}

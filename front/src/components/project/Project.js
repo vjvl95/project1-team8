@@ -1,8 +1,9 @@
-import { Card, Row, Button, Col } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 import ProjectList from "./ProjectList";
 import ProjectEditForm from "./ProjectEditForm";
 import { useState, useEffect, useCallback } from "react";
 import * as Api from "../../api";
+import PlusButton from "../PlusButton";
 
 function Project({ portfolioOwnerId, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -32,12 +33,7 @@ function Project({ portfolioOwnerId, isEditable }) {
         {isEditable && (
           <Row className="mt-3 text-center text-info">
             <Col sm={{ span: 20 }}>
-              <Button
-                variant="primary"
-                onClick={() => setIsEditing((state) => !state)}
-              >
-                +
-              </Button>
+              <PlusButton setIsEditing={setIsEditing} />
             </Col>
           </Row>
         )}
