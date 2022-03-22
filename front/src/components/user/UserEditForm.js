@@ -1,8 +1,13 @@
-import React, { useState } from "react";
-import { Button, Form, Card, Col, Row } from "react-bootstrap";
-import * as Api from "../../api";
+import React, { useState, useContext } from 'react';
+import { Button, Form, Card, Col, Row } from 'react-bootstrap';
+import * as Api from '../../api';
+import { DispatchContext } from '../../App';
+import { useNavigate } from 'react-router-dom';
 
 function UserEditForm({ user, setIsEditing, setUser }) {
+  const navigate = useNavigate();
+  const dispatch = useContext(DispatchContext);
+
   //useState로 name 상태를 생성함.
   const [name, setName] = useState(user.name);
   //useState로 email 상태를 생성함.
@@ -28,45 +33,65 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     setIsEditing(false);
   };
 
+  const handleDelete = async () => {
+    await Api.delete(`users/${user.id}`);
+  };
+
   return (
-    <Card className="mb-2">
+    <Card className='mb-2'>
       <Card.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="useEditName" className="mb-3">
+          <Form.Group controlId='useEditName' className='mb-3'>
             <Form.Control
-              type="text"
-              placeholder="이름"
+              type='text'
+              placeholder='이름'
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </Form.Group>
 
-          <Form.Group controlId="userEditEmail" className="mb-3">
+          <Form.Group controlId='userEditEmail' className='mb-3'>
             <Form.Control
-              type="email"
-              placeholder="이메일"
+              type='email'
+              placeholder='이메일'
               value={email}
+              disabled
               onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
 
-          <Form.Group controlId="userEditDescription">
+          <Form.Group controlId='userEditDescription'>
             <Form.Control
-              type="text"
-              placeholder="정보, 인사말"
+              type='text'
+              placeholder='정보, 인사말'
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Group>
 
-          <Form.Group as={Row} className="mt-3 text-center">
+          <Form.Group as={Row} className='mt-3 text-center'>
             <Col sm={{ span: 20 }}>
-              <Button variant="primary" type="submit" className="me-3">
+              <Button variant='primary' type='submit' className='me-3'>
                 확인
               </Button>
-              <Button variant="secondary" onClick={() => setIsEditing(false)}>
+              <Button variant='secondary' onClick={() => setIsEditing(false)}>
                 취소
               </Button>
+              <Col className='mt-3 text-center'>
+                <Button
+                  variant='danger'
+                  onClick={() => {
+                    if (window.confirm('정말 탈퇴하시겠습니까?😢')) {
+                      handleDelete();
+                      sessionStorage.removeItem('userToken');
+                      dispatch({ type: 'LOGOUT' });
+                      navigate('/');
+                    }
+                  }}
+                >
+                  회원탈퇴
+                </Button>
+              </Col>
             </Col>
           </Form.Group>
         </Form>
