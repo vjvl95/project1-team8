@@ -1,16 +1,17 @@
-import is from '@sindresorhus/is';
-import { Router } from 'express';
-import { login_required } from '../middlewares/login_required';
-import { projectService } from '../services/projectService';
+import is from "@sindresorhus/is";
+import { Router } from "express";
+import { login_required } from "../middlewares/login_required";
+import { projectService } from "../services/projectService";
+import { headerError } from "../utils/errorMessages"
 
 const projectRouter = Router();
 projectRouter.use(login_required);
 
-projectRouter.post('/projects/project', async (req, res, next) => {
+projectRouter.post("/projects/project", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        'headers의 Content-Type을 application/json으로 설정해주세요'
+        headerError
       );
     }
 
@@ -34,7 +35,7 @@ projectRouter.post('/projects/project', async (req, res, next) => {
       throw new Error(newProject.errorMessage);
     }
 
-    res.status(201).json(newProject);
+    res.status(201).end();
   } catch (error) {
     next(error);
   }
@@ -108,5 +109,27 @@ projectRouter.delete('/projects/:id', async function (req, res, next) {
     next(error);
   }
 });
+
+projectRouter.get(
+  "/projectlist",
+  async function (req, res, next) {
+    try {
+      // URI로부터 user_id를 추출함.
+      const { findKey, findWord } = req.query;
+      
+      const keyOptions = findKey.split(" ")
+      const searchOpt = keyOptions.map(v => {
+        const arr = {}
+        arr[v] = {$regex: findWord, '$options': "i"}
+        return arr
+      })
+
+      const foundList = await projectService.searchProjectList({ searchOpt });
+      res.status(200).send(foundList);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { projectRouter };

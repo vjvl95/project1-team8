@@ -1,35 +1,36 @@
-import is from '@sindresorhus/is';
-import { Router } from 'express';
-import { login_required } from '../middlewares/login_required';
-import { awardService } from '../services/awardService';
+import is from "@sindresorhus/is";
+import { Router } from "express";
+import { login_required } from "../middlewares/login_required";
+import { awardService } from "../services/awardService";
+import { headerError } from "../utils/errorMessages"
 
 const awardRouter = Router();
 awardRouter.use(login_required);
 
-awardRouter.post('/awards/award', async function (req, res, next) {
-  try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        'headers의 Content-Type을 application/json으로 설정해주세요'
-      );
+awardRouter.post("/awards/award", async function (req, res, next) {
+    try {
+      if (is.emptyObject(req.body)) {
+        throw new Error( 
+          headerError
+        );
+      }
+  
+      // req (request) 에서 데이터 가져오기
+      const user_id = req.body.user_id;
+      const title = req.body.title;
+      const description = req.body.description;
+  
+      // 위 데이터를 유저 db에 추가하기
+      const newAward = await awardService.addAward({
+        user_id,
+        title,
+        description,
+      });
+  
+      res.status(201).end();
+    } catch (error) {
+      next(error);
     }
-
-    // req (request) 에서 데이터 가져오기
-    const user_id = req.body.user_id;
-    const title = req.body.title;
-    const description = req.body.description;
-
-    // 위 데이터를 유저 db에 추가하기
-    const newAward = await awardService.addAward({
-      user_id,
-      title,
-      description,
-    });
-
-    res.status(201).json(newAward);
-  } catch (error) {
-    next(error);
-  }
 });
 
 awardRouter.get('/awards/:id', async function (req, res, next) {
@@ -41,7 +42,6 @@ awardRouter.get('/awards/:id', async function (req, res, next) {
     if (award.errorMessage) {
       throw new Error(award.errorMessage);
     }
-
     res.status(200).send(award);
   } catch (error) {
     next(error);
@@ -92,11 +92,35 @@ awardRouter.delete('/awards/:id', async function (req, res, next) {
     if (deletedResult.errorMessage) {
       throw new Error(deletedResult.errorMessage);
     }
-
     res.status(200).end();
-  } catch (error) {
-    next(error);
+    } catch (error) {
+      next(error);
+    }
   }
+);
+
+awardRouter.get(
+  "/awardlist",
+  async function (req, res, next) {
+    try {
+      // URI로부터 user_id를 추출함.
+      const { findKey, findWord } = req.query;
+      // 해당 user의 전체 수상내역 목록을 얻음
+      
+      const keyOptions = findKey.split(" ")
+      // console.log("mapping전:", keyOptions)
+      const searchOpt = keyOptions.map(v => {
+        const arr = {}
+        arr[v] = {$regex: findWord, '$options': "i"}
+        return arr
+      })
+      // console.log("mapping 후 : ", searchOpt)
+
+      const foundList = await awardService.searchAwardList({ searchOpt });
+      res.status(200).send(foundList);
+    } catch (error) {
+      next(error);
+    }
 });
 
 export { awardRouter };

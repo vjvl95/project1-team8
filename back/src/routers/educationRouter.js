@@ -1,16 +1,17 @@
-import is from '@sindresorhus/is';
-import { Router } from 'express';
-import { login_required } from '../middlewares/login_required';
-import { educationService } from '../services/educationService';
+import is from "@sindresorhus/is";
+import { Router } from "express";
+import { login_required } from "../middlewares/login_required";
+import { educationService } from "../services/educationService";
+import { headerError } from "../utils/errorMessages"
 
 const educationRouter = Router();
 educationRouter.use(login_required);
 
-educationRouter.post('/educations/education', async (req, res, next) => {
+educationRouter.post("/educations/education", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        'headers의 Content-Type을 application/json으로 설정해주세요'
+        headerError
       );
     }
 
@@ -32,7 +33,7 @@ educationRouter.post('/educations/education', async (req, res, next) => {
       throw new Error(newEducation.errorMessage);
     }
 
-    res.status(201).json(newEducation);
+    res.status(201).end();
   } catch (error) {
     next(error);
   }
@@ -107,5 +108,25 @@ educationRouter.delete('/educations/:id', async function (req, res, next) {
     next(error);
   }
 });
+
+educationRouter.get(
+  "/educationlist",
+  async function (req, res, next) {
+    try {
+      const { findKey, findWord } = req.query;      
+      const keyOptions = findKey.split(" ")
+      const searchOpt = keyOptions.map(v => {
+        const arr = {}
+        arr[v] = {$regex: findWord, '$options': "i"}
+        return arr
+      })
+
+      const foundList = await educationService.searchEduList({ searchOpt });
+      res.status(200).send(foundList);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { educationRouter };

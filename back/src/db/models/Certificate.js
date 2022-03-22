@@ -12,8 +12,8 @@ class Certificate {
   }
 
   static async findByUserId({ user_id }) {
-    const certificates = await CertificateModel.find({ user_id });
-    return certificates;
+    const certificateList = await CertificateModel.find({ user_id });
+    return certificateList;
   }
 
   static async update({ certificateId, fieldToUpdate, newValue }) {
@@ -38,6 +38,11 @@ class Certificate {
   static async deleteByUserId({ user_id }) {
     const result = await CertificateModel.deleteMany({ user_id });
     return result;
+  }
+  
+  static async findBySearchWord({ searchOpt }) {
+    const certificateList = await CertificateModel.find({ $or: searchOpt });
+    return certificateList;
   }
 }
 
