@@ -5,7 +5,13 @@ import AwardEditForm from "./AwardEditForm";
 import EditButton from "../EditButton";
 import DeleteButton from "../DeleteButton";
 
-const AwardListItem = ({ id, title, description, isEditable }) => {
+const AwardListItem = ({
+  id,
+  title,
+  description,
+  isEditable,
+  getAwardList,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
@@ -35,7 +41,7 @@ const AwardListItem = ({ id, title, description, isEditable }) => {
                 <EditButton setIsEditing={setIsEditing} />
               </Col>
               <Col className="col-lg-1">
-                <DeleteButton />
+                <DeleteButton itemId={id} getAwardList={getAwardList} />
               </Col>
             </>
           )}

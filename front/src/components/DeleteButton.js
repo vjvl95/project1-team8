@@ -1,9 +1,11 @@
 import { Button } from "react-bootstrap";
+import * as API from "../api";
 
-const DeleteButton = () => {
+const DeleteButton = ({ itemId, getAwardList }) => {
   const HandleDelete = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
-      return;
+      API.delete(`awards/${itemId}`);
+      getAwardList();
     } else {
       return;
     }

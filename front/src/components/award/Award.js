@@ -29,6 +29,7 @@ function Award({ portfolioOwnerId, isEditable }) {
           isEditing={isEditing}
           isEditable={isEditable}
           awardList={awardList}
+          getAwardList={getAwardList}
         />
         {isEditable && (
           <Row className="mt-3 text-center text-info">
