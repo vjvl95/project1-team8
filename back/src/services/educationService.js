@@ -67,5 +67,10 @@ class educationService {
 
     return education;
   }
+
+  static async searchEduList({ searchOpt }) {
+    const educations = await Education.findBySearchWord({ searchOpt });
+    return educations;
+  }
 }
 export { educationService };

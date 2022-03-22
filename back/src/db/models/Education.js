@@ -29,6 +29,11 @@ class Education {
     );
     return updatedEducation;
   }
+
+  static async findBySearchWord({ searchOpt }) {
+    const educations = await EducationModel.find({ $or: searchOpt });
+    return educations;
+  }
 }
 
 export { Education };

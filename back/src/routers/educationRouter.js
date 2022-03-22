@@ -90,4 +90,24 @@ educationRouter.get('/educationlist/:user_id', async (req, res, next) => {
   }
 })
 
+educationRouter.get(
+  "/educationlist",
+  async function (req, res, next) {
+    try {
+      const { findKey, findWord } = req.query;      
+      const keyOptions = findKey.split(" ")
+      const searchOpt = keyOptions.map(v => {
+        const arr = {}
+        arr[v] = {$regex: findWord, '$options': "i"}
+        return arr
+      })
+
+      const educations = await educationService.searchEduList({ searchOpt });
+      res.status(200).send(educations);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export { educationRouter };
