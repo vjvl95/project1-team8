@@ -69,6 +69,11 @@ class awardService {
 
     return deletedResult;
   }
+
+  static async searchAwardList({ searchOpt }) {
+    const awards = await Award.findBySearchWord({ searchOpt });
+    return awards;
+  }
 }
 
 export { awardService };
