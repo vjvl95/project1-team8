@@ -1,16 +1,16 @@
-import is from "@sindresorhus/is";
-import { Router } from "express";
-import { login_required } from "../middlewares/login_required";
-import { projectService } from "../services/projectService";
+import is from '@sindresorhus/is';
+import { Router } from 'express';
+import { login_required } from '../middlewares/login_required';
+import { projectService } from '../services/projectService';
 
 const projectRouter = Router();
-projectRouter.use(login_required)
+projectRouter.use(login_required);
 
-projectRouter.post("/projects/project", async (req, res, next) => {
+projectRouter.post('/projects/project', async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
+        'headers의 Content-Type을 application/json으로 설정해주세요'
       );
     }
 
@@ -41,9 +41,9 @@ projectRouter.post("/projects/project", async (req, res, next) => {
 });
 
 projectRouter.get('/projects/:id', async (req, res, next) => {
-  const projectId = req.params.id
+  const projectId = req.params.id;
   try {
-    const foundProject = await projectService.getProject({ projectId })
+    const foundProject = await projectService.getProject({ projectId });
     if (foundProject.errorMessage) {
       throw new Error(foundProject.errorMessage);
     }
@@ -52,12 +52,12 @@ projectRouter.get('/projects/:id', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 projectRouter.put('/projects/:id', async (req, res, next) => {
-  const projectId = req.params.id
+  const projectId = req.params.id;
   try {
-    const foundProject = await projectService.getProject({ projectId })
+    const foundProject = await projectService.getProject({ projectId });
     if (foundProject.errorMessage) {
       throw new Error(foundProject.errorMessage);
     }
@@ -68,48 +68,45 @@ projectRouter.put('/projects/:id', async (req, res, next) => {
 
     const toUpdate = { title, description, from_date, to_date };
 
-    const updatedProject = await projectService.setProject({ projectId, toUpdate });
+    const updatedProject = await projectService.setProject({
+      projectId,
+      toUpdate,
+    });
 
     if (updatedProject.errorMessage) {
       throw new Error(updatedProject.errorMessage);
     }
 
     res.status(200).json(updatedProject);
-
   } catch (error) {
     next(error);
   }
-})
+});
 
 projectRouter.get('/projectlist/:user_id', async (req, res, next) => {
-  const { user_id } = req.params
+  const { user_id } = req.params;
   try {
-    const foundList = await projectService.getProjectList({ user_id })
+    const foundList = await projectService.getProjectList({ user_id });
 
     res.status(200).json(foundList);
-
   } catch (error) {
     next(error);
   }
-})
+});
 
-projectRouter.delete(
-  "/projects/:id",
-  async function (req, res, next) {
-    try {
-      const projectId = req.params.id;
-      const deletedResult = await projectService.deleteProject({ projectId });
+projectRouter.delete('/projects/:id', async function (req, res, next) {
+  try {
+    const projectId = req.params.id;
+    const deletedResult = await projectService.deleteProject({ projectId });
 
-      if (deletedResult.errorMessage) {
-        throw new Error(deletedResult.errorMessage);
-      }
-
-      res.status(200);
-
-    } catch (error) {
-      next(error);
+    if (deletedResult.errorMessage) {
+      throw new Error(deletedResult.errorMessage);
     }
+
+    res.status(200).end();
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 export { projectRouter };

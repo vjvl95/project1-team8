@@ -1,15 +1,15 @@
-import is from "@sindresorhus/is";
-import { Router } from "express";
-import { login_required } from "../middlewares/login_required";
-import { userAuthService } from "../services/userService";
+import is from '@sindresorhus/is';
+import { Router } from 'express';
+import { login_required } from '../middlewares/login_required';
+import { userAuthService } from '../services/userService';
 
 const userAuthRouter = Router();
 
-userAuthRouter.post("/users/user", async function (req, res, next) {
+userAuthRouter.post('/users/user', async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
+        'headers의 Content-Type을 application/json으로 설정해주세요'
       );
     }
 
@@ -35,7 +35,7 @@ userAuthRouter.post("/users/user", async function (req, res, next) {
   }
 });
 
-userAuthRouter.post("/user/login", async function (req, res, next) {
+userAuthRouter.post('/user/login', async function (req, res, next) {
   try {
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
@@ -55,7 +55,7 @@ userAuthRouter.post("/user/login", async function (req, res, next) {
 });
 
 userAuthRouter.get(
-  "/userlist",
+  '/userlist',
   login_required,
   async function (req, res, next) {
     try {
@@ -69,7 +69,7 @@ userAuthRouter.get(
 );
 
 userAuthRouter.get(
-  "/user/current",
+  '/user/current',
   login_required,
   async function (req, res, next) {
     try {
@@ -91,7 +91,7 @@ userAuthRouter.get(
 );
 
 userAuthRouter.put(
-  "/users/:id",
+  '/users/:id',
   login_required,
   async function (req, res, next) {
     try {
@@ -120,7 +120,7 @@ userAuthRouter.put(
 );
 
 userAuthRouter.get(
-  "/users/:id",
+  '/users/:id',
   login_required,
   async function (req, res, next) {
     try {
@@ -139,7 +139,7 @@ userAuthRouter.get(
 );
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
+userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {
   res
     .status(200)
     .send(
@@ -148,22 +148,19 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
 });
 
 // :id는 user_id 임.
-userAuthRouter.delete(
-  "/users/:id",
-  async function (req, res, next) {
-    try {
-      const user_id = req.params.id;  
-      const deletedResult = await userAuthService.deleteUser({ user_id });
+userAuthRouter.delete('/users/:id', async function (req, res, next) {
+  try {
+    const user_id = req.params.id;
+    const deletedResult = await userAuthService.deleteUser({ user_id });
 
-      if (deletedResult.errorMessage) {
-        throw new Error(deletedResult.errorMessage);
-      }
-
-      res.status(200);
-
-    } catch (error) {
-      next(error);
+    if (deletedResult.errorMessage) {
+      throw new Error(deletedResult.errorMessage);
     }
+
+    res.status(200).end();
+  } catch (error) {
+    next(error);
+  }
 });
 
 export { userAuthRouter };
