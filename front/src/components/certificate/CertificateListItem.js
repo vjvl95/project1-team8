@@ -1,4 +1,4 @@
-import { Col, Button, Card, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import CertificateEditForm from "./CertificateEditForm";
 import EditButton from "../EditButton";

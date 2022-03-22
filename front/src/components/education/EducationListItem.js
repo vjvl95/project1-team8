@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Col, Row, Card } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import EducationEditForm from "./EducationEditForm";
 import EditButton from "../EditButton";
 
