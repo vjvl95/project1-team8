@@ -11,7 +11,7 @@ function CertificateEditForm({
   itemWhenDate,
   setNewDescription,
   setNewTitle,
-  setNewWenDate,
+  setNewWhenDate,
   setIsEditing,
   getCertificateList,
 }) {
@@ -29,7 +29,7 @@ function CertificateEditForm({
       });
       setNewTitle(title);
       setNewDescription(description);
-      setNewWenDate(whenDate);
+      setNewWhenDate(whenDate);
       setIsEditing(false);
     } catch (err) {
       console.log("수상내역을 수정하는데 실패하였습니다", err);

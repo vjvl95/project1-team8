@@ -6,7 +6,7 @@ function CertificateListItem({ id, isEditable, item }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(item.title);
   const [newDescription, setNewDescription] = useState(item.description);
-  const [newWhenDate, setNewWenDate] = useState(new Date(item.when_date));
+  const [newWhenDate, setNewWhenDate] = useState(new Date(item.when_date));
 
   return (
     <>
@@ -19,7 +19,7 @@ function CertificateListItem({ id, isEditable, item }) {
           itemWhenDate={newWhenDate}
           setNewTitle={setNewTitle}
           setNewDescription={setNewDescription}
-          setNewWenDate={setNewWenDate}
+          setNewWhenDate={setNewWhenDate}
         />
       ) : (
         <Row className="align-items-center mb-3">
