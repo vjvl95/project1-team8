@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useLayoutEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { Card, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import EducationList from "./EducationList";
@@ -19,7 +19,7 @@ const Education = ({ portfolioOwnerId, isEditable }) => {
     });
   }, [portfolioOwnerId]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     getEducationList();
   }, [getEducationList]);
 
@@ -31,6 +31,7 @@ const Education = ({ portfolioOwnerId, isEditable }) => {
           portfolioOwnerId={portfolioOwnerId}
           isEditable={isEditable}
           educationList={educationList}
+          getEducationList={getEducationList}
         />
 
         {isEditable && (

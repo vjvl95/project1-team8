@@ -1,6 +1,10 @@
 import CertificateListItem from "./CertificateListItem";
 
-const CertificateList = ({ certificateList, isEditable }) => {
+const CertificateList = ({
+  certificateList,
+  isEditable,
+  getCertificateList,
+}) => {
   const certificateListArray = certificateList?.map((item) => {
     return (
       <CertificateListItem
@@ -8,6 +12,7 @@ const CertificateList = ({ certificateList, isEditable }) => {
         id={item.id}
         item={item}
         isEditable={isEditable}
+        getCertificateList={getCertificateList}
       />
     );
   });

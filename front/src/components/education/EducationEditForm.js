@@ -38,7 +38,7 @@ function EducationEditForm({
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
     try {
-      await Api.post(`education/create`, {
+      await Api.post(`educations/education`, {
         user_id: portfolioOwnerId,
         school,
         major,

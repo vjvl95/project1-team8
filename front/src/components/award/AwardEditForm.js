@@ -33,7 +33,7 @@ function AwardEditForm({
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
     try {
-      await Api.post(`award/create`, {
+      await Api.post(`awards/award`, {
         user_id: portfolioOwnerId,
         title,
         description,

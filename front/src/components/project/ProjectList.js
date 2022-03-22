@@ -1,6 +1,6 @@
 import ProjectListItem from "./ProjectListItem";
 
-const ProjectList = ({ projectList, isEditable }) => {
+const ProjectList = ({ projectList, isEditable, getProjectList }) => {
   const projectListArray = projectList?.map((item) => {
     return (
       <ProjectListItem
@@ -8,6 +8,7 @@ const ProjectList = ({ projectList, isEditable }) => {
         id={item.id}
         item={item}
         isEditable={isEditable}
+        getProjectList={getProjectList}
       />
     );
   });

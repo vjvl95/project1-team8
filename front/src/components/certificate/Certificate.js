@@ -29,6 +29,7 @@ function Certificate({ portfolioOwnerId, isEditable }) {
           isEditing={isEditing}
           isEditable={isEditable}
           certificateList={certificateList}
+          getCertificateList={getCertificateList}
         />
         {isEditable && (
           <Row className="mt-3 text-center text-info">

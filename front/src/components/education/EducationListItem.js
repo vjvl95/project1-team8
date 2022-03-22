@@ -1,14 +1,34 @@
 import { useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Button } from "react-bootstrap";
 import EducationEditForm from "./EducationEditForm";
 import EditButton from "../EditButton";
-import DeleteButton from "../DeleteButton";
+import * as API from "../../api";
 
-const EducationListItem = ({ id, school, major, position, isEditable }) => {
+const EducationListItem = ({
+  id,
+  school,
+  major,
+  position,
+  isEditable,
+  getEducationList,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newSchool, setNewSchool] = useState(school);
   const [newMajor, setNewMajor] = useState(major);
   const [newPosition, setNewPostion] = useState(position);
+
+  const HandleDelete = () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      try {
+        API.delete(`educations/${id}`);
+        getEducationList();
+      } catch (err) {
+        console.log("삭제 실패하였습니다.", err);
+      }
+    } else {
+      return;
+    }
+  };
 
   return (
     <>
@@ -39,7 +59,9 @@ const EducationListItem = ({ id, school, major, position, isEditable }) => {
                 <EditButton setIsEditing={setIsEditing} />
               </Col>
               <Col className="col-lg-1">
-                <DeleteButton />
+                <Button variant="outline-info" size="sm" onClick={HandleDelete}>
+                  삭제
+                </Button>
               </Col>
             </>
           )}

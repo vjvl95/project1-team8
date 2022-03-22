@@ -1,6 +1,6 @@
 import EducationListItem from "./EducationListItem";
 
-const EducationList = ({ educationList, isEditable }) => {
+const EducationList = ({ educationList, isEditable, getEducationList }) => {
   const educationListArray = educationList?.map((item) => {
     return (
       <EducationListItem
@@ -10,6 +10,7 @@ const EducationList = ({ educationList, isEditable }) => {
         major={item.major}
         position={item.position}
         isEditable={isEditable}
+        getEducationList={getEducationList}
       />
     );
   });

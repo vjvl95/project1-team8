@@ -44,7 +44,7 @@ function ProjectEditForm({
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
     try {
-      await Api.post(`project/create`, {
+      await Api.post(`projects/project`, {
         user_id: portfolioOwnerId,
         title,
         description,

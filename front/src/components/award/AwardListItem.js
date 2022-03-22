@@ -1,9 +1,9 @@
 // import AwardEditForm from "./AwardEditForm";
 import { useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Button } from "react-bootstrap";
 import AwardEditForm from "./AwardEditForm";
 import EditButton from "../EditButton";
-import DeleteButton from "../DeleteButton";
+import * as API from "../../api";
 
 const AwardListItem = ({
   id,
@@ -15,6 +15,19 @@ const AwardListItem = ({
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
+
+  const HandleDelete = () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      try {
+        API.delete(`awards/${id}`);
+        getAwardList();
+      } catch (err) {
+        console.log("삭제 실패하였습니다.", err);
+      }
+    } else {
+      return;
+    }
+  };
 
   return (
     <>
@@ -41,7 +54,9 @@ const AwardListItem = ({
                 <EditButton setIsEditing={setIsEditing} />
               </Col>
               <Col className="col-lg-1">
-                <DeleteButton itemId={id} getAwardList={getAwardList} />
+                <Button variant="outline-info" size="sm" onClick={HandleDelete}>
+                  삭제
+                </Button>
               </Col>
             </>
           )}

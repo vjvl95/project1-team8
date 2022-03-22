@@ -39,7 +39,7 @@ function CertificateEditForm({
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
     try {
-      await Api.post(`certificate/create`, {
+      await Api.post(`certificates/certificate`, {
         user_id: portfolioOwnerId,
         title,
         description,

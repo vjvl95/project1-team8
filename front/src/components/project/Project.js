@@ -29,6 +29,7 @@ function Project({ portfolioOwnerId, isEditable }) {
           isEditing={isEditing}
           isEditable={isEditable}
           projectList={projectList}
+          getProjectList={getProjectList}
         />
         {isEditable && (
           <Row className="mt-3 text-center text-info">
