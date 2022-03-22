@@ -8,6 +8,7 @@ const CertificateList = ({ certificateList, isEditable }) => {
         id={item.id}
         title={item.title}
         description={item.description}
+        whenDate={item.when_date}
         isEditable={isEditable}
       />
     );
