@@ -39,6 +39,7 @@ class Award {
     const awardList = await AwardModel.find({ $or: searchOpt });
     return awardList;
   }
+
 }
 
 export { Award };

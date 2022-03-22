@@ -2,17 +2,18 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { certificateService } from "../services/certificateService";
+import { headerError } from "../utils/errorMessages"
 
 const certificateRouter = Router();
 certificateRouter.use(login_required);
 
 certificateRouter.post(
-  "/certificate/create", 
+  "/certificates/certificate", 
   async function (req, res, next) {
     try {
       if (is.emptyObject(req.body)) {
         throw new Error(
-          "headers의 Content-Type을 application/json으로 설정해주세요"
+          headerError
         );
       }
 
@@ -30,7 +31,7 @@ certificateRouter.post(
         when_date
       });
 
-      res.status(201).json(newCertificate);
+      res.status(201).end();
     } catch (error) {
       next(error);
     }

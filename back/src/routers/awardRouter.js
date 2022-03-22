@@ -2,15 +2,16 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { awardService } from "../services/awardService";
+import { headerError } from "../utils/errorMessages"
 
 const awardRouter = Router();
 awardRouter.use(login_required);
 
-awardRouter.post("/award/create", async function (req, res, next) {
+awardRouter.post("/awards/award", async function (req, res, next) {
     try {
       if (is.emptyObject(req.body)) {
-        throw new Error(
-          "headers의 Content-Type을 application/json으로 설정해주세요"
+        throw new Error( 
+          headerError
         );
       }
   
@@ -26,7 +27,7 @@ awardRouter.post("/award/create", async function (req, res, next) {
         description,
       });
   
-      res.status(201).json(newAward);
+      res.status(201).end();
     } catch (error) {
       next(error);
     }
@@ -100,11 +101,11 @@ awardRouter.post("/award/create", async function (req, res, next) {
         const awardId = req.params.id;
         const deletedResult = await awardService.deleteAward({ awardId });
   
-        if (!deletedResult) {
+        if (deletedResult.errorMessage) {
           throw new Error(deletedResult.errorMessage);
         }
   
-        res.status(200).send("삭제되었습니다.");
+        res.status(200).end();
       } catch (error) {
         next(error);
       }
