@@ -2,6 +2,7 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
+import { headerError } from "../utils/errorMessages"
 
 const userAuthRouter = Router();
 
@@ -9,7 +10,7 @@ userAuthRouter.post("/users/user", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
+        headerError
       );
     }
 

@@ -2,6 +2,7 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { educationService } from "../services/educationService";
+import { headerError } from "../utils/errorMessages"
 
 const educationRouter = Router();
 educationRouter.use(login_required)
@@ -10,7 +11,7 @@ educationRouter.post("/educations/education", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
+        headerError
       );
     }
 

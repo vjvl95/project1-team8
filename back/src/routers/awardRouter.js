@@ -2,6 +2,7 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { awardService } from "../services/awardService";
+import { headerError } from "../utils/errorMessages"
 
 const awardRouter = Router();
 awardRouter.use(login_required);
@@ -9,8 +10,8 @@ awardRouter.use(login_required);
 awardRouter.post("/awards/award", async function (req, res, next) {
     try {
       if (is.emptyObject(req.body)) {
-        throw new Error(
-          "headers의 Content-Type을 application/json으로 설정해주세요"
+        throw new Error( 
+          headerError
         );
       }
   
@@ -104,7 +105,7 @@ awardRouter.post("/awards/award", async function (req, res, next) {
           throw new Error(deletedResult.errorMessage);
         }
   
-        res.status(200);
+        res.status(200).end();
       } catch (error) {
         next(error);
       }
