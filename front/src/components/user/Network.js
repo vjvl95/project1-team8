@@ -32,7 +32,7 @@ function Network() {
   return (
     <Container fluid>
       <div style={{marginLeft:"20%",marginRight:"20%",marginBottom:"70px"}}>
-        <h1 style={{marginBottom:"30px"}}>인기 많은 포토폴리오</h1>
+        <h1 style={{marginBottom:"30px", marginTop:"20px"}}>인기 많은 포토폴리오</h1>
             <Row className="justify-content-between">
             {<UserCard key={1} user={users[1]} isNetwork num={1}/>}
             {<UserCard key={2} user={users[1]} isNetwork num={2}/>}

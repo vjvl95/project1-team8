@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Card, Row, Button, Col } from "react-bootstrap";
+
 function UserCard({ user, setIsEditing, isEditable, isNetwork,num }) {
   const navigate = useNavigate();
   return (
@@ -33,7 +34,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork,num }) {
             </Row>
           </Col>
         )}
-
+    
         {isNetwork && (
           <Card.Link
             className="mt-3"
