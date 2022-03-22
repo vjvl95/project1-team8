@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import AwardEditForm from "./AwardEditForm";
 import EditButton from "../EditButton";
+import DeleteButton from "../DeleteButton";
 
 const AwardListItem = ({ id, title, description, isEditable }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -29,9 +30,14 @@ const AwardListItem = ({ id, title, description, isEditable }) => {
           </Col>
 
           {isEditable && (
-            <Col className="col-lg-1">
-              <EditButton setIsEditing={setIsEditing} />
-            </Col>
+            <>
+              <Col className="col-lg-1">
+                <EditButton setIsEditing={setIsEditing} />
+              </Col>
+              <Col className="col-lg-1">
+                <DeleteButton />
+              </Col>
+            </>
           )}
         </Row>
       )}

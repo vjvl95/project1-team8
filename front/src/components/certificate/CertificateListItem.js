@@ -2,6 +2,7 @@ import { Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import CertificateEditForm from "./CertificateEditForm";
 import EditButton from "../EditButton";
+import DeleteButton from "../DeleteButton";
 
 function CertificateListItem({ id, isEditable, item }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -35,9 +36,14 @@ function CertificateListItem({ id, isEditable, item }) {
           </Col>
 
           {isEditable && (
-            <Col className="col-lg-1">
-              <EditButton setIsEditing={setIsEditing} />
-            </Col>
+            <>
+              <Col className="col-lg-1">
+                <EditButton setIsEditing={setIsEditing} />
+              </Col>
+              <Col className="col-lg-1">
+                <DeleteButton />
+              </Col>
+            </>
           )}
         </Row>
       )}
