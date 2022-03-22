@@ -1,23 +1,22 @@
-import CertificateItem from "./CertificateItem"
+import CertificateListItem from "./CertificateListItem";
 
-
-function CertificateList({setCertificateList,certificateList,portfolioOwnerId,isEditable}){   
-    
-   return <>
-    {certificateList.map((certificate)=> {
-       return( 
-       <CertificateItem
-        key={certificate.id}
-        certificate={certificate}
-        portfolioOwnerId={portfolioOwnerId}
-        certificateList={certificateList}
-        setCertificateList={setCertificateList}
+const CertificateList = ({
+  certificateList,
+  isEditable,
+  getCertificateList,
+}) => {
+  const certificateListArray = certificateList?.map((item) => {
+    return (
+      <CertificateListItem
+        key={item.id}
+        id={item.id}
+        item={item}
         isEditable={isEditable}
-        />
-       )
-    })
-}
-    </>
-}
+        getCertificateList={getCertificateList}
+      />
+    );
+  });
+  return <>{certificateListArray}</>;
+};
 
-export default CertificateList
+export default CertificateList;
