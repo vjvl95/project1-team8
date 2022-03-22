@@ -57,6 +57,7 @@ function App() {
             <Route path='/register' element={<RegisterForm />} />
             <Route path='/users/:userId' element={<Portfolio />} />
             <Route path='/network' element={<Network />} />
+            <Route path='/bookmark' element={<Network />} />
             <Route path='*' element={<Portfolio />} />
           </Routes>
         </Router>
