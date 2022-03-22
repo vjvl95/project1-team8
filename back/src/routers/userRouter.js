@@ -152,8 +152,8 @@ userAuthRouter.delete(
   "/users/:id",
   async function (req, res, next) {
     try {
-      const { id } = req.params;
-      const deletedResult = await userService.deleteUser({ id });
+      const user_id = req.params.id;  
+      const deletedResult = await userAuthService.deleteUser({ user_id });
 
       if (deletedResult.errorMessage) {
         throw new Error(deletedResult.errorMessage);
