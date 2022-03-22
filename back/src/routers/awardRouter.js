@@ -111,4 +111,30 @@ awardRouter.post("/award/create", async function (req, res, next) {
     }
   );
 
+  awardRouter.get(
+    "/awardlist",
+    async function (req, res, next) {
+      try {
+        // URI로부터 user_id를 추출함.
+        const { findKey, findWord } = req.query;
+        // 해당 user의 전체 수상내역 목록을 얻음
+        
+        const keyOptions = findKey.split(" ")
+        // console.log("mapping전:", keyOptions)
+        const searchOpt = keyOptions.map(v => {
+          const arr = {}
+          arr[v] = {$regex: findWord, '$options': "i"}
+          console.log("arr는: ", arr)
+          return arr
+        })
+        // console.log("mapping 후 : ", searchOpt)
+        
+        const awards = await awardService.searchAwardList({ searchOpt });
+        res.status(200).send(awards);
+      } catch (error) {
+        next(error);
+      }
+    }
+  );
+
 export { awardRouter };
