@@ -6,7 +6,7 @@ import { projectService } from "../services/projectService";
 const projectRouter = Router();
 projectRouter.use(login_required)
 
-projectRouter.post("/project/create", async (req, res, next) => {
+projectRouter.post("/projects/project", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -41,9 +41,9 @@ projectRouter.post("/project/create", async (req, res, next) => {
 });
 
 projectRouter.get('/projects/:id', async (req, res, next) => {
-  const { id } = req.params
+  const projectId = req.params.id
   try {
-    const foundProject = await projectService.getProject({ id })
+    const foundProject = await projectService.getProject({ projectId })
     if (foundProject.errorMessage) {
       throw new Error(foundProject.errorMessage);
     }
@@ -55,9 +55,9 @@ projectRouter.get('/projects/:id', async (req, res, next) => {
 })
 
 projectRouter.put('/projects/:id', async (req, res, next) => {
-  const { id } = req.params
+  const projectId = req.params.id
   try {
-    const foundProject = await projectService.getProject({ id })
+    const foundProject = await projectService.getProject({ projectId })
     if (foundProject.errorMessage) {
       throw new Error(foundProject.errorMessage);
     }
@@ -68,7 +68,7 @@ projectRouter.put('/projects/:id', async (req, res, next) => {
 
     const toUpdate = { title, description, from_date, to_date };
 
-    const updatedProject = await projectService.setProject({ id, toUpdate });
+    const updatedProject = await projectService.setProject({ projectId, toUpdate });
 
     if (updatedProject.errorMessage) {
       throw new Error(updatedProject.errorMessage);
@@ -92,5 +92,24 @@ projectRouter.get('/projectlist/:user_id', async (req, res, next) => {
     next(error);
   }
 })
+
+projectRouter.delete(
+  "/projects/:id",
+  async function (req, res, next) {
+    try {
+      const projectId = req.params.id;
+      const deletedResult = await projectService.deleteProject({ projectId });
+
+      if (deletedResult.errorMessage) {
+        throw new Error(deletedResult.errorMessage);
+      }
+
+      res.status(200);
+
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { projectRouter };

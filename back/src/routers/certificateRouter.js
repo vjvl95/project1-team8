@@ -7,7 +7,7 @@ const certificateRouter = Router();
 certificateRouter.use(login_required);
 
 certificateRouter.post(
-  "/certificate/create", 
+  "/certificates/certificate", 
   async function (req, res, next) {
     try {
       if (is.emptyObject(req.body)) {
@@ -91,6 +91,25 @@ certificateRouter.get(
       // 해당 user의 전체 수상내역 목록을 얻음
       const certificates = await certificateService.getCertificateList({ user_id });
       res.status(200).send(certificates);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+certificateRouter.delete(
+  "/certificates/:id",
+  async function (req, res, next) {
+    try {
+      // URI로부터 certificateId를 추출함.
+      const certificateId = req.params.id;
+      const deletedResult = await certificateService.deleteCertificate({ certificateId });
+
+      if (deletedResult.errorMessage) {
+        throw new Error(deletedResult.errorMessage);
+      }
+
+      res.status(200);
     } catch (error) {
       next(error);
     }

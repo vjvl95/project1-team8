@@ -5,7 +5,7 @@ import { userAuthService } from "../services/userService";
 
 const userAuthRouter = Router();
 
-userAuthRouter.post("/user/register", async function (req, res, next) {
+userAuthRouter.post("/users/user", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -145,6 +145,25 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
     .send(
       `안녕하세요 ${req.currentUserId}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
     );
+});
+
+// :id는 user_id 임.
+userAuthRouter.delete(
+  "/users/:id",
+  async function (req, res, next) {
+    try {
+      const user_id = req.params.id;  
+      const deletedResult = await userAuthService.deleteUser({ user_id });
+
+      if (deletedResult.errorMessage) {
+        throw new Error(deletedResult.errorMessage);
+      }
+
+      res.status(200);
+
+    } catch (error) {
+      next(error);
+    }
 });
 
 export { userAuthRouter };
