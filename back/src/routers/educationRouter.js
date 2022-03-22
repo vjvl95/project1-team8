@@ -21,7 +21,7 @@ educationRouter.post("/education/create", async (req, res, next) => {
     const position = req.body.position;
 
     // 위 데이터를 유저 db에 추가하기
-    const newEducation = await educationService.addEdu({
+    const newEducation = await educationService.addEducation({
       user_id,
       school,
       major,
@@ -39,9 +39,9 @@ educationRouter.post("/education/create", async (req, res, next) => {
 });
 
 educationRouter.get('/educations/:id', async (req, res, next) => {
-  const { id } = req.params
+  const educationId = req.params.id
   try {
-    const foundEdu = await educationService.getEdu({ id })
+    const foundEdu = await educationService.getEducation({ educationId })
     if (foundEdu.errorMessage) {
       throw new Error(foundEdu.errorMessage);
     }
@@ -53,9 +53,9 @@ educationRouter.get('/educations/:id', async (req, res, next) => {
 })
 
 educationRouter.put('/educations/:id', async (req, res, next) => {
-  const { id } = req.params
+  const educationId = req.params.id
   try {
-    const foundEdu = await educationService.getEdu({ id })
+    const foundEdu = await educationService.getEducation({ educationId })
     if (foundEdu.errorMessage) {
       throw new Error(foundEdu.errorMessage);
     }
@@ -65,7 +65,7 @@ educationRouter.put('/educations/:id', async (req, res, next) => {
 
     const toUpdate = { school, major, position };
 
-    const updatedEdu = await educationService.setEdu({ id, toUpdate });
+    const updatedEdu = await educationService.setEducation({ educationId, toUpdate });
 
     if (updatedEdu.errorMessage) {
       throw new Error(updatedEdu.errorMessage);
@@ -81,7 +81,7 @@ educationRouter.put('/educations/:id', async (req, res, next) => {
 educationRouter.get('/educationlist/:user_id', async (req, res, next) => {
   const { user_id } = req.params
   try {
-    const foundList = await educationService.getEduList({ user_id })
+    const foundList = await educationService.getEducationList({ user_id })
 
     res.status(200).json(foundList);
 
@@ -89,5 +89,24 @@ educationRouter.get('/educationlist/:user_id', async (req, res, next) => {
     next(error);
   }
 })
+
+educationRouter.delete(
+  "/educations/:id",
+  async function (req, res, next) {
+    try {
+      const educationId = req.params.id;
+      const deletedResult = await educationService.deleteEducation({ educationId });
+
+      if (deletedResult.errorMessage) {
+        throw new Error(deletedResult.errorMessage);
+      }
+
+      res.status(200);
+
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { educationRouter };

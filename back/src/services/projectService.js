@@ -17,9 +17,9 @@ class projectService {
     return createdNewProject;
   }
 
-  static async getProject({ id }) {
+  static async getProject({ projectId }) {
     // id가 project db에 존재 여부 확인
-    const project = await Project.findById({ id });
+    const project = await Project.findById({ projectId });
     if (!project) {
       const errorMessage =
         "잘못된 접근입니다. 다시 한 번 확인해 주세요.";
@@ -35,10 +35,10 @@ class projectService {
     return projectlist;
   }
 
-  static async setProject({ id, toUpdate }) {
+  static async setProject({ projectId, toUpdate }) {
 
     // id가 project db에 존재 여부 확인
-    let project = await Project.findById({ id });
+    let project = await Project.findById({ projectId });
     if (!project) {
       const errorMessage =
         "잘못된 접근입니다. 다시 한 번 확인해 주세요.";
@@ -50,28 +50,41 @@ class projectService {
     if (toUpdate.title) {
       const fieldToUpdate = "title";
       const newValue = toUpdate.title;
-      project = await Project.update({ id, fieldToUpdate, newValue });
+      project = await Project.update({ projectId, fieldToUpdate, newValue });
     }
 
     if (toUpdate.description) {
       const fieldToUpdate = "description";
       const newValue = toUpdate.description;
-      project = await Project.update({ id, fieldToUpdate, newValue });
+      project = await Project.update({ projectId, fieldToUpdate, newValue });
     }
 
     if (toUpdate.from_date) {
       const fieldToUpdate = "from_date";
       const newValue = toUpdate.from_date;
-      project = await Project.update({ id, fieldToUpdate, newValue });
+      project = await Project.update({ projectId, fieldToUpdate, newValue });
     }
 
     if (toUpdate.to_date) {
       const fieldToUpdate = "to_date";
       const newValue = toUpdate.to_date;
-      project = await Project.update({ id, fieldToUpdate, newValue });
+      project = await Project.update({ projectId, fieldToUpdate, newValue });
     }
 
     return project;
+  }
+
+  static async deleteProject({ projectId }) {
+    // awardId db에 존재 여부 확인
+
+    const deletedResult = await Project.deleteById({ projectId })
+    if (!deletedResult) {
+      const errorMessage =
+        "해당하는 내용이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    return deletedResult;
   }
 }
 export { projectService };

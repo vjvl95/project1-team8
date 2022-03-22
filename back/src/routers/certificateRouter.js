@@ -103,13 +103,13 @@ certificateRouter.delete(
     try {
       // URI로부터 certificateId를 추출함.
       const certificateId = req.params.id;
-      const result = await certificateService.deleteCertificate({ certificateId });
+      const deletedResult = await certificateService.deleteCertificate({ certificateId });
 
-      if (result.deletedCount !== 1) {
-        throw new Error(result.errorMessage);
+      if (deletedResult.errorMessage) {
+        throw new Error(deletedResult.errorMessage);
       }
 
-      res.status(200).json(result);
+      res.status(200);
     } catch (error) {
       next(error);
     }

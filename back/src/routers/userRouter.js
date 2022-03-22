@@ -147,4 +147,23 @@ userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
     );
 });
 
+// :id는 user_id 임.
+userAuthRouter.delete(
+  "/users/:id",
+  async function (req, res, next) {
+    try {
+      const { id } = req.params;
+      const deletedResult = await userService.deleteUser({ id });
+
+      if (deletedResult.errorMessage) {
+        throw new Error(deletedResult.errorMessage);
+      }
+
+      res.status(200);
+
+    } catch (error) {
+      next(error);
+    }
+});
+
 export { userAuthRouter };

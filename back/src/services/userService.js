@@ -125,6 +125,19 @@ class userAuthService {
 
     return user;
   }
+
+  static async deleteUser({ user_id }) {
+    // awardId db에 존재 여부 확인
+
+    const deletedResult = await User.deleteByUserId({ user_id })
+    if (!deletedResult) {
+      const errorMessage =
+        "가입된 아이디가 아닙니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    return deletedResult;
+  }
 }
 
 export { userAuthService };

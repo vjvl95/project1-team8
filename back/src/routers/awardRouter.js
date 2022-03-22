@@ -100,11 +100,11 @@ awardRouter.post("/award/create", async function (req, res, next) {
         const awardId = req.params.id;
         const deletedResult = await awardService.deleteAward({ awardId });
   
-        if (!deletedResult) {
+        if (deletedResult.errorMessage) {
           throw new Error(deletedResult.errorMessage);
         }
   
-        res.status(200).send("삭제되었습니다.");
+        res.status(200);
       } catch (error) {
         next(error);
       }

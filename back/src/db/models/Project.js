@@ -11,14 +11,14 @@ class Project {
     return Projectlist;
   }
 
-  static async findById({ id }) {
-    const Project = await ProjectModel.findOne({ id: id });
+  static async findByProjectId({ projectId }) {
+    const Project = await ProjectModel.findOne({ id: projectId });
     return Project;
   }
 
 
-  static async update({ id, fieldToUpdate, newValue }) {
-    const filter = { id: id };
+  static async update({ projectId, fieldToUpdate, newValue }) {
+    const filter = { id: projectId };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 
@@ -28,6 +28,12 @@ class Project {
       option
     );
     return updatedProject;
+  }
+
+  static async deleteByProjectId({ projectId }) {
+    const result = await ProjectModel.deleteOne({ id: projectId });
+    const deletedResult = (result.deletedCount == 1) //Boolean
+    return deletedResult;
   }
 }
 

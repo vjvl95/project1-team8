@@ -66,14 +66,14 @@ class certificateService {
   static async deleteCertificate({ certificateId }) {
     // certificateId db에 존재 여부 확인
 
-    const result = await Certificate.deleteByCertificateId({ certificateId })
-    if (result.deletedCount !== 1) {
+    const deletedResult = await Certificate.deleteByCertificateId({ certificateId })
+    if (!deletedResult) {
       const errorMessage =
         "해당하는 자격증내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
-    return result;
+    return deletedResult;
   }
 }
 
