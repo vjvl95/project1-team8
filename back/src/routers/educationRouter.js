@@ -84,7 +84,7 @@ educationRouter.put('/educations/:id', async (req, res, next) => {
 educationRouter.get('/educationlist/:user_id', async (req, res, next) => {
   const { user_id } = req.params;
   try {
-    const foundList = await educationService.getEducationList({ user_id });
+    const foundList = await educationService.getEduList({ user_id });
 
     res.status(200).json(foundList);
   } catch (error) {
