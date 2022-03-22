@@ -124,11 +124,10 @@ awardRouter.post("/award/create", async function (req, res, next) {
         const searchOpt = keyOptions.map(v => {
           const arr = {}
           arr[v] = {$regex: findWord, '$options': "i"}
-          console.log("arr는: ", arr)
           return arr
         })
         // console.log("mapping 후 : ", searchOpt)
-        
+
         const awards = await awardService.searchAwardList({ searchOpt });
         res.status(200).send(awards);
       } catch (error) {
