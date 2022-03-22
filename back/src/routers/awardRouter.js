@@ -26,7 +26,7 @@ awardRouter.post("/awards/award", async function (req, res, next) {
         description,
       });
   
-      res.status(201).json(newAward);
+      res.status(201).end();
     } catch (error) {
       next(error);
     }
@@ -100,7 +100,7 @@ awardRouter.post("/awards/award", async function (req, res, next) {
         const awardId = req.params.id;
         const deletedResult = await awardService.deleteAward({ awardId });
   
-        if (!deletedResult) {
+        if (deletedResult.errorMessage) {
           throw new Error(deletedResult.errorMessage);
         }
   

@@ -32,7 +32,7 @@ educationRouter.post("/educations/education", async (req, res, next) => {
       throw new Error(newEducation.errorMessage);
     }
 
-    res.status(201).json(newEducation);
+    res.status(201).end();
   } catch (error) {
     next(error);
   }

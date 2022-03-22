@@ -29,7 +29,7 @@ userAuthRouter.post("/users/user", async function (req, res, next) {
       throw new Error(newUser.errorMessage);
     }
 
-    res.status(201).json(newUser);
+    res.status(201).end();
   } catch (error) {
     next(error);
   }

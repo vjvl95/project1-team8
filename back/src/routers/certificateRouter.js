@@ -30,7 +30,7 @@ certificateRouter.post(
         when_date
       });
 
-      res.status(201).json(newCertificate);
+      res.status(201).end();
     } catch (error) {
       next(error);
     }

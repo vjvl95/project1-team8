@@ -34,7 +34,7 @@ projectRouter.post("/projects/project", async (req, res, next) => {
       throw new Error(newProject.errorMessage);
     }
 
-    res.status(201).json(newProject);
+    res.status(201).end();
   } catch (error) {
     next(error);
   }
