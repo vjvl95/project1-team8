@@ -69,6 +69,5 @@ class awardService {
 
     return deletedResult;
   }
-}
 
 export { awardService };
