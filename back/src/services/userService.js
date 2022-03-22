@@ -2,14 +2,14 @@ import { User } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
+import { existError, matchError, findError } from "../utils/errorMessages"
 
 class userAuthService {
   static async addUser({ name, email, password }) {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email });
     if (user) {
-      const errorMessage =
-        "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.";
+      const errorMessage = existError("이메일")
       return { errorMessage };
     }
 
@@ -31,8 +31,7 @@ class userAuthService {
     // 이메일 db에 존재 여부 확인
     const user = await User.findByEmail({ email });
     if (!user) {
-      const errorMessage =
-        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      const errorMessage = findError("이메일")
       return { errorMessage };
     }
 
@@ -43,8 +42,7 @@ class userAuthService {
       correctPasswordHash
     );
     if (!isPasswordCorrect) {
-      const errorMessage =
-        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.";
+      const errorMessage = matchError("비밀번호")
       return { errorMessage };
     }
 
@@ -80,8 +78,7 @@ class userAuthService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      const errorMessage =
-        "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      const errorMessage = findError("가입")
       return { errorMessage };
     }
 
@@ -118,8 +115,7 @@ class userAuthService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      const errorMessage =
-        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      const errorMessage = findError("이메일")
       return { errorMessage };
     }
 
