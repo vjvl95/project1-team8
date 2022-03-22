@@ -6,7 +6,7 @@ import { projectService } from "../services/projectService";
 const projectRouter = Router();
 projectRouter.use(login_required)
 
-projectRouter.post("/project/create", async (req, res, next) => {
+projectRouter.post("/projects/project", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(

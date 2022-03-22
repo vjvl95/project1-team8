@@ -6,7 +6,7 @@ import { awardService } from "../services/awardService";
 const awardRouter = Router();
 awardRouter.use(login_required);
 
-awardRouter.post("/award/create", async function (req, res, next) {
+awardRouter.post("/awards/award", async function (req, res, next) {
     try {
       if (is.emptyObject(req.body)) {
         throw new Error(
@@ -104,7 +104,30 @@ awardRouter.post("/award/create", async function (req, res, next) {
           throw new Error(deletedResult.errorMessage);
         }
   
-        res.status(200).send("삭제되었습니다.");
+        res.status(200);
+      } catch (error) {
+        next(error);
+      }
+    }
+  );
+
+  awardRouter.get(
+    "/awardlist/:user_id/sort",
+    async function (req, res, next) {
+      try {
+        const type = { 
+          asc: 1,
+          desc: -1
+        }
+        // URI로부터 user_id를 추출함.
+        const user_id = req.params.user_id;
+        const { sort_key, sort_type } = req.query
+        const arr = {}
+        arr[sort_key] = type[sort_type]
+
+        // 해당 user의 전체 수상내역 목록 정렬함
+        const sortedAwards = await awardService.sortAwardList({ user_id, arr });
+        res.status(200).send(sortedAwards);
       } catch (error) {
         next(error);
       }

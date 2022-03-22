@@ -5,7 +5,7 @@ import { userAuthService } from "../services/userService";
 
 const userAuthRouter = Router();
 
-userAuthRouter.post("/user/register", async function (req, res, next) {
+userAuthRouter.post("/users/user", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(

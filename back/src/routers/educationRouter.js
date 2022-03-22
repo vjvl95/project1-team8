@@ -6,7 +6,7 @@ import { educationService } from "../services/educationService";
 const educationRouter = Router();
 educationRouter.use(login_required)
 
-educationRouter.post("/education/create", async (req, res, next) => {
+educationRouter.post("/educations/education", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
