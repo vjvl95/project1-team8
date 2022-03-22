@@ -1,39 +1,56 @@
-import {useEffect, useState} from 'react'
-import CertificateCard from "./CertificateCard"
+import { Card, Row, Button, Col } from "react-bootstrap";
+import CertificateList from "./CertificateList";
 import CertificateEditForm from "./CertificateEditForm";
-import {Card, Row, Col} from "react-bootstrap";
+import { useState, useEffect, useCallback } from "react";
 import * as Api from "../../api";
 
+function Certificate({ portfolioOwnerId, isEditable }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [certificateList, setCertificateList] = useState([]);
 
-function Certificate({portfolioOwnerId,isEditable}){
-    const [IsEditing, setIsEditing] = useState(false);
-    // useState 훅을 통해 user 상태를 생성함.
-    const [certificateList,setCertificateList]=useState([])
+  const getCertificateList = useCallback(() => {
+    Api.get(`certificatelist/${portfolioOwnerId}`).then((res) => {
+      const { data } = res;
+      setCertificateList(data);
+      setIsEditing(false);
+    });
+  }, [portfolioOwnerId]);
 
-    useEffect(()=>{
-      Api.get("certificatelist", portfolioOwnerId).then((res) =>setCertificateList(res.data));
-    },[])
-    
+  useEffect(() => {
+    getCertificateList();
+  }, [getCertificateList]);
 
-
-    return <Card>
-    <CertificateCard
-    setIsEditing={setIsEditing}
-    isEditable={isEditable}
-    portfolioOwnerId={portfolioOwnerId}
-    certificateList={certificateList}
-    setCertificateList={setCertificateList}
-    />
-
-    {IsEditing && (
-        <CertificateEditForm
-          setIsEditing={setIsAdding}
-          portfolioOwnerId={portfolioOwnerId}
-          setCertificateList={setCertificateList}
+  return (
+    <Card>
+      <Card.Body>
+        <Card.Title>자격증</Card.Title>
+        <CertificateList
+          isEditing={isEditing}
+          isEditable={isEditable}
+          certificateList={certificateList}
         />
-      )}
+        {isEditable && (
+          <Row className="mt-3 text-center text-info">
+            <Col sm={{ span: 20 }}>
+              <Button
+                variant="primary"
+                onClick={() => setIsEditing((state) => !state)}
+              >
+                +
+              </Button>
+            </Col>
+          </Row>
+        )}
+        {isEditing && (
+          <CertificateEditForm
+            setIsEditing={setIsEditing}
+            getCertificateList={getCertificateList}
+            portfolioOwnerId={portfolioOwnerId}
+          />
+        )}
+      </Card.Body>
     </Card>
-
+  );
 }
 
-export default Certificate
+export default Certificate;
