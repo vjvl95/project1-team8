@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Col, Row, Card } from "react-bootstrap";
 import EducationEditForm from "./EducationEditForm";
+import EditButton from "../EditButton";
 
 const EducationListItem = ({ id, school, major, position, isEditable }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -33,15 +34,7 @@ const EducationListItem = ({ id, school, major, position, isEditable }) => {
 
           {isEditable && (
             <Col className="col-lg-1">
-              <Button
-                variant="outline-info"
-                size="sm"
-                onClick={() => {
-                  setIsEditing(true);
-                }}
-              >
-                편집
-              </Button>
+              <EditButton setIsEditing={setIsEditing} />
             </Col>
           )}
         </Row>

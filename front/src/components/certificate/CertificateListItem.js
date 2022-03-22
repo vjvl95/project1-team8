@@ -1,6 +1,7 @@
 import { Col, Button, Card, Row } from "react-bootstrap";
 import { useState } from "react";
 import CertificateEditForm from "./CertificateEditForm";
+import EditButton from "../EditButton";
 
 function CertificateListItem({ id, isEditable, item }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -35,15 +36,7 @@ function CertificateListItem({ id, isEditable, item }) {
 
           {isEditable && (
             <Col className="col-lg-1">
-              <Button
-                variant="outline-info"
-                size="sm"
-                onClick={() => {
-                  setIsEditing(true);
-                }}
-              >
-                편집
-              </Button>
+              <EditButton setIsEditing={setIsEditing} />
             </Col>
           )}
         </Row>
