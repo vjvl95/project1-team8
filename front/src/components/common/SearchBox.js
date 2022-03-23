@@ -1,3 +1,4 @@
+import { IoIosSearch } from 'react-icons/io';
 import { useContext, useState } from 'react';
 import {
   InputGroup,
@@ -40,8 +41,18 @@ const SearchBox = () => {
     <Form onSubmit={onSubmit}>
       <InputGroup className='mt-1'>
         <FormControl placeholder='Search' name='search' />
-        <Button variant='outline-warning' id='button-addon' type='submit'>
-          🔍
+        <Button
+          variant='outline-warning'
+          id='button-addon'
+          type='submit'
+          style={{
+            color: 'black',
+            display: 'flex',
+            alignItems: 'center',
+            border: '1px solid gray',
+          }}
+        >
+          <IoIosSearch />
         </Button>
         <DropdownButton
           variant='outline-secondary'
