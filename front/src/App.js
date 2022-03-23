@@ -2,7 +2,7 @@ import React, { useState, useEffect, useReducer, createContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import * as Api from './api';
-import { loginReducer } from './reducer';
+import { loginReducer, searchReducer } from './reducer';
 
 import Header from './components/Header';
 import LoginForm from './components/user/LoginForm';
@@ -12,10 +12,16 @@ import Portfolio from './components/Portfolio';
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
+export const SearchContext = createContext(null);
 
 function App() {
-  const [userState, dispatch] = useReducer(loginReducer, {
+  const [userState, userDispatch] = useReducer(loginReducer, {
     user: null,
+  });
+
+  const [searchState, searchDispatch] = useReducer(searchReducer, {
+    category: 'all',
+    search: '',
   });
 
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -25,8 +31,8 @@ function App() {
       const res = await Api.get('user/current');
       const currentUser = res.data;
 
-      // dispatch 함수를 통해 로그인 성공 상태로 만듦.
-      dispatch({
+      // userDispatch 함수를 통해 로그인 성공 상태로 만듦.
+      userDispatch({
         type: 'LOGIN_SUCCESS',
         payload: currentUser,
       });
@@ -47,19 +53,21 @@ function App() {
   }
 
   return (
-    <DispatchContext.Provider value={dispatch}>
+    <DispatchContext.Provider value={{ userDispatch, searchDispatch }}>
       <UserStateContext.Provider value={userState}>
-        <Router>
-          <Header />
-          <Routes>
-            <Route path='/' exact element={<Portfolio />} />
-            <Route path='/login' element={<LoginForm />} />
-            <Route path='/register' element={<RegisterForm />} />
-            <Route path='/users/:userId' element={<Portfolio />} />
-            <Route path='/network' element={<Network />} />
-            <Route path='*' element={<Portfolio />} />
-          </Routes>
-        </Router>
+        <SearchContext.Provider value={searchState}>
+          <Router>
+            <Header />
+            <Routes>
+              <Route path='/' exact element={<Portfolio />} />
+              <Route path='/login' element={<LoginForm />} />
+              <Route path='/register' element={<RegisterForm />} />
+              <Route path='/users/:userId' element={<Portfolio />} />
+              <Route path='/network' element={<Network />} />
+              <Route path='*' element={<Portfolio />} />
+            </Routes>
+          </Router>
+        </SearchContext.Provider>
       </UserStateContext.Provider>
     </DispatchContext.Provider>
   );

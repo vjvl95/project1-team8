@@ -4,12 +4,13 @@ import { Container, Row } from 'react-bootstrap';
 
 import * as Api from '../../api';
 import UserCard from './UserCard';
-import { UserStateContext } from '../../App';
+import { SearchContext, UserStateContext } from '../../App';
 
 function Network() {
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
-  // useState 훅을 통해 users 상태를 생성함.
+  const searchState = useContext(SearchContext);
+
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -18,13 +19,23 @@ function Network() {
       navigate('/login');
       return;
     }
-    // "userlist" 엔드포인트로 GET 요청을 하고, users를 response의 data로 세팅함.
-    Api.get('userlist').then((res) => setUsers(res.data));
-  }, [userState, navigate]);
+    if (searchState.category === 'all' && searchState.search === '') {
+      Api.get('userlist').then((res) => setUsers(res.data));
+    } else {
+      Api.get(
+        'userlist',
+        `search?searchType=${searchState.category}&searchWord=${searchState.search}`
+      )
+        .then((res) => setUsers(res.data))
+        .catch((e) =>
+          alert(`${searchState.search}에 해당하는 검색 결과가 없습니다.  `)
+        );
+    }
+  }, [userState, navigate, searchState]);
 
   return (
     <Container fluid>
-      <Row xs='auto' className='jusify-content-center'>
+      <Row xs='auto' className='justify-content-center'>
         {users.map((user) => (
           <UserCard key={user.id} user={user} isNetwork />
         ))}
