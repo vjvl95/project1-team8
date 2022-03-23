@@ -1,45 +1,19 @@
 import { InputGroup, Button, Form, FormControl } from "react-bootstrap";
-import { useState, useEffect, useCallback } from "react";
-import * as API from "../../api";
 import { IoMdRefreshCircle } from "react-icons/io";
-import { CommentList } from "./CommentList";
 
-const CommentInput = () => {
-  const [inputValue, setInputValue] = useState("");
-  const [commentList, setCommentList] = useState([]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await API.post("comments/comment", {
-        comment: inputValue,
-      });
-      setInputValue("");
-      getCommentList();
-    } catch (err) {
-      console.log("채팅을 업로드 하는데 실패하였습니다.", err);
-    }
-  };
-
-  const getCommentList = useCallback(() => {
-    API.get("commentlist").then((res) => {
-      const { data } = res;
-      setCommentList(data);
-    });
-  }, []);
-
-  useEffect(() => {
-    getCommentList();
-  }, [getCommentList]);
-
+const CommentInput = ({
+  inputValue,
+  setInputValue,
+  getCommentList,
+  handleSubmit,
+}) => {
   return (
     <>
-      <CommentList commentList={commentList} />
       <Form>
         <InputGroup className="mb-3">
           <IoMdRefreshCircle
-            className="mt-2 me-2"
-            size="25"
+            className="mt-1"
+            size="30"
             cursor="pointer"
             onClick={getCommentList}
           />
