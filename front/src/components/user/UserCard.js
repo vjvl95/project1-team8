@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Card, Row, Button, Col } from "react-bootstrap";
+import {AiOutlineStar}  from "react-icons/ai"
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork,num ,color}) {
   const navigate = useNavigate();
@@ -41,7 +42,10 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork,num ,color}) {
             href=""
             onClick={() => navigate(`/users/${user.id}`)}
           >
+            <AiOutlineStar style={{fontSize:"30px", marginLeft:"90px"}}/>
+            <span style={{fontSize:"20px", marginLeft:"5px", marginTop:"15px"}}>150</span>
           </Card.Link>
+          
         )}
       </Card.Body>
     </Card>

@@ -16,7 +16,6 @@ function Portfolio() {
   const [portfolioOwner, setPortfolioOwner] = useState(null);
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const userState = useContext(UserStateContext);
-  const randomColor=['lightblue' , 'aquamarine','blanchedalmond','lightpink',' olivedrab','powderblue','cadetblue']
   const fetchPorfolioOwner = async (ownerId) => {
     const res = await Api.get('users', ownerId);
     const ownerData = res.data;
