@@ -72,8 +72,7 @@ class projectService {
 
     const deletedResult = await Project.deleteByProjectId({ projectId });
     if (!deletedResult) {
-      const errorMessage =
-        '해당하는 내용이 없습니다. 다시 한 번 확인해 주세요.';
+      const errorMessage = findError("프로젝트")
       return { errorMessage };
     }
 

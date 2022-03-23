@@ -106,6 +106,44 @@ class userAuthService {
       const newValue = toUpdate.description;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
+    
+    if (toUpdate.bookMarkList) {
+
+      const targetId = toUpdate.bookMarkList
+
+      const fieldToUpdate = "bookMarkList";
+      const targetField = "bookMarked";
+
+      const target = await User.findById({ user_id: targetId })
+      console.log(target)
+      if (toUpdate.bookMarked==="true") {
+        if (user.bookMarkList.includes(targetId)){
+          const errorMessage = "이미 즐겨찾기 등록한 유저입니다.";
+          return {errorMessage}
+        } else {
+          const newValue = [...user.bookMarkList, toUpdate.bookMarkList];
+          const targetNewValue = target.bookMarked + 1;
+          const result = await Promise.all([
+          User.update({ user_id, fieldToUpdate, newValue }),
+          User.update({ user_id: targetId, fieldToUpdate: targetField, newValue: targetNewValue})
+        ])
+        return result
+        }
+      } else if (toUpdate.bookMarked==="false") {
+        if (!user.bookMarkList.includes(targetId)){
+          const errorMessage = "즐겨찾기 목록에 없는 유저입니다."
+          return {errorMessage}
+        } else {
+          const newValue = user.bookMarkList.filter(user_id => user_id!==targetId);
+          const targetNewValue = target.bookMarked - 1;
+          const result = await Promise.all([
+            User.update({ user_id, fieldToUpdate, newValue }),
+            User.update({ user_id: targetId, fieldToUpdate: targetField, newValue: targetNewValue})
+          ]);
+          return result
+          }
+      }
+    }
 
     return user;
   }
@@ -134,6 +172,20 @@ class userAuthService {
     ]);
 
     return deletedResult;
+  }
+  static async getTop3() {
+    const fieldToSort = ["bookMarked"]
+    const sortType = [1]
+    let users = await User.sort({ fieldToSort, sortType });
+    users = users.filter(user=>user.bookMarked>0);
+
+    if (users===[]) {
+      const errorMessage =
+        "아직 아무도 북마크되지 않았습니다.";
+      return { errorMessage };
+    }
+
+    return users;
   }
 }
 

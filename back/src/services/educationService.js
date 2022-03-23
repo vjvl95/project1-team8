@@ -19,7 +19,7 @@ class educationService {
     // id가 education db에 존재 여부 확인
     const education = await Education.findByEducationId({ educationId });
     if (!education) {
-      const errorMessage = '잘못된 접근입니다. 다시 한 번 확인해 주세요.';
+      const errorMessage = findError("학력")
       return { errorMessage };
     }
     education.errorMessage = null;
@@ -79,8 +79,7 @@ class educationService {
 
     const deletedResult = await Education.deleteByEducationId({ educationId });
     if (!deletedResult) {
-      const errorMessage =
-        '해당하는 내용이 없습니다. 다시 한 번 확인해 주세요.';
+      const errorMessage = findError("학력")
       return { errorMessage };
     }
 
