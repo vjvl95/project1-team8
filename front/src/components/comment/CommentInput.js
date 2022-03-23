@@ -1,21 +1,28 @@
 import { InputGroup, Button, Form, FormControl } from "react-bootstrap";
 import { useState, useEffect } from "react";
 
-const ChattingInput = () => {
+const CommentInput = () => {
   const [inputValue, setInputValue] = useState("");
-  const [chattingLog, setChattingLog] = useState([]);
+  const [commentLog, setCommentLog] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setChattingLog((curr) => [...curr, inputValue]);
+
+    setCommentLog((curr) => [
+      {
+        key: new Date().getTime(),
+        value: inputValue,
+      },
+      ...curr,
+    ]);
     setInputValue("");
   };
 
-  const ChattingLog = () => {
+  const CommentLog = () => {
     return (
       <>
-        {chattingLog.map((chatting) => (
-          <div>{chatting}</div>
+        {commentLog.map((comment) => (
+          <div key={comment.key}>{comment.value}</div>
         ))}
       </>
     );
@@ -42,9 +49,9 @@ const ChattingInput = () => {
           </Button>
         </InputGroup>
       </Form>
-      <ChattingLog />
+      <CommentLog />
     </>
   );
 };
 
-export default ChattingInput;
+export default CommentInput;

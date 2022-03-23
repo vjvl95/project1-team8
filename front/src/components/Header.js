@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { UserStateContext, DispatchContext } from "../App";
-import Chatting from "./chatting/Chatting";
+import Comment from "./comment/Comment";
 
 function Header() {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ function Header() {
                 // setShow((state) => !state);
               }}
             >
-              <Chatting />
+              <Comment />
             </Nav.Link>
           </Nav.Item>
         </>

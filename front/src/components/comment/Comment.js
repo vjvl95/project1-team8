@@ -1,8 +1,8 @@
 import { Offcanvas, Button } from "react-bootstrap";
 import { useState } from "react";
-import ChattingInput from "./ChattingInput";
+import CommentInput from "./CommentInput";
 
-const Chatting = () => {
+const Comment = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow((state) => !state);
@@ -24,11 +24,11 @@ const Chatting = () => {
           <Offcanvas.Title>채팅방</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <ChattingInput />
+          <CommentInput />
         </Offcanvas.Body>
       </Offcanvas>
     </>
   );
 };
 
-export default Chatting;
+export default Comment;
