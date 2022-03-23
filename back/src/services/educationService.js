@@ -87,9 +87,5 @@ class educationService {
     return deletedResult;
   }
 
-  static async searchEducationList({ searchOpt }) {
-    const educationList = await Education.findBySearchWord({ searchOpt });
-    return educationList;
-  }
 }
 export { educationService };

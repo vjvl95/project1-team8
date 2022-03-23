@@ -110,24 +110,4 @@ projectRouter.delete('/projects/:id', async function (req, res, next) {
   }
 });
 
-projectRouter.get("/projectlist", async function (req, res, next) {
-    try {
-      // URI로부터 user_id를 추출함.
-      const { findKey, findWord } = req.query;
-      
-      const keyOptions = findKey.split(" ")
-      const searchOpt = keyOptions.map(v => {
-        const arr = {}
-        arr[v] = {$regex: findWord, '$options': "i"}
-        return arr
-      })
-
-      const foundList = await projectService.searchProjectList({ searchOpt });
-      res.status(200).send(foundList);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 export { projectRouter };
