@@ -2,14 +2,15 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
+import { headerError } from "../utils/errorMessages"
 
 const userAuthRouter = Router();
 
-userAuthRouter.post("/user/register", async function (req, res, next) {
+userAuthRouter.post("/users/user", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
+        headerError
       );
     }
 
@@ -29,13 +30,13 @@ userAuthRouter.post("/user/register", async function (req, res, next) {
       throw new Error(newUser.errorMessage);
     }
 
-    res.status(201).json(newUser);
+    res.status(201).end();
   } catch (error) {
     next(error);
   }
 });
 
-userAuthRouter.post("/user/login", async function (req, res, next) {
+userAuthRouter.post('/user/login', async function (req, res, next) {
   try {
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
@@ -55,7 +56,7 @@ userAuthRouter.post("/user/login", async function (req, res, next) {
 });
 
 userAuthRouter.get(
-  "/userlist",
+  '/userlist',
   login_required,
   async function (req, res, next) {
     try {
@@ -69,7 +70,7 @@ userAuthRouter.get(
 );
 
 userAuthRouter.get(
-  "/user/current",
+  '/user/current',
   login_required,
   async function (req, res, next) {
     try {
@@ -91,7 +92,7 @@ userAuthRouter.get(
 );
 
 userAuthRouter.put(
-  "/users/:id",
+  '/users/:id',
   login_required,
   async function (req, res, next) {
     try {
@@ -102,8 +103,10 @@ userAuthRouter.put(
       const email = req.body.email ?? null;
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
+      const bookMarkList = null;
+      const bookMarked = null;
 
-      const toUpdate = { name, email, password, description };
+      const toUpdate = { name, email, password, description, bookMarkList, bookMarked };
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
       const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
@@ -120,7 +123,7 @@ userAuthRouter.put(
 );
 
 userAuthRouter.get(
-  "/users/:id",
+  '/users/:id',
   login_required,
   async function (req, res, next) {
     try {
@@ -139,12 +142,89 @@ userAuthRouter.get(
 );
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
+userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {
   res
     .status(200)
     .send(
       `안녕하세요 ${req.currentUserId}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
     );
 });
+
+// :id는 user_id 임.
+userAuthRouter.delete('/users/:id', async function (req, res, next) {
+  try {
+    const user_id = req.params.id;
+    const deletedResult = await userAuthService.deleteUser({ user_id });
+
+    if (deletedResult.errorMessage) {
+      throw new Error(deletedResult.errorMessage);
+    }
+
+    res.status(200).end();
+  } catch (error) {
+    next(error);
+  }
+});
+
+userAuthRouter.put("/user/bookmark", login_required, async function (req, res, next) {
+  try {
+    const me = req.currentUserId
+    const { target, toggle } = req.body
+    
+    const name = null;
+    const email = null;
+    const password = null;
+    const description = null;
+    const bookMarkList = target;
+    const bookMarked = toggle;
+
+    const result = await userAuthService.setUser({
+      user_id: me,
+      toUpdate: { name, email, password, description, bookMarkList, bookMarked }
+    })
+
+    if (result.errorMessage) {
+      throw new Error(result.errorMessage);
+    }
+
+    res.status(200).end();
+    
+  } catch (error) {
+    next(error);
+  }
+});
+
+userAuthRouter.get("/user/bookmarklist", login_required, async function (req, res, next) {
+  try {
+    const user_id = req.currentUserId
+
+    const User = await userAuthService.getUserInfo({ user_id });
+    const bookMarkList = User.bookMarkList;
+    res.status(200).json(bookMarkList);
+  } catch (error) {
+    next(error);
+  }
+})
+
+userAuthRouter.get("/users/:id/bookmarkcount", login_required, async function (req, res, next) {
+  try {
+    const user_id = req.params.id
+
+    const User = await userAuthService.getUserInfo({ user_id });
+    const bookMarkCount = User.bookMarked;
+    res.status(200).json(bookMarkCount);
+  } catch (error) {
+    next(error);
+  }
+})
+
+userAuthRouter.get("/user/bookmarktop3", login_required, async function (req, res, next) {
+  try {
+    const result = await userAuthService.getTop3();
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+})
 
 export { userAuthRouter };

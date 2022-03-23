@@ -38,10 +38,6 @@ function Portfolio() {
     }
   }, [params, userState, navigate]);
 
-  // useEffect(() => {
-  //   console.log(portfolioOwner?.id);
-  // }, [portfolioOwner]);
-
   if (!isFetchCompleted) {
     return 'loading...';
   }

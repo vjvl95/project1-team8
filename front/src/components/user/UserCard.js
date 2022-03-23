@@ -1,43 +1,37 @@
-import { useNavigate } from "react-router-dom";
-import { Card, Row, Button, Col } from "react-bootstrap";
-import {AiOutlineStar}  from "react-icons/ai"
+import { useNavigate } from 'react-router-dom';
+import { Card, Row, Col } from 'react-bootstrap';
+import EditButton from '../EditButton';
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork,num ,color}) {
   const navigate = useNavigate();
   return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem",backgroundColor:color }}>
-      <Card.Title style={{fontWeight:"bolder",textAlign:"center", marginTop:"10px"}} >{num}</Card.Title>
+    <Card className='mb-2 ms-3 mr-5' style={{ width: '18rem' }}>
       <Card.Body>
-        <Row className="justify-content-md-center">
+        <Row className='justify-content-md-center'>
           <Card.Img
-            style={{ width: "10rem", height: "8rem" }}
-            className="mb-3"
-            src="http://placekitten.com/200/200"
-            alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
+            style={{ width: '10rem', height: '8rem' }}
+            className='mb-3'
+            src='http://placekitten.com/200/200'
+            alt='랜덤 고양이 사진 (http://placekitten.com API 사용)'
           />
         </Row>
         <Card.Title>{user?.name}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
+        <Card.Subtitle className='mb-2 text-muted'>{user?.email}</Card.Subtitle>
         <Card.Text>{user?.description}</Card.Text>
 
         {isEditable && (
           <Col>
-            <Row className="mt-3 text-center text-info">
+            <Row className='mt-3 text-center text-info'>
               <Col sm={{ span: 20 }}>
-                <Button
-                  variant="outline-info"
-                  size="sm"
-                  onClick={() => setIsEditing(true)}
-                >
-                  편집
-                </Button>
+                <EditButton setIsEditing={setIsEditing} />
               </Col>
             </Row>
           </Col>
         )}
-      {!isEditable && !isNetwork &&<Card.Link
-            className="mt-3 stretched-link"
-            href=""
+        {isNetwork && (
+          <Card.Link
+            className='mt-3'
+            href='#'
             onClick={() => navigate(`/users/${user.id}`)}
           >
             <AiOutlineStar style={{fontSize:"30px", marginLeft:"90px"}}/>

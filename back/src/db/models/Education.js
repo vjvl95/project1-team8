@@ -7,18 +7,18 @@ class Education {
   }
 
   static async findByUserId({ user_id }) {
-    const educationlist = await EducationModel.find({ user_id: user_id });
-    return educationlist;
+    const educationList = await EducationModel.find({ user_id: user_id });
+    return educationList;
   }
 
-  static async findById({ id }) {
-    const education = await EducationModel.findOne({ id: id });
+  static async findByEducationId({ educationId }) {
+    const education = await EducationModel.findOne({ id: educationId });
     return education;
   }
 
 
-  static async update({ id, fieldToUpdate, newValue }) {
-    const filter = { id: id };
+  static async update({ educationId, fieldToUpdate, newValue }) {
+    const filter = { id: educationId };
     const update = { [fieldToUpdate]: newValue };
     const option = { returnOriginal: false };
 
@@ -28,6 +28,22 @@ class Education {
       option
     );
     return updatedEducation;
+  }
+
+  static async deleteByEducationId({ educationId }) {
+    const result = await EducationModel.deleteOne({ id: educationId });
+    const deletedResult = (result.deletedCount == 1) //Boolean
+    return deletedResult;
+  }
+
+  static async deleteByUserId({ user_id }) {
+    const result = await EducationModel.deleteMany({ user_id });
+    return result;
+  }
+  
+  static async findBySearchWord({ searchOpt }) {
+    const educationList = await EducationModel.find({ $or: searchOpt });
+    return educationList;
   }
 }
 

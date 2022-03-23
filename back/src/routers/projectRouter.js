@@ -2,15 +2,16 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { projectService } from "../services/projectService";
+import { headerError } from "../utils/errorMessages"
 
 const projectRouter = Router();
-projectRouter.use(login_required)
+projectRouter.use(login_required);
 
-projectRouter.post("/project/create", async (req, res, next) => {
+projectRouter.post("/projects/project", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
+        headerError
       );
     }
 
@@ -34,16 +35,16 @@ projectRouter.post("/project/create", async (req, res, next) => {
       throw new Error(newProject.errorMessage);
     }
 
-    res.status(201).json(newProject);
+    res.status(201).end();
   } catch (error) {
     next(error);
   }
 });
 
 projectRouter.get('/projects/:id', async (req, res, next) => {
-  const { id } = req.params
+  const projectId = req.params.id;
   try {
-    const foundProject = await projectService.getProject({ id })
+    const foundProject = await projectService.getProject({ projectId });
     if (foundProject.errorMessage) {
       throw new Error(foundProject.errorMessage);
     }
@@ -52,12 +53,12 @@ projectRouter.get('/projects/:id', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 projectRouter.put('/projects/:id', async (req, res, next) => {
-  const { id } = req.params
+  const projectId = req.params.id;
   try {
-    const foundProject = await projectService.getProject({ id })
+    const foundProject = await projectService.getProject({ projectId });
     if (foundProject.errorMessage) {
       throw new Error(foundProject.errorMessage);
     }
@@ -68,29 +69,65 @@ projectRouter.put('/projects/:id', async (req, res, next) => {
 
     const toUpdate = { title, description, from_date, to_date };
 
-    const updatedProject = await projectService.setProject({ id, toUpdate });
+    const updatedProject = await projectService.setProject({
+      projectId,
+      toUpdate,
+    });
 
     if (updatedProject.errorMessage) {
       throw new Error(updatedProject.errorMessage);
     }
 
     res.status(200).json(updatedProject);
-
   } catch (error) {
     next(error);
   }
-})
+});
 
 projectRouter.get('/projectlist/:user_id', async (req, res, next) => {
-  const { user_id } = req.params
+  const { user_id } = req.params;
   try {
-    const foundList = await projectService.getProjectList({ user_id })
+    const foundList = await projectService.getProjectList({ user_id });
 
     res.status(200).json(foundList);
-
   } catch (error) {
     next(error);
   }
-})
+});
+
+projectRouter.delete('/projects/:id', async function (req, res, next) {
+  try {
+    const projectId = req.params.id;
+    const deletedResult = await projectService.deleteProject({ projectId });
+
+    if (deletedResult.errorMessage) {
+      throw new Error(deletedResult.errorMessage);
+    }
+
+    res.status(200).end();
+  } catch (error) {
+    next(error);
+  }
+});
+
+projectRouter.get("/projectlist", async function (req, res, next) {
+    try {
+      // URI로부터 user_id를 추출함.
+      const { findKey, findWord } = req.query;
+      
+      const keyOptions = findKey.split(" ")
+      const searchOpt = keyOptions.map(v => {
+        const arr = {}
+        arr[v] = {$regex: findWord, '$options': "i"}
+        return arr
+      })
+
+      const foundList = await projectService.searchProjectList({ searchOpt });
+      res.status(200).send(foundList);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { projectRouter };

@@ -1,8 +1,9 @@
-import { Card, Row, Button, Col } from 'react-bootstrap';
-import AwardList from './AwardList';
-import AwardEditForm from './AwardEditForm';
-import { useState, useEffect, useCallback } from 'react';
-import * as Api from '../../api';
+import { Card, Row, Col } from "react-bootstrap";
+import AwardList from "./AwardList";
+import AwardEditForm from "./AwardEditForm";
+import { useState, useEffect, useCallback } from "react";
+import * as Api from "../../api";
+import PlusButton from "../PlusButton";
 
 function Award({ portfolioOwnerId, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -28,16 +29,12 @@ function Award({ portfolioOwnerId, isEditable }) {
           isEditing={isEditing}
           isEditable={isEditable}
           awardList={awardList}
+          getAwardList={getAwardList}
         />
         {isEditable && (
-          <Row className='mt-3 text-center text-info'>
+          <Row className="mt-3 text-center text-info">
             <Col sm={{ span: 20 }}>
-              <Button
-                variant='primary'
-                onClick={() => setIsEditing((state) => !state)}
-              >
-                +
-              </Button>
+              <PlusButton setIsEditing={setIsEditing} />
             </Col>
           </Row>
         )}

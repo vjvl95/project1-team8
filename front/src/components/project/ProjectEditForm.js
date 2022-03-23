@@ -1,77 +1,113 @@
-import { Button, Form, Card, Col, Row } from 'react-bootstrap';
-import React, {useState,useEffect} from 'react'
-import * as Api from '../../api'
+import { useState } from "react";
+import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
+import * as Api from "../../api";
 
+function ProjectEditForm({
+  portfolioOwnerId,
+  itemId,
+  itemTitle,
+  itemDescription,
+  itemFromDate,
+  itemToDate,
+  setNewDescription,
+  setNewTitle,
+  setNewFromDate,
+  setNewToDate,
+  setIsEditing,
+  getProjectList,
+}) {
+  const [title, setTitle] = useState(itemTitle || "");
+  const [description, setDescription] = useState(itemDescription || "");
+  const [fromDate, setFromDate] = useState(itemFromDate || new Date());
+  const [toDate, setToDate] = useState(itemToDate || new Date());
 
-function ProjectEditForm({thisProject,setThisProject,id,setIsEditing,portfolioOwnerId,setProjectList})
-
-{
-  
-    const [edit_from_date,setEdit_from_date]=useState(new Date(thisProject.from_date))
-    const [edit_to_date,setEdit_to_date]=useState(new Date(thisProject.to_date))
-
-    const  handleSubmit = async (portfolioOwnerId,e) => {
-        e.preventDefault();
-           try
-           { await Api.put(`projects/${id}`, {
-            title:thisProject.title,
-            description:thisProject.description,
-            from_date : edit_from_date.toISOString().substring(0, 10),
-            to_date : edit_to_date.toISOString().substring(0, 10)
-          })     
-           }
-        catch(e){
-          console.log("수정에 실패했습니다")
-        }
-  
-        const res=await Api.get("projectlist",portfolioOwnerId)
-        setProjectList(res.data)
-        setIsEditing(false)
+  const handlePutSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await Api.put(`projects/${itemId}`, {
+        title,
+        description,
+        from_date: fromDate.toISOString().substring(0, 10),
+        to_date: toDate.toISOString().substring(0, 10),
+      });
+      setNewTitle(title);
+      setNewDescription(description);
+      setNewFromDate(fromDate);
+      setNewToDate(toDate);
+      setIsEditing(false);
+    } catch (err) {
+      console.log("프로젝트를 수정하는데 실패하였습니다", err);
     }
+  };
 
-    return <>
-    <Card.Body>
-        <Form onSubmit={(e) => {handleSubmit(portfolioOwnerId,e)}}>
-          <Form.Group controlId='userEditTitle' className='mb-3'>
-           <Form.Control
-              type='text'
-              placeholder='프로젝트 제목'
-              value={thisProject.title}
-              onChange={(e) => setThisProject({...thisProject,
-                title:e.target.value})}
+  const handleCreateSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await Api.post(`projects/project`, {
+        user_id: portfolioOwnerId,
+        title,
+        description,
+        from_date: fromDate.toISOString().substring(0, 10),
+        to_date: toDate.toISOString().substring(0, 10),
+      });
+      getProjectList();
+    } catch (err) {
+      console.log("프로젝트를 입력하는데 실패하였습니다", err);
+    }
+  };
+
+  return (
+    <>
+      <Card.Body>
+        <Form onSubmit={itemId ? handlePutSubmit : handleCreateSubmit}>
+          <Form.Group controlId="useEditName" className="mb-3">
+            <Form.Control
+              type="text"
+              placeholder="프로젝트 제목"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </Form.Group>
 
-          <Form.Group controlId='userEditdescription' className='mb-3'>
+          <Form.Group controlId="userEditEmail" className="mb-3">
             <Form.Control
-            type='description'
-            placeholder='상세내역'
-            value={thisProject.description}
-            onChange={(e) => setThisProject({...thisProject,
-              description:e.target.value})}
-          />
+              type="description"
+              placeholder="상세내역"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </Form.Group>
 
-          <Form.Group className='mt-3 row'>
-          <Col className="col-auto"> 
-            <DatePicker selected={edit_from_date} onChange={(date) => setEdit_from_date(date)}/>
-          </Col>
-          <Col className="col-auto">
-         <DatePicker selected={edit_to_date}  onChange={(date) => setEdit_to_date(date)}/>
-          </Col>
+          <Form.Group className="mt-3 row">
+            <Col className="col-auto">
+              <DatePicker
+                selected={fromDate}
+                onChange={(date) => setFromDate(date)}
+              />
+            </Col>
+            <Col className="col-auto">
+              <DatePicker
+                selected={toDate}
+                onChange={(date) => setToDate(date)}
+              />
+            </Col>
           </Form.Group>
-          <Form.Group as={Row} className='mt-3 text-center'>
-          <Col sm={{ span: 20 }}>
-               <Button variant='primary' type='submit'  className='me-3'>
+
+          <Form.Group as={Row} className="mt-3 text-center">
+            <Col sm={{ span: 20 }}>
+              <Button variant="primary" type="submit" className="me-3">
                 확인
               </Button>
-              <Button variant='secondary' onClick={() => setIsEditing(false)}>취소</Button>
-          </Col>
+              <Button variant="secondary" onClick={() => setIsEditing(false)}>
+                취소
+              </Button>
+            </Col>
           </Form.Group>
         </Form>
       </Card.Body>
     </>
+  );
 }
 
-export default ProjectEditForm
+export default ProjectEditForm;

@@ -1,26 +1,27 @@
-// import AwardEditForm from "./AwardEditForm";
 import { useState } from "react";
 import { Col, Row, Button } from "react-bootstrap";
-import AwardEditForm from "./AwardEditForm";
+import EducationEditForm from "./EducationEditForm";
 import EditButton from "../EditButton";
 import * as API from "../../api";
 
-const AwardListItem = ({
+const EducationListItem = ({
   id,
-  title,
-  description,
+  school,
+  major,
+  position,
   isEditable,
-  getAwardList,
+  getEducationList,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [newTitle, setNewTitle] = useState(title);
-  const [newDescription, setNewDescription] = useState(description);
+  const [newSchool, setNewSchool] = useState(school);
+  const [newMajor, setNewMajor] = useState(major);
+  const [newPosition, setNewPostion] = useState(position);
 
   const HandleDelete = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
-        API.delete(`awards/${id}`);
-        getAwardList();
+        API.delete(`educations/${id}`);
+        getEducationList();
       } catch (err) {
         console.log("삭제 실패하였습니다.", err);
       }
@@ -32,20 +33,24 @@ const AwardListItem = ({
   return (
     <>
       {isEditing ? (
-        <AwardEditForm
+        <EducationEditForm
           setIsEditing={setIsEditing}
           itemId={id}
-          itemTitle={newTitle}
-          itemDescription={newDescription}
-          setNewTitle={setNewTitle}
-          setNewDescription={setNewDescription}
+          itemSchool={newSchool}
+          itemMajor={newMajor}
+          itemPosition={newPosition}
+          setNewSchool={setNewSchool}
+          setNewMajor={setNewMajor}
+          setNewPosition={setNewPostion}
         />
       ) : (
         <Row className="align-items-center mb-3">
           <Col>
-            <span>{newTitle}</span>
+            <span>{newSchool}</span>
             <br />
-            <span className="text-muted">{newDescription}</span>
+            <span className="text-muted">
+              {newMajor} ({newPosition})
+            </span>
           </Col>
 
           {isEditable && (
@@ -66,4 +71,4 @@ const AwardListItem = ({
   );
 };
 
-export default AwardListItem;
+export default EducationListItem;
