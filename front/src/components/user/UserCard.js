@@ -3,6 +3,7 @@ import { Card, Row, Button, Col } from "react-bootstrap";
 import {AiOutlineStar,AiTwotoneStar}  from "react-icons/ai"
 import {useEffect, useState} from "react"
 import * as Api from "../../api";
+import {BiRefresh} from "react-icons/bi"
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork,num ,color,bookmarklist}) {
   const navigate = useNavigate();
@@ -16,10 +17,14 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork,num ,color,bookmar
     })
 
     setToggle(!toggle)
+    toggle ?setCount(count-1):setCount(count+1)
   }
 
   useEffect(()=>{
-    bookmarklist.includes(user.id) ?setToggle(true): setToggle(false)
+    if(bookmarklist!==undefined){
+      bookmarklist.includes(user.id) ?setToggle(true): setToggle(false)
+
+    }
     async function getCount(){
       const res=await Api.get(`users/${user.id}/bookmarkcount`)
       console.log(res)

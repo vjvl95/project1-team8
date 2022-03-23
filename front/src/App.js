@@ -7,6 +7,7 @@ import { loginReducer } from './reducer';
 import Header from './components/Header';
 import LoginForm from './components/user/LoginForm';
 import Network from './components/user/Network';
+import Bookmark from './components/user/Bookmark';
 import RegisterForm from './components/user/RegisterForm';
 import Portfolio from './components/Portfolio';
 
@@ -57,7 +58,7 @@ function App() {
             <Route path='/register' element={<RegisterForm />} />
             <Route path='/users/:userId' element={<Portfolio />} />
             <Route path='/network' element={<Network />} />
-            <Route path='/bookmark' element={<Network />} />
+            <Route path='/bookmark' element={<Bookmark />} />
             <Route path='*' element={<Portfolio />} />
           </Routes>
         </Router>
