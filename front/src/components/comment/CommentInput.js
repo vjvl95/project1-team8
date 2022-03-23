@@ -9,13 +9,15 @@ const CommentInput = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    await API.post("comments/comment", {
-      comment: inputValue,
-    });
-
-    setInputValue("");
-    getCommentList();
+    try {
+      await API.post("comments/comment", {
+        comment: inputValue,
+      });
+      setInputValue("");
+      getCommentList();
+    } catch (err) {
+      console.log("채팅을 업로드 하는데 실패하였습니다.", err);
+    }
   };
 
   const getCommentList = useCallback(() => {
@@ -41,6 +43,7 @@ const CommentInput = () => {
 
   return (
     <>
+      <CommentList />
       <Form>
         <InputGroup className="mb-3">
           <IoMdRefreshCircle
@@ -65,7 +68,6 @@ const CommentInput = () => {
           </Button>
         </InputGroup>
       </Form>
-      <CommentList />
     </>
   );
 };

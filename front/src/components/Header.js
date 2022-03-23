@@ -44,10 +44,9 @@ function Header() {
           </Nav.Item>
           <Nav.Item>
             <Nav.Link
-              onClick={(e) => {
-                e.preventDefault();
-                // setShow((state) => !state);
-              }}
+            // onClick={(e) => {
+            //   e.preventDefault();
+            // }}
             >
               <Comment />
             </Nav.Link>
