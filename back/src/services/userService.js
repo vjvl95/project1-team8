@@ -173,6 +173,7 @@ class userAuthService {
 
     return deletedResult;
   }
+
   static async getTop3() {
     const fieldToSort = ["bookMarked"]
     const sortType = [1]
@@ -186,6 +187,37 @@ class userAuthService {
     }
 
     return users;
+  }
+
+  static async searchUserList({ searchType, searchWord }) {
+    let userAll = []
+    if (searchType === "all") {
+      const userList1 = await Award.findBySearchWord({ searchWord })
+      const userList2 = await Certificate.findBySearchWord({ searchWord })
+      const userList3 = await Education.findBySearchWord({ searchWord })
+      const userList4 = await Project.findBySearchWord({ searchWord })
+      // user 합치기
+      userAll = [...userList1, ...userList2, ...userList3, ...userList4]
+    }
+    else if (searchType === "award") {
+      userAll = await Award.findBySearchWord({ searchWord })
+    } else if (searchType === "certificate") {
+      userAll = await Certificate.findBySearchWord({ searchWord })
+    } else if (searchType === "education") {
+      userAll = await Education.findBySearchWord({ searchWord })
+    } else if (searchType === "project") {
+      userAll = await Project.findBySearchWord({ searchWord })
+    }
+
+    const set = new Set(userAll);
+    const userArr = [...set]
+    // [ {id: user_id}, {id: user_id} ... ] 만들기
+    const userIdList = await userArr.map(v => {
+      return {id: v}
+    })
+    const userList = await User.findByIdList({ userIdList })
+
+    return userList;    
   }
 }
 

@@ -39,10 +39,17 @@ class Award {
     const result = await AwardModel.deleteMany({ user_id });
     return result;
   }
-  
-  static async findBySearchWord({ searchOpt }) {
+
+  static async findBySearchWord({ searchWord }) { 
+    const searchKey = ['title', 'description']
+    const searchOpt = searchKey.map(v => {
+      const arr = {}
+      arr[v] = {$regex: searchWord, '$options': "i"}
+      return arr
+    })
     const awardList = await AwardModel.find({ $or: searchOpt });
-    return awardList;
+    const userIdList = await awardList.map(v => v.user_id)
+    return userIdList;
   }
 
 }

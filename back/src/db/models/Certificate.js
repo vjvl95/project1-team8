@@ -39,11 +39,19 @@ class Certificate {
     const result = await CertificateModel.deleteMany({ user_id });
     return result;
   }
-  
-  static async findBySearchWord({ searchOpt }) {
+
+  static async findBySearchWord({ searchWord }) {
+    const searchKey = ['title', 'description']
+    const searchOpt = searchKey.map(v => {
+      const arr = {}
+      arr[v] = {$regex: searchWord, '$options': "i"}
+      return arr
+    })
     const certificateList = await CertificateModel.find({ $or: searchOpt });
-    return certificateList;
+    const userIdList = await certificateList.map(v => v.user_id)
+    return userIdList;
   }
+  
 }
 
 export { Certificate };

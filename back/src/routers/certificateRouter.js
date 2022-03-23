@@ -118,29 +118,4 @@ certificateRouter.delete('/certificates/:id', async function (req, res, next) {
   }
 });
 
-certificateRouter.get(
-  "/certificatelist",
-  async function (req, res, next) {
-    try {
-      // URI로부터 user_id를 추출함.
-      const { findKey, findWord } = req.query;
-      // 해당 user의 전체 수상내역 목록을 얻음
-      
-      const keyOptions = findKey.split(" ")
-      // console.log("mapping전:", keyOptions)
-      const searchOpt = keyOptions.map(v => {
-        const arr = {}
-        arr[v] = {$regex: findWord, '$options': "i"}
-        return arr
-      })
-      // console.log("mapping 후 : ", searchOpt)
-
-      const foundList = await certificateService.searchCertificateList({ searchOpt });
-      res.status(200).send(foundList);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 export { certificateRouter };
