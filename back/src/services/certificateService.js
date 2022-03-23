@@ -66,8 +66,7 @@ class certificateService {
 
     const deletedResult = await Certificate.deleteByCertificateId({ certificateId })
     if (!deletedResult) {
-      const errorMessage =
-        "해당하는 자격증내역이 없습니다. 다시 한 번 확인해 주세요.";
+      const errorMessage = findError("자격증")
       return { errorMessage };
     }
 
