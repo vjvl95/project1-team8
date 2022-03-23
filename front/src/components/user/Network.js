@@ -10,21 +10,24 @@ function Network() {
   const userState = useContext(UserStateContext);
   // useState 훅을 통해 users 상태를 생성함.
   const [users, setUsers] = useState([]);
+  const [top3,setTop3]=useState([])
+  const [bookmarklist,setBookmarklist]=useState([])
   const randomColor=['lightblue' , 'aquamarine','blanchedalmond','lightpink',' gainsboro','powderblue','azure','papayawhip','navajowhite','lavender','honeydew','lightcyan','pink','lavenderblush']
 
   useEffect(  () => {
-    // 만약 전역 상태의 user가 null이라면, 로그인 페이지로 이동함.
     if (!userState.user) {
       navigate('/login');
       return;
     }
-    // "userlist" 엔드포인트로 GET 요청을 하고, users를 response의 data로 세팅함.
     async function getUser(){
+      const top3=await Api.get('user/bookmarktop3')
       const res= await Api.get('userlist')
-      console.log(res)
+      const bookmarklist=await Api.get('user/bookmarklist')
 
+      setBookmarklist(bookmarklist.data)
       setUsers(res.data)
-      console.log(users)
+      setTop3(top3.data)
+
   }
   getUser()
   }, [userState, navigate]);
@@ -34,15 +37,15 @@ function Network() {
       <div style={{marginLeft:"20%",marginRight:"20%",marginBottom:"70px"}}>
         <h1 style={{marginBottom:"30px", marginTop:"20px"}}>인기 많은 포토폴리오</h1>
             <Row className="justify-content-between">
-            {<UserCard key={1} user={users[1]} isNetwork num={1}/>}
-            {<UserCard key={2} user={users[1]} isNetwork num={2}/>}
-            {<UserCard key={3} user={users[1]} isNetwork num={3}/>}
+            {top3.map((top,index)=>
+            (
+            <UserCard key={top.id} user={top} isNetwork num={index+1} bookmarklist={bookmarklist}/>
+            ))}
             </Row>
       </div>
       <Row className='jusify-content-center' style={{marginLeft:"5%"}}>
         {users.map((user,index) => (
-  
-          <UserCard key={user.id} user={user} color={randomColor[index%14]} isNetwork />
+          <UserCard key={user.id} user={user} color={randomColor[index%14]} isNetwork bookmarklist={bookmarklist}/>
         ))}
       </Row>
     </Container>

@@ -116,7 +116,7 @@ class userAuthService {
 
       const target = await User.findById({ user_id: targetId })
       console.log(target)
-      if (toUpdate.bookMarked==="true") {
+      if (toUpdate.bookMarked) {
         if (user.bookMarkList.includes(targetId)){
           const errorMessage = "이미 즐겨찾기 등록한 유저입니다.";
           return {errorMessage}
@@ -129,7 +129,7 @@ class userAuthService {
         ])
         return result
         }
-      } else if (toUpdate.bookMarked==="false") {
+      } else if (!toUpdate.bookMarked) {
         if (!user.bookMarkList.includes(targetId)){
           const errorMessage = "즐겨찾기 목록에 없는 유저입니다."
           return {errorMessage}
@@ -178,7 +178,7 @@ class userAuthService {
     const sortType = [1]
     let users = await User.sort({ fieldToSort, sortType });
     users = users.filter(user=>user.bookMarked>0);
-
+    users=users.splice(0,3)
     if (users===[]) {
       const errorMessage =
         "아직 아무도 북마크되지 않았습니다.";
