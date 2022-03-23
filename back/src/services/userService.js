@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 import { existError, matchError, findError } from "../utils/errorMessages"
+import { searchFunc } from "../utils/serviceFuction"
 
 class userAuthService {
   static async addUser({ name, email, password }) {
@@ -192,21 +193,27 @@ class userAuthService {
   static async searchUserList({ searchType, searchWord }) {
     let userAll = []
     if (searchType === "all") {
-      const userList1 = await Award.findBySearchWord({ searchWord })
-      const userList2 = await Certificate.findBySearchWord({ searchWord })
-      const userList3 = await Education.findBySearchWord({ searchWord })
-      const userList4 = await Project.findBySearchWord({ searchWord })
+      let searchOpt = searchFunc(searchType, searchWord)
+      const userList1 = await Award.findBySearchWord({ searchOpt })
+      const userList2 = await Certificate.findBySearchWord({ searchOpt })
+      const userList3 = await Project.findBySearchWord({ searchOpt })
+      searchOpt = searchFunc("education", searchWord)
+      const userList4 = await Education.findBySearchWord({ searchOpt })
       // user 합치기
       userAll = [...userList1, ...userList2, ...userList3, ...userList4]
     }
     else if (searchType === "award") {
-      userAll = await Award.findBySearchWord({ searchWord })
+      const searchOpt = searchFunc(searchType, searchWord)
+      userAll = await Award.findBySearchWord({ searchOpt })
     } else if (searchType === "certificate") {
-      userAll = await Certificate.findBySearchWord({ searchWord })
+      const searchOpt = searchFunc(searchType, searchWord)
+      userAll = await Certificate.findBySearchWord({ searchOpt })
     } else if (searchType === "education") {
-      userAll = await Education.findBySearchWord({ searchWord })
+      const searchOpt = searchFunc(searchType, searchWord)
+      userAll = await Education.findBySearchWord({ searchOpt })
     } else if (searchType === "project") {
-      userAll = await Project.findBySearchWord({ searchWord })
+      const searchOpt = searchFunc(searchType, searchWord)
+      userAll = await Project.findBySearchWord({ searchOpt })
     }
 
     const set = new Set(userAll);

@@ -41,13 +41,7 @@ class Education {
     return result;
   }
 
-  static async findBySearchWord({ searchWord }) { 
-    const searchKey = ['school', 'major', 'position']
-    const searchOpt = searchKey.map(v => {
-      const arr = {}
-      arr[v] = {$regex: searchWord, '$options': "i"}
-      return arr
-    })
+  static async findBySearchWord({ searchOpt }) { 
     const educationList = await EducationModel.find({ $or: searchOpt });
     const userIdList = await educationList.map(v => v.user_id)
     return userIdList;

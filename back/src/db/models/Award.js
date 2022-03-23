@@ -40,13 +40,7 @@ class Award {
     return result;
   }
 
-  static async findBySearchWord({ searchWord }) { 
-    const searchKey = ['title', 'description']
-    const searchOpt = searchKey.map(v => {
-      const arr = {}
-      arr[v] = {$regex: searchWord, '$options': "i"}
-      return arr
-    })
+  static async findBySearchWord({ searchOpt }) { 
     const awardList = await AwardModel.find({ $or: searchOpt });
     const userIdList = await awardList.map(v => v.user_id)
     return userIdList;

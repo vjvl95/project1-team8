@@ -41,13 +41,7 @@ class Project {
     return result;
   }
 
-  static async findBySearchWord({ searchWord }) { 
-    const searchKey = ['title', 'description']
-    const searchOpt = searchKey.map(v => {
-      const arr = {}
-      arr[v] = {$regex: searchWord, '$options': "i"}
-      return arr
-    })
+  static async findBySearchWord({ searchOpt }) { 
     const projectList = await ProjectModel.find({ $or: searchOpt });
     const userIdList = await projectList.map(v => v.user_id)
     return userIdList;
