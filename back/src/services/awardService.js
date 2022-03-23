@@ -66,9 +66,14 @@ class awardService {
     return deletedResult;
   }
   
-  static async searchAwardList({ searchOpt }) {
-    const awardList = await Award.findBySearchWord({ searchOpt });
-    return awardList;
+  static async searchAwardList(findKey, findWord) {
+    const conditions = findKey.split(" ").map(v => {
+      return { [v]: {$regex: findWord} }
+    })
+
+    const search = { $or: conditions }
+
+    return await Award.findBySearchWord(search);;
   }
 
 }
