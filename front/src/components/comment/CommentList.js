@@ -4,7 +4,7 @@ const CommentList = ({ commentList }) => {
   const messageRef = useRef(null);
 
   const scrollToBottom = () => {
-    messageRef.current.scrollIntoView({ behavior: "smooth" });
+    messageRef.current.scrollIntoView({ behavior: "auto" });
   };
 
   useEffect(scrollToBottom, [commentList]);
