@@ -23,14 +23,15 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork,num ,color,bookmar
   useEffect(()=>{
     if(bookmarklist!==undefined){
       bookmarklist.includes(user.id) ?setToggle(true): setToggle(false)
+      async function getCount(){
+        const res=await Api.get(`users/${user.id}/bookmarkcount`)
+        console.log(res)
+        setCount(res.data)
+      }
+      getCount()
 
     }
-    async function getCount(){
-      const res=await Api.get(`users/${user.id}/bookmarkcount`)
-      console.log(res)
-      setCount(res.data)
-    }
-    getCount()
+    
   },[])
   return (
     <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem",backgroundColor:color }}>
@@ -62,19 +63,23 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork,num ,color,bookmar
               </Col>
             </Row>
           </Col>
-        )}
+         )
+      
+        }
 
         {isNetwork && ( <>
-          <Card.Link
-            className="mt-3"
-            href=""
-            onClick={() => navigate(`/users/${user.id}`)}
-          >
-           
-          </Card.Link>
+         
+           <Button  onClick={() => navigate(`/users/${user.id}`)}>상세보기</Button>
          
            {toggle? <AiTwotoneStar style={{fontSize:"30px", marginLeft:"90px"}} onClick={clickHander}/> :<AiOutlineStar style={{fontSize:"30px", marginLeft:"90px"}} onClick={clickHander}/>}
            <span style={{fontSize:"20px", marginLeft:"5px", marginTop:"15px"}}>{count}</span>
+          </>
+        )}
+
+        {!isNetwork && !isEditable && (
+          <>
+          {toggle? <AiTwotoneStar style={{fontSize:"30px", marginLeft:"90px"}} onClick={clickHander}/> :<AiOutlineStar style={{fontSize:"30px", marginLeft:"90px"}} onClick={clickHander}/>}
+          <span style={{fontSize:"20px", marginLeft:"5px", marginTop:"15px"}}>{count}</span>
           </>
         )}
       </Card.Body>

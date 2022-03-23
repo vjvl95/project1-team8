@@ -23,7 +23,7 @@ function Network() {
       const top3=await Api.get('user/bookmarktop3')
       const res= await Api.get('userlist')
       const bookmarklist=await Api.get('user/bookmarklist')
-
+      console.log(top3)
       setBookmarklist(bookmarklist.data)
       setUsers(res.data)
       setTop3(top3.data)
@@ -34,8 +34,8 @@ function Network() {
 
   return (
     <Container fluid>
-      <div style={{marginLeft:"20%",marginRight:"20%",marginBottom:"70px"}}>
-        <h1 style={{marginBottom:"30px", marginTop:"20px"}}>인기 많은 포토폴리오</h1>
+      <div style={{marginLeft:"20%",marginRight:"20%",marginBottom:"70px" }}>
+        <h1 style={{marginBottom:"30px", marginTop:"40px"}}>인기 많은 포토폴리오</h1>
             <Row className="justify-content-between">
             {top3.map((top,index)=>
             (
@@ -48,6 +48,8 @@ function Network() {
           <UserCard key={user.id} user={user} color={randomColor[index%14]} isNetwork bookmarklist={bookmarklist}/>
         ))}
       </Row>
+
+
     </Container>
   );
 }

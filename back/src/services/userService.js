@@ -187,6 +187,23 @@ class userAuthService {
 
     return users;
   }
+  static async getBookmarkUsers({ user_id }) {
+    const user = await User.findById({ user_id });
+
+    if (!user) {
+      const errorMessage = findError("이메일")
+      return { errorMessage };
+    }
+
+    const list = user.bookMarkList
+    const resultList = []
+    await Promise.all(list.map(async (user_id)=>{
+      const info = await User.findById({ user_id })
+      resultList.push(info)
+    }))
+    return resultList
+  }
+
 }
 
 export { userAuthService };
