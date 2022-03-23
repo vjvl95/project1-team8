@@ -1,5 +1,6 @@
 import { Offcanvas, Button } from "react-bootstrap";
 import { useState } from "react";
+import ChattingInput from "./ChattingInput";
 
 const Chatting = () => {
   const [show, setShow] = useState(false);
@@ -23,8 +24,7 @@ const Chatting = () => {
           <Offcanvas.Title>채팅방</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          Some text as placeholder. In real life you can have the elements you
-          have chosen. Like, text, images, lists, etc.
+          <ChattingInput />
         </Offcanvas.Body>
       </Offcanvas>
     </>
