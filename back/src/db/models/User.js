@@ -16,6 +16,11 @@ class User {
     return user;
   }
 
+  static async findByIdList({ userIdList }) {
+    const userList = await UserModel.find({ $or: userIdList });
+    return userList;
+  }
+
   static async findAll() {
     const users = await UserModel.find({});
     return users;
@@ -48,6 +53,7 @@ class User {
     const sortedUsers = await UserModel.find({}).sort(sortBy);
     return sortedUsers;
   }
+
 }
 
 export { User };

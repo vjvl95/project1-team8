@@ -40,10 +40,11 @@ class Education {
     const result = await EducationModel.deleteMany({ user_id });
     return result;
   }
-  
-  static async findBySearchWord({ searchOpt }) {
+
+  static async findBySearchWord({ searchOpt }) { 
     const educationList = await EducationModel.find({ $or: searchOpt });
-    return educationList;
+    const userIdList = await educationList.map(v => v.user_id)
+    return userIdList;
   }
 }
 

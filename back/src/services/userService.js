@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 import { existError, matchError, findError } from "../utils/errorMessages"
+import { searchFunc } from "../utils/serviceFuction"
 
 class userAuthService {
   static async addUser({ name, email, password }) {
@@ -207,6 +208,42 @@ class userAuthService {
     return resultList
   }
 
+  static async searchUserList({ searchType, searchWord }) {
+    let userAll = []
+    if (searchType === "all") {
+      let searchOpt = searchFunc(searchType, searchWord)
+      const userList1 = await Award.findBySearchWord({ searchOpt })
+      const userList2 = await Certificate.findBySearchWord({ searchOpt })
+      const userList3 = await Project.findBySearchWord({ searchOpt })
+      searchOpt = searchFunc("education", searchWord)
+      const userList4 = await Education.findBySearchWord({ searchOpt })
+      // user 합치기
+      userAll = [...userList1, ...userList2, ...userList3, ...userList4]
+    }
+    else if (searchType === "award") {
+      const searchOpt = searchFunc(searchType, searchWord)
+      userAll = await Award.findBySearchWord({ searchOpt })
+    } else if (searchType === "certificate") {
+      const searchOpt = searchFunc(searchType, searchWord)
+      userAll = await Certificate.findBySearchWord({ searchOpt })
+    } else if (searchType === "education") {
+      const searchOpt = searchFunc(searchType, searchWord)
+      userAll = await Education.findBySearchWord({ searchOpt })
+    } else if (searchType === "project") {
+      const searchOpt = searchFunc(searchType, searchWord)
+      userAll = await Project.findBySearchWord({ searchOpt })
+    }
+
+    const set = new Set(userAll);
+    const userArr = [...set]
+    // [ {id: user_id}, {id: user_id} ... ] 만들기
+    const userIdList = await userArr.map(v => {
+      return {id: v}
+    })
+    const userList = await User.findByIdList({ userIdList })
+
+    return userList;    
+  }
 }
 
 export { userAuthService };

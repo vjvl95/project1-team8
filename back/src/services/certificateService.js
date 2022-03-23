@@ -72,11 +72,6 @@ class certificateService {
 
     return deletedResult;
   }
-
-  static async searchCertificateList({ searchOpt }) {
-    const certificateList = await Certificate.findBySearchWord({ searchOpt });
-    return certificateList;
-  }
 }
 
 export { certificateService };

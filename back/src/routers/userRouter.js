@@ -238,5 +238,16 @@ userAuthRouter.get("/user/bookmarklist_data", login_required, async function (re
   }
 })
 
+userAuthRouter.get("/userlist/search", async function (req, res, next) {
+  try {
+    // URI로부터 user_id를 추출함.
+    const { searchType, searchWord } = req.query;
+    // 해당 user의 전체 수상내역 목록을 얻음
+    const foundList = await userAuthService.searchUserList({ searchType, searchWord });
+    res.status(200).send(foundList);
+  } catch (error) {
+    next(error);
+  }
+});
 
 export { userAuthRouter };

@@ -40,10 +40,11 @@ class Project {
     const result = await ProjectModel.deleteMany({ user_id });
     return result;
   }
-  
-  static async findBySearchWord({ searchOpt }) {
+
+  static async findBySearchWord({ searchOpt }) { 
     const projectList = await ProjectModel.find({ $or: searchOpt });
-    return projectList;
+    const userIdList = await projectList.map(v => v.user_id)
+    return userIdList;
   }
 }
 
