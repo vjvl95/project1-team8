@@ -116,7 +116,7 @@ class userAuthService {
 
       const target = await User.findById({ user_id: targetId })
       console.log(target)
-      if (toUpdate.bookMarked==="true") {
+      if (toUpdate.bookMarked) {
         if (user.bookMarkList.includes(targetId)){
           const errorMessage = "이미 즐겨찾기 등록한 유저입니다.";
           return {errorMessage}
@@ -129,7 +129,7 @@ class userAuthService {
         ])
         return result
         }
-      } else if (toUpdate.bookMarked==="false") {
+      } else if (!toUpdate.bookMarked) {
         if (!user.bookMarkList.includes(targetId)){
           const errorMessage = "즐겨찾기 목록에 없는 유저입니다."
           return {errorMessage}
@@ -173,11 +173,13 @@ class userAuthService {
 
     return deletedResult;
   }
+
   static async getTop3() {
     const fieldToSort = ["bookMarked"]
-    const sortType = [1]
+    const sortType = [-1]
     let users = await User.sort({ fieldToSort, sortType });
     users = users.filter(user=>user.bookMarked>0);
+    users = users.splice(0,3)
 
     if (users===[]) {
       const errorMessage =
@@ -187,6 +189,24 @@ class userAuthService {
 
     return users;
   }
+
+  static async getBookmarkUsers({ user_id }) {
+    const user = await User.findById({ user_id });
+
+    if (!user) {
+      const errorMessage = findError("이메일")
+      return { errorMessage };
+    }
+
+    const list = user.bookMarkList
+    const resultList = []
+    await Promise.all(list.map(async (user_id)=>{
+      const info = await User.findById({ user_id })
+      resultList.push(info)
+    }))
+    return resultList
+  }
+
 }
 
 export { userAuthService };
