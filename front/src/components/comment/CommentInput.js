@@ -1,6 +1,7 @@
 import { InputGroup, Button, Form, FormControl } from "react-bootstrap";
 import { useState, useEffect, useCallback } from "react";
 import * as API from "../../api";
+import { IoMdRefreshCircle } from "react-icons/io";
 
 const CommentInput = () => {
   const [inputValue, setInputValue] = useState("");
@@ -42,7 +43,12 @@ const CommentInput = () => {
     <>
       <Form>
         <InputGroup className="mb-3">
-          <img src="https://img.icons8.com/material-two-tone/24/000000/recurring-appointment.png" />
+          <IoMdRefreshCircle
+            className="mt-2 me-2"
+            size="25"
+            cursor="pointer"
+            onClick={getCommentList}
+          />
           <FormControl
             placeholder="입력하세요."
             aria-label="Recipient's username"

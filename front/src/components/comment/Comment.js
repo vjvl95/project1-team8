@@ -1,6 +1,7 @@
 import { Offcanvas, Button } from "react-bootstrap";
 import { useState } from "react";
 import CommentInput from "./CommentInput";
+import { HiOutlineChatAlt2 } from "react-icons/hi";
 
 const Comment = () => {
   const [show, setShow] = useState(false);
@@ -10,7 +11,7 @@ const Comment = () => {
   return (
     <>
       <Button variant="outline-primary" onClick={handleShow}>
-        <img src="https://img.icons8.com/color/24/000000/chat--v1.png" />
+        <HiOutlineChatAlt2 size="25" />
       </Button>
 
       <Offcanvas
