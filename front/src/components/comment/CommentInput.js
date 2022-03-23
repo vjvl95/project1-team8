@@ -2,6 +2,7 @@ import { InputGroup, Button, Form, FormControl } from "react-bootstrap";
 import { useState, useEffect, useCallback } from "react";
 import * as API from "../../api";
 import { IoMdRefreshCircle } from "react-icons/io";
+import { CommentList } from "./CommentList";
 
 const CommentInput = () => {
   const [inputValue, setInputValue] = useState("");
@@ -31,19 +32,9 @@ const CommentInput = () => {
     getCommentList();
   }, [getCommentList]);
 
-  const CommentList = () => {
-    return (
-      <>
-        {commentList?.map((item) => (
-          <div key={item.id}>{item.comment}</div>
-        ))}
-      </>
-    );
-  };
-
   return (
     <>
-      <CommentList />
+      <CommentList commentList={commentList} />
       <Form>
         <InputGroup className="mb-3">
           <IoMdRefreshCircle
