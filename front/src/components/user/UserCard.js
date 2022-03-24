@@ -9,10 +9,9 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
       <Card.Body>
         <Row className="justify-content-md-center">
           <Card.Img
-            style={{ width: "10rem", height: "8rem" }}
+            style={{ width: "20rem", height: "8rem" }}
             className="mb-3"
-            src="http://placekitten.com/200/200"
-            alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
+            src="https://picsum.photos/250/250"
           />
         </Row>
         <Card.Title>{user?.name}</Card.Title>
