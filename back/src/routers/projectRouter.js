@@ -14,15 +14,15 @@ projectRouter.post("/projects/project", async (req, res, next) => {
         headerError
       );
     }
-
+    // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
+    const user_id = req.currentUserId;
     // req (request) 에서 데이터 가져오기
-    const user_id = req.body.user_id;
     const title = req.body.title;
     const description = req.body.description;
     const from_date = req.body.from_date;
     const to_date = req.body.to_date;
 
-    // 위 데이터를 유저 db에 추가하기
+    // 위 데이터를 project db에 추가하기
     const newProject = await projectService.addProject({
       user_id,
       title,
@@ -42,8 +42,8 @@ projectRouter.post("/projects/project", async (req, res, next) => {
 });
 
 projectRouter.get('/projects/:id', async (req, res, next) => {
-  const projectId = req.params.id;
   try {
+    const projectId = req.params.id;
     const foundProject = await projectService.getProject({ projectId });
     if (foundProject.errorMessage) {
       throw new Error(foundProject.errorMessage);
@@ -56,12 +56,8 @@ projectRouter.get('/projects/:id', async (req, res, next) => {
 });
 
 projectRouter.put('/projects/:id', async (req, res, next) => {
-  const projectId = req.params.id;
   try {
-    const foundProject = await projectService.getProject({ projectId });
-    if (foundProject.errorMessage) {
-      throw new Error(foundProject.errorMessage);
-    }
+    const projectId = req.params.id;
     const title = req.body.title ?? null;
     const description = req.body.description ?? null;
     const from_date = req.body.from_date ?? null;
@@ -85,8 +81,8 @@ projectRouter.put('/projects/:id', async (req, res, next) => {
 });
 
 projectRouter.get('/projectlist/:user_id', async (req, res, next) => {
-  const { user_id } = req.params;
   try {
+    const { user_id } = req.params;
     const foundList = await projectService.getProjectList({ user_id });
 
     res.status(200).json(foundList);

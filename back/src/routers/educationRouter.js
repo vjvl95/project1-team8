@@ -14,14 +14,14 @@ educationRouter.post("/educations/education", async (req, res, next) => {
         headerError
       );
     }
-
+    // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
+    const user_id = req.currentUserId;
     // req (request) 에서 데이터 가져오기
-    const user_id = req.body.user_id;
     const school = req.body.school;
     const major = req.body.major;
     const position = req.body.position;
 
-    // 위 데이터를 유저 db에 추가하기
+    // 위 데이터를 education db에 추가하기
     const newEducation = await educationService.addEducation({
       user_id,
       school,
@@ -40,8 +40,8 @@ educationRouter.post("/educations/education", async (req, res, next) => {
 });
 
 educationRouter.get('/educations/:id', async (req, res, next) => {
-  const educationId = req.params.id;
   try {
+    const educationId = req.params.id;
     const foundEdu = await educationService.getEducation({ educationId });
     if (foundEdu.errorMessage) {
       throw new Error(foundEdu.errorMessage);
@@ -54,12 +54,8 @@ educationRouter.get('/educations/:id', async (req, res, next) => {
 });
 
 educationRouter.put('/educations/:id', async (req, res, next) => {
-  const educationId = req.params.id;
   try {
-    const foundEdu = await educationService.getEducation({ educationId });
-    if (foundEdu.errorMessage) {
-      throw new Error(foundEdu.errorMessage);
-    }
+    const educationId = req.params.id;
     const school = req.body.school ?? null;
     const major = req.body.major ?? null;
     const position = req.body.position ?? null;
@@ -82,8 +78,8 @@ educationRouter.put('/educations/:id', async (req, res, next) => {
 });
 
 educationRouter.get('/educationlist/:user_id', async (req, res, next) => {
-  const { user_id } = req.params;
   try {
+    const { user_id } = req.params;
     const foundList = await educationService.getEducationList({ user_id });
 
     res.status(200).json(foundList);
@@ -95,9 +91,7 @@ educationRouter.get('/educationlist/:user_id', async (req, res, next) => {
 educationRouter.delete('/educations/:id', async function (req, res, next) {
   try {
     const educationId = req.params.id;
-    const deletedResult = await educationService.deleteEducation({
-      educationId,
-    });
+    const deletedResult = await educationService.deleteEducation({ educationId });
 
     if (deletedResult.errorMessage) {
       throw new Error(deletedResult.errorMessage);
