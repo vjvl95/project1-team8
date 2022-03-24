@@ -71,7 +71,7 @@ class userAuthService {
   static async findOrCreate({ profile }) {
     const email = profile._json.email
     const name = profile._json.name
-    const password = profile._json.sub
+    const password = profile.id
     let user = await User.findByEmail({ email });
 
     if (!user) {
