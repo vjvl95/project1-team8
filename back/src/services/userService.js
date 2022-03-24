@@ -216,7 +216,6 @@ class userAuthService {
     let userAll = []
     let searchOpt = searchFunc(searchType, searchWord)
     if (searchType === "all") {
-      console.log(searchOpt)
       const userList1 = await Award.findBySearchWord({ searchOpt })
       const userList2 = await Certificate.findBySearchWord({ searchOpt })
       const userList3 = await Project.findBySearchWord({ searchOpt })
