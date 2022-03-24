@@ -22,7 +22,7 @@ export function searchReducer(searchState, action) {
     case 'DEFAULT':
       return {
         category: 'all',
-        search: null,
+        search: '',
       };
     case 'SEARCH':
       return {
