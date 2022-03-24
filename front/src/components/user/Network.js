@@ -12,8 +12,6 @@ function Network() {
   const searchState = useContext(SearchContext);
   const { searchDispatch } = useContext(DispatchContext);
 
-  const url = "https://lorempokemon.fakerapi.it/pokemon/200/";
-
   const [users, setUsers] = useState([]);
   const searchInit = () => {
     searchState.search !== "" &&
@@ -47,7 +45,7 @@ function Network() {
     <Container fluid>
       <Row xs="auto" className="justify-content-center">
         {users.map((user) => (
-          <UserCard key={user.id} user={user} isNetwork url={url} />
+          <UserCard key={user.id} user={user} isNetwork />
         ))}
       </Row>
     </Container>

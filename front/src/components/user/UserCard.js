@@ -2,10 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { Card, Row, Col } from "react-bootstrap";
 import EditButton from "../common/EditButton";
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork, url }) {
+function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const navigate = useNavigate();
 
   const index = Math.floor(Math.random() * 1500);
+  const url = "https://lorempokemon.fakerapi.it/pokemon/200/";
 
   return (
     <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>

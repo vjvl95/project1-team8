@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import { UserStateContext, DispatchContext } from "../App";
 import SearchBox from "../components/common/SearchBox";
 import Comment from "./comment/Comment";
-import styled from "styled-components";
+// import styled from "styled-components";
 
 function Header() {
   const navigate = useNavigate();
@@ -27,43 +27,41 @@ function Header() {
     navigate("/");
   };
 
-  const StyledHeader = styled.header`
-    position: fixed;
-    top: 0;
-    width: 100%;
-  `;
+  // const StyledHeader = styled.header`
+  //   position: fixed;
+  //   top: 0;
+  //   width: 100%;
+  // `;
 
   return (
-    <StyledHeader>
-      <Nav activeKey={location.pathname}>
-        <Nav.Item className="me-auto mb-5">
-          <Nav.Link disabled>
-            안녕하세요, 포트폴리오 공유 서비스입니다.
-          </Nav.Link>
+    // <StyledHeader>
+    <Nav activeKey={location.pathname}>
+      <Nav.Item className="me-auto mb-5">
+        <Nav.Link disabled>안녕하세요, 포트폴리오 공유 서비스입니다.</Nav.Link>
+      </Nav.Item>
+      {path === "network" && (
+        <Nav.Item>
+          <SearchBox></SearchBox>
         </Nav.Item>
-        {path === "network" && (
+      )}
+      <Nav.Item>
+        <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
+      </Nav.Item>
+      {isLogin && (
+        <>
           <Nav.Item>
-            <SearchBox></SearchBox>
+            <Nav.Link onClick={logout}>로그아웃</Nav.Link>
           </Nav.Item>
-        )}
-        <Nav.Item>
-          <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
-        </Nav.Item>
-        {isLogin && (
-          <>
-            <Nav.Item>
-              <Nav.Link onClick={logout}>로그아웃</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Comment />
-            </Nav.Item>
-          </>
-        )}
-      </Nav>
-    </StyledHeader>
+          <Nav.Item>
+            <Comment />
+          </Nav.Item>
+        </>
+      )}
+    </Nav>
+    //  </StyledHeader>
   );
 }
 
