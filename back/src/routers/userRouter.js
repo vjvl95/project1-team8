@@ -237,5 +237,17 @@ userAuthRouter.get("/user/bookmarklist_data", login_required, async function (re
     next(error);
   }
 })
+userAuthRouter.get("/users/:id/bookmarklist", login_required, async function (req, res, next) {
+  try {
+    const user_id = req.params.id
+
+    const User = await userAuthService.getUserInfo({ user_id });
+    const bookMarkList = User.bookMarkList;
+    res.status(200).json(bookMarkList);
+  } catch (error) {
+    next(error);
+  }
+})
+
 
 export { userAuthRouter };

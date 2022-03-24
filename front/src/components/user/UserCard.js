@@ -1,16 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { Card, Row, Button, Col } from "react-bootstrap";
 import {AiOutlineStar,AiTwotoneStar}  from "react-icons/ai"
-import {useEffect, useState} from "react"
+import {useContext, useEffect, useState} from "react"
 import * as Api from "../../api";
-import {BiRefresh} from "react-icons/bi"
+import { BookmarkListContext } from "../../App";
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork,num ,color,bookmarklist}) {
+function UserCard({ aa,portfolioOwnerId,user, setIsEditing, isEditable, isNetwork,num ,color}) {
   const navigate = useNavigate();
   const [toggle,setToggle]= useState()
   const [count,setCount]=useState(0)
 
-   const clickHander = async() => {
+  const {bookmarklist,setBookmarklist}=useContext(BookmarkListContext)
+
+   const toggleHander = async() => {
     await Api.put("user/bookmark",{
       target:user.id,
       toggle:!toggle
@@ -21,18 +23,34 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork,num ,color,bookmar
   }
 
   useEffect(()=>{
-    if(bookmarklist!==undefined){
-      bookmarklist.includes(user.id) ?setToggle(true): setToggle(false)
-      async function getCount(){
-        const res=await Api.get(`users/${user.id}/bookmarkcount`)
-        console.log(res)
-        setCount(res.data)
-      }
-      getCount()
+    let res=""
+    console.log(user,aa,bookmarklist)
+
+    async function getCount(){
+      user!==null?res=await Api.get(`users/${user?.id}/bookmarkcount`):res=await Api.get(`users/${portfolioOwnerId}/bookmarkcount`)
+      setCount(res.data)
+
+      user!==null?res=await Api.get(`users/${user?.id}/bookmarklist`):res=await Api.get(`users/${portfolioOwnerId}/bookmarklist`)
+      
+
 
     }
-    
+
+
+    getCount()
+
+    if(bookmarklist!==undefined){
+      user!==null ? bookmarklist?.includes(user?.id) ?setToggle(true): setToggle(false) :bookmarklist?.includes(portfolioOwnerId) ?setToggle(true): setToggle(false)
+    }
   },[])
+
+  function togglemodule()
+  {
+    return <>
+    {toggle? <AiTwotoneStar style={{fontSize:"30px", marginLeft:"90px"}} onClick={toggleHander}/> :<AiOutlineStar style={{fontSize:"30px", marginLeft:"90px"}} onClick={toggleHander}/>}
+    <span style={{fontSize:"20px", marginLeft:"5px", marginTop:"15px"}}>{count}</span>
+    </>
+  }
   return (
     <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem",backgroundColor:color }}>
       <Card.Title style={{fontWeight:"bolder",textAlign:"center", marginTop:"10px"}} >{num}</Card.Title>
@@ -70,16 +88,13 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork,num ,color,bookmar
         {isNetwork && ( <>
          
            <Button  onClick={() => navigate(`/users/${user.id}`)}>상세보기</Button>
-         
-           {toggle? <AiTwotoneStar style={{fontSize:"30px", marginLeft:"90px"}} onClick={clickHander}/> :<AiOutlineStar style={{fontSize:"30px", marginLeft:"90px"}} onClick={clickHander}/>}
-           <span style={{fontSize:"20px", marginLeft:"5px", marginTop:"15px"}}>{count}</span>
+          {togglemodule()}
           </>
         )}
 
         {!isNetwork && !isEditable && (
           <>
-          {toggle? <AiTwotoneStar style={{fontSize:"30px", marginLeft:"90px"}} onClick={clickHander}/> :<AiOutlineStar style={{fontSize:"30px", marginLeft:"90px"}} onClick={clickHander}/>}
-          <span style={{fontSize:"20px", marginLeft:"5px", marginTop:"15px"}}>{count}</span>
+         {togglemodule()}
           </>
         )}
       </Card.Body>

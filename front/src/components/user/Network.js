@@ -4,14 +4,16 @@ import { Container, Row,Card } from 'react-bootstrap';
 import * as Api from '../../api';
 import UserCard from './UserCard';
 import { UserStateContext } from '../../App';
+import { BookmarkListContext } from "../../App";
 
 function Network() {
+  const {bookmarklist,setBookmarklist}=useContext(BookmarkListContext)
+
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
   // useState 훅을 통해 users 상태를 생성함.
   const [users, setUsers] = useState([]);
   const [top3,setTop3]=useState([])
-  const [bookmarklist,setBookmarklist]=useState([])
   const randomColor=['lightblue' , 'aquamarine','blanchedalmond','lightpink',' gainsboro','powderblue','azure','papayawhip','navajowhite','lavender','honeydew','lightcyan','pink','lavenderblush']
 
   useEffect(  () => {

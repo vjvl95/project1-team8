@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useCallback, useEffect } from "react";
 import UserEditForm from "./UserEditForm";
 import UserCard from "./UserCard";
 import * as Api from "../../api";
@@ -8,11 +8,25 @@ function User({ portfolioOwnerId, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
   // useState 훅을 통해 user 상태를 생성함.
   const [user, setUser] = useState(null);
+  const [bookmarklist,setBookmarklist]=useState(null)
+ 
+  const getUser = useCallback(() => {
+    Api.get("users", portfolioOwnerId).then((res) => {
+      console.log(res.data)
+      setUser(res.data)
+      setIsEditing(false);
+    });
+    Api.get(`users/${portfolioOwnerId}/bookmarklist`).then(res=>{
+      setBookmarklist(res.data)
+      console.log(res.data)
+    })
+
+  }, [portfolioOwnerId]);
 
   useEffect(() => {
-    // "users/유저id" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
-    Api.get("users", portfolioOwnerId).then((res) => setUser(res.data));
-  }, [portfolioOwnerId]);
+    getUser();
+  }, [getUser]);
+
 
   return (
     <>
@@ -25,6 +39,9 @@ function User({ portfolioOwnerId, isEditable }) {
       ) : (
         <UserCard 
           user={user}
+          aa={11}
+          portfolioOwnerId={portfolioOwnerId}
+          bookmarklist={bookmarklist}
           setIsEditing={setIsEditing}
           isEditable={isEditable}
         />
