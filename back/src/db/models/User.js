@@ -45,11 +45,7 @@ class User {
     return deletedResult;
   }
   
-  static async sort({ fieldToSort, sortType }) {
-    const sortBy = {}
-    for (let i = 0; i < fieldToSort.length; i++) {
-      sortBy[fieldToSort[i]]=sortType[i]
-    }
+  static async sort({ sortBy }) {    
     const sortedUsers = await UserModel.find({}).sort(sortBy);
     return sortedUsers;
   }

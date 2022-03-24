@@ -178,7 +178,11 @@ class userAuthService {
   static async getTop3() {
     const fieldToSort = ["bookMarked"]
     const sortType = [-1]
-    let users = await User.sort({ fieldToSort, sortType });
+    const sortBy = {}
+    for (let i = 0; i < fieldToSort.length; i++) {
+      sortBy[fieldToSort[i]]=sortType[i]
+    }
+    let users = await User.sort({ sortBy });
     users = users.filter(user=>user.bookMarked>0);
     users = users.splice(0,3)
 
