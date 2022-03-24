@@ -12,4 +12,10 @@ const findError = (value) => {
 
 const headerError = "headers의 Content-Type을 application/json으로 설정해주세요"
 
-export { existError, matchError, findError, headerError }
+const addError = "이미 즐겨찾기 등록한 유저입니다."
+
+const removeError = "즐겨찾기 목록에 없는 유저입니다."
+
+const listError = "아직 아무도 북마크되지 않았습니다."
+
+export { existError, matchError, findError, headerError, addError, removeError, listError }
