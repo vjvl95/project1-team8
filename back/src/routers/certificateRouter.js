@@ -45,13 +45,13 @@ certificateRouter.post(
 certificateRouter.get('/certificates/:id', async function (req, res, next) {
   try {
     const certificateId = req.params.id;
-    const certificate = await certificateService.getCertificate({ certificateId });
+    const foundCertificate = await certificateService.getCertificate({ certificateId });
 
-    if (certificate.errorMessage) {
-      throw new Error(certificate.errorMessage);
+    if (foundCertificate.errorMessage) {
+      throw new Error(foundCertificate.errorMessage);
     }
 
-    res.status(200).send(certificate);
+    res.status(200).send(foundCertificate);
   } catch (error) {
     next(error);
   }
