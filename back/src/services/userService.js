@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 import { existError, matchError, findError } from "../utils/errorMessages"
-import { searchFunc } from "../utils/serviceFuction"
+import { searchFunc } from "../utils/serviceFunction"
 
 class userAuthService {
   static async addUser({ name, email, password }) {
