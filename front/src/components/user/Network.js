@@ -5,10 +5,9 @@ import * as Api from '../../api';
 import UserCard from './UserCard';
 import { UserStateContext } from '../../App';
 import { BookmarkListContext } from "../../App";
-import { DispatchContext } from "../../App";
 
 function Network() {
-  const {bookmarklist,setBookmarklist}=useContext(BookmarkListContext)
+  const {setBookmarklist}=useContext(BookmarkListContext)
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
   // useState 훅을 통해 users 상태를 생성함.
@@ -25,9 +24,8 @@ function Network() {
       const res= await Api.get('userlist')
       const new_bookmarklist=await Api.get('user/bookmarklist')
       setBookmarklist(new_bookmarklist.data)
-      setUsers(res.data)
       setTop3(top3.data)
-
+      setUsers(res.data)
   }
   getUser()
   }, [userState, navigate]);
@@ -39,13 +37,13 @@ function Network() {
             <Row className="justify-content-between">
             {top3.map((top,index)=>
             (
-            <UserCard key={top.id} user={top} isNetwork num={index+1} bookmarklist={bookmarklist}/>
+            <UserCard key={top.id} user={top} isNetwork num={index+1} />
             ))}
             </Row>
       </div>
       <Row className='jusify-content-center' style={{marginLeft:"5%"}}>
         {users.map((user) => (
-          <UserCard key={user.id} user={user} isNetwork bookmarklist={bookmarklist}/>
+          <UserCard key={user.id} user={user} isNetwork />
         ))}
       </Row>
 

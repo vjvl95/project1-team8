@@ -7,7 +7,7 @@ import { BookmarkListContext } from "../../App";
 
 function Bookmark(){
   const [users, setUsers] = useState([]);
-  const {bookmarklist,setBookmarklist}=useContext(BookmarkListContext)
+  const {setBookmarklist}=useContext(BookmarkListContext)
 
 
     useEffect(() => {
@@ -24,8 +24,8 @@ function Bookmark(){
         <Container fluid>
           <Row className='jusify-content-center' style={{marginLeft:"5%"}}>
             { users.length===0?<h1 style={{marginTop:"400px", marginLeft:"650px"}}>북마크한 포토폴리오가 없습니다</h1>  
-                        : users.map((user,index) => (
-                        <UserCard key={user.id} user={user} isNetwork bookmarklist={bookmarklist}/>))}
+                        : users.map((user) => (
+                        <UserCard key={user.id} user={user} isNetwork/>))}
           </Row>
         </Container>
       );
