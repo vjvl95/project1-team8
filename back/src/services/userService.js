@@ -214,8 +214,9 @@ class userAuthService {
 
   static async searchUserList({ searchType, searchWord }) {
     let userAll = []
+    let searchOpt = searchFunc(searchType, searchWord)
     if (searchType === "all") {
-      let searchOpt = searchFunc(searchType, searchWord)
+      console.log(searchOpt)
       const userList1 = await Award.findBySearchWord({ searchOpt })
       const userList2 = await Certificate.findBySearchWord({ searchOpt })
       const userList3 = await Project.findBySearchWord({ searchOpt })
@@ -225,19 +226,15 @@ class userAuthService {
       userAll = [...userList1, ...userList2, ...userList3, ...userList4]
     }
     else if (searchType === "award") {
-      const searchOpt = searchFunc(searchType, searchWord)
       userAll = await Award.findBySearchWord({ searchOpt })
     } else if (searchType === "certificate") {
-      const searchOpt = searchFunc(searchType, searchWord)
       userAll = await Certificate.findBySearchWord({ searchOpt })
     } else if (searchType === "education") {
-      const searchOpt = searchFunc(searchType, searchWord)
       userAll = await Education.findBySearchWord({ searchOpt })
     } else if (searchType === "project") {
-      const searchOpt = searchFunc(searchType, searchWord)
       userAll = await Project.findBySearchWord({ searchOpt })
     }
-
+    // user_id 중복 제거
     const set = new Set(userAll);
     const userArr = [...set]
     // [ {id: user_id}, {id: user_id} ... ] 만들기
