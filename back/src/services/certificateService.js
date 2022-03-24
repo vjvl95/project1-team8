@@ -10,12 +10,12 @@ class certificateService {
 
     // db에 저장
     const createdNewCertificate = await Certificate.create({ newCertificate });
+    createdNewCertificate.errorMessage = null;
 
     return createdNewCertificate;
   }
 
   static async getCertificate({ certificateId }) {
-    // certificateId가 certificate db에 존재 여부 확인
     const certificate = await Certificate.findByCertificateId({ certificateId });
     if (!certificate) {
       const errorMessage = findError("자격증")
@@ -31,10 +31,7 @@ class certificateService {
   }
 
   static async setCertificate({ certificateId, toUpdate }) {
-    // 우선 해당 id 의 certificate가 db에 존재하는지 여부 확인
     let certificate = await Certificate.findByCertificateId({ certificateId });
-
-    // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!certificate) {
       const errorMessage = findError("자격증")
       return { errorMessage };
@@ -43,27 +40,37 @@ class certificateService {
     if (toUpdate.title) {
       const fieldToUpdate = "title";
       const newValue = toUpdate.title;
-      certificate = await Certificate.update({ certificateId, fieldToUpdate, newValue });
+      certificate = await Certificate.update({ 
+        certificateId, 
+        fieldToUpdate, 
+        newValue 
+      });
     }
 
     if (toUpdate.description) {
       const fieldToUpdate = "description";
       const newValue = toUpdate.description;
-      certificate = await Certificate.update({ certificateId, fieldToUpdate, newValue });
+      certificate = await Certificate.update({ 
+        certificateId, 
+        fieldToUpdate, 
+        newValue 
+      });
     }
 
     if (toUpdate.when_date) {
       const fieldToUpdate = "when_date";
       const newValue = toUpdate.when_date;
-      certificate = await Certificate.update({ certificateId, fieldToUpdate, newValue });
+      certificate = await Certificate.update({ 
+        certificateId, 
+        fieldToUpdate, 
+        newValue 
+      });
     }
 
     return certificate;
   }
 
   static async deleteCertificate({ certificateId }) {
-    // certificateId db에 존재 여부 확인
-
     const deletedResult = await Certificate.deleteByCertificateId({ certificateId })
     if (!deletedResult) {
       const errorMessage = findError("자격증")

@@ -2,10 +2,10 @@ import { User, Award, Certificate, Education, Project } from "../db"; // from을
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
-import { existError, matchError, findError } from "../utils/errorMessages"
+import { existError, matchError, findError, addError, removeError, listError } from "../utils/errorMessages"
 import { searchFunc } from "../utils/serviceFunction"
 
-class userAuthService {
+class userService {
   static async addUser({ name, email, password }) {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email });
@@ -119,7 +119,7 @@ class userAuthService {
       console.log(target)
       if (toUpdate.bookMarked) {
         if (user.bookMarkList.includes(targetId)){
-          const errorMessage = "이미 즐겨찾기 등록한 유저입니다.";
+          const errorMessage = addError
           return {errorMessage}
         } else {
           const newValue = [...user.bookMarkList, toUpdate.bookMarkList];
@@ -132,7 +132,7 @@ class userAuthService {
         }
       } else if (!toUpdate.bookMarked) {
         if (!user.bookMarkList.includes(targetId)){
-          const errorMessage = "즐겨찾기 목록에 없는 유저입니다."
+          const errorMessage = removeError
           return {errorMessage}
         } else {
           const newValue = user.bookMarkList.filter(user_id => user_id!==targetId);
@@ -187,8 +187,7 @@ class userAuthService {
     users = users.splice(0,3)
 
     if (users===[]) {
-      const errorMessage =
-        "아직 아무도 북마크되지 않았습니다.";
+      const errorMessage = listError
       return { errorMessage };
     }
 
@@ -246,4 +245,4 @@ class userAuthService {
   }
 }
 
-export { userAuthService };
+export { userService };

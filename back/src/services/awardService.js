@@ -10,18 +10,17 @@ class awardService {
 
     // db에 저장
     const createdNewAward = await Award.create({ newAward });
+    createdNewAward.errorMessage = null;
 
     return createdNewAward;
   }
 
   static async getAward({ awardId }) {
-    // awardId가 award db에 존재 여부 확인
     const award = await Award.findByAwardId({ awardId });
     if (!award) {
       const errorMessage = findError("수상");
       return { errorMessage };
     }
-
     return award;
   }
 
@@ -31,10 +30,7 @@ class awardService {
   }
 
   static async setAward({ awardId, toUpdate }) {
-    // 우선 해당 id 의 award가 db에 존재하는지 여부 확인
     let award = await Award.findByAwardId({ awardId });
-
-    // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!award) {
       const errorMessage = findError("수상");
       return { errorMessage };
@@ -43,20 +39,27 @@ class awardService {
     if (toUpdate.title) {
       const fieldToUpdate = "title";
       const newValue = toUpdate.title;
-      award = await Award.update({ awardId, fieldToUpdate, newValue });
+      award = await Award.update({ 
+        awardId, 
+        fieldToUpdate, 
+        newValue 
+      });
     }
 
     if (toUpdate.description) {
       const fieldToUpdate = "description";
       const newValue = toUpdate.description;
-      award = await Award.update({ awardId, fieldToUpdate, newValue });
+      award = await Award.update({ 
+        awardId, 
+        fieldToUpdate, 
+        newValue 
+      });
     }
 
     return award;
   }
 
   static async deleteAward({ awardId }) {
-
     const deletedResult = await Award.deleteByAwardId({ awardId })
     if (!deletedResult) {
       const errorMessage = findError("수상");

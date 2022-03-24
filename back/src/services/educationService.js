@@ -10,19 +10,17 @@ class educationService {
 
     // db에 저장
     const createdNewEducation = await Education.create({ newEducation });
-    createdNewEducation.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
+    createdNewEducation.errorMessage = null; 
 
     return createdNewEducation;
   }
 
   static async getEducation({ educationId }) {
-    // id가 education db에 존재 여부 확인
     const education = await Education.findByEducationId({ educationId });
     if (!education) {
       const errorMessage = findError("학력")
       return { errorMessage };
     }
-    education.errorMessage = null;
     return education;
   }
 
@@ -32,14 +30,11 @@ class educationService {
   }
 
   static async setEducation({ educationId, toUpdate }) {
-
-    // id가 education db에 존재 여부 확인
     let education = await Education.findByEducationId({ educationId });
     if (!education) {
       const errorMessage = findError("학력")
       return { errorMessage };
     }
-    education.errorMessage = null;
 
     if (toUpdate.school) {
       const fieldToUpdate = 'school';
@@ -75,8 +70,6 @@ class educationService {
   }
 
   static async deleteEducation({ educationId }) {
-    // awardId db에 존재 여부 확인
-
     const deletedResult = await Education.deleteByEducationId({ educationId });
     if (!deletedResult) {
       const errorMessage = findError("학력")
