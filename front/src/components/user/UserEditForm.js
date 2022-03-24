@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function UserEditForm({ user, setIsEditing, setUser }) {
   const navigate = useNavigate();
-  const dispatch = useContext(DispatchContext);
+  const { userDispatch } = useContext(DispatchContext);
 
   //useState로 name 상태를 생성함.
   const [name, setName] = useState(user.name);
@@ -84,7 +84,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                     if (window.confirm('정말 탈퇴하시겠습니까?😢')) {
                       handleDelete();
                       sessionStorage.removeItem('userToken');
-                      dispatch({ type: 'LOGOUT' });
+                      userDispatch({ type: 'LOGOUT' });
                       navigate('/');
                     }
                   }}
