@@ -68,6 +68,18 @@ class userAuthService {
     return loginUser;
   }
 
+  static async findOrCreate({ profile }) {
+    const email = profile._json.email
+    const name = profile._json.name
+    const password = profile._json.sub
+    let user = await User.findByEmail({ email });
+
+    if (!user) {
+      user = await this.addUser({ email, name, password });
+    }
+    return user
+  }
+
   static async getUsers() {
     const users = await User.findAll();
     return users;
