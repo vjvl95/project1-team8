@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Col, Row } from 'react-bootstrap';
 
 import { UserStateContext } from '../App';
+import { DispatchContext } from '../App';
+
 import * as Api from '../api';
 import User from './user/User';
 import Award from './award/Award';
@@ -16,6 +18,7 @@ function Portfolio() {
   const [portfolioOwner, setPortfolioOwner] = useState(null);
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const userState = useContext(UserStateContext);
+  const { searchDispatch } = useContext(DispatchContext);
 
   const fetchPorfolioOwner = async (ownerId) => {
     const res = await Api.get('users', ownerId);
@@ -38,6 +41,12 @@ function Portfolio() {
       fetchPorfolioOwner(ownerId);
     }
   }, [params, userState, navigate]);
+
+  useEffect(() => {
+    searchDispatch({
+      type: 'DEFAULT',
+    });
+  }, [params, searchDispatch]);
 
   if (!isFetchCompleted) {
     return 'loading...';
