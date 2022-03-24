@@ -1,7 +1,7 @@
 import { Col, Row, Button } from "react-bootstrap";
 import { useState } from "react";
 import CertificateEditForm from "./CertificateEditForm";
-import EditButton from "../EditButton";
+import EditButton from "../common/EditButton";
 import * as API from "../../api";
 
 function CertificateListItem({ id, isEditable, item, getCertificateList }) {

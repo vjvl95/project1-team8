@@ -3,7 +3,7 @@ import { Card, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import EducationList from "./EducationList";
 import EducationEditForm from "./EducationEditForm";
-import PlusButton from "../PlusButton";
+import PlusButton from "../common/PlusButton";
 
 const Education = ({ portfolioOwnerId, isEditable }) => {
   // useState 훅을 통해 isEditing 상태를 생성함.

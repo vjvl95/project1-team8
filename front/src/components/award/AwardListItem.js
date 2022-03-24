@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Col, Row, Button } from "react-bootstrap";
 import AwardEditForm from "./AwardEditForm";
-import EditButton from "../EditButton";
+import EditButton from "../common/EditButton";
 import * as API from "../../api";
 
 const AwardListItem = ({

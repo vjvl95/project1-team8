@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Col, Row, Button } from "react-bootstrap";
 import EducationEditForm from "./EducationEditForm";
-import EditButton from "../EditButton";
+import EditButton from "../common/EditButton";
 import * as API from "../../api";
 
 const EducationListItem = ({
