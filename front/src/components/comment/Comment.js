@@ -43,18 +43,12 @@ const Comment = () => {
         <HiOutlineChatAlt2 size="25" />
       </Button>
 
-      <Offcanvas
-        show={show}
-        onHide={handleClose}
-        className="mt-5"
-        placement="end"
-        scroll="true"
-      >
+      <Offcanvas show={show} onHide={handleClose} placement="end" scroll="true">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>채팅방</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <CommentList commentList={commentList} />
+          <CommentList className="mt-5" commentList={commentList} />
         </Offcanvas.Body>
         <Offcanvas.Title>
           <CommentInput

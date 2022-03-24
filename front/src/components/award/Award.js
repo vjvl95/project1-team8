@@ -3,7 +3,7 @@ import AwardList from "./AwardList";
 import AwardEditForm from "./AwardEditForm";
 import { useState, useEffect, useCallback } from "react";
 import * as Api from "../../api";
-import PlusButton from "../PlusButton";
+import PlusButton from "../common/PlusButton";
 
 function Award({ portfolioOwnerId, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
