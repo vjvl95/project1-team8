@@ -4,14 +4,13 @@ import {AiOutlineStar,AiTwotoneStar}  from "react-icons/ai"
 import {useContext, useEffect, useState} from "react"
 import * as Api from "../../api";
 import { BookmarkListContext } from "../../App";
-import {UserStateContext} from "../../App";
 function UserCard({aa,portfolioOwnerId,user, setIsEditing, isEditable, isNetwork,num}) {
   const navigate = useNavigate();
   const [toggle,setToggle]= useState()
   const [count,setCount]=useState(0)
   const randomColor=['lightblue' , 'aquamarine','blanchedalmond','lightpink',' gainsboro','powderblue','azure','papayawhip','navajowhite','lavender','honeydew','lightcyan','pink','lavenderblush']
-  const {bookmarklist,setBookmarklist}=useContext(BookmarkListContext)
-  const index=Math.floor(Math.random()*15)
+  const {bookmarklist}=useContext(BookmarkListContext)
+  const index=Math.floor(Math.random()*14)
 
    const toggleHander = async() => {
     await Api.put("user/bookmark",{
@@ -29,18 +28,17 @@ function UserCard({aa,portfolioOwnerId,user, setIsEditing, isEditable, isNetwork
       user===null ?res=await Api.get(`users/${portfolioOwnerId}/bookmarkcount`) :res=await Api.get(`users/${user.id}/bookmarkcount`)
       setCount(res.data)     
     }
+    console.log(index)
 
     getCount()     
     
 
 
     if(bookmarklist!==undefined){
-      console.log(3531,portfolioOwnerId)
      bookmarklist?.includes(user?.id) ?setToggle(true): setToggle(false) 
     }
     if(isEditable===false)
     {
-      console.log(bookmarklist)
       bookmarklist?.includes(portfolioOwnerId) ?setToggle(true): setToggle(false)
     }
   },[bookmarklist])

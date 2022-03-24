@@ -9,11 +9,9 @@ function User({ portfolioOwnerId, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
   // useState 훅을 통해 user 상태를 생성함.
   const [user, setUser] = useState(null);
-  const {bookmarklist,setBookmarklist}=useContext(BookmarkListContext)
- 
+  const {bookmarklist,setBookmarklist,setToggle}=useContext(BookmarkListContext)
+  
   useEffect(() => {
-    // "users/유저id" 엔드포인트로 GET 요청을 하고, user를 response의 data로 세팅함.
-
     async function getUser()
     {
       const res_user=await Api.get("users", portfolioOwnerId)

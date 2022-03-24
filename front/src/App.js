@@ -21,7 +21,6 @@ function App() {
     user: null,
   });
   const [bookmarklist,setBookmarklist]=useState(null)
-  const [toggle,setToggle]=useState(false)
 
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const fetchCurrentUser = async () => {
@@ -54,7 +53,7 @@ function App() {
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>
-        <BookmarkListContext.Provider value={{bookmarklist,setBookmarklist,toggle,setToggle}}>
+        <BookmarkListContext.Provider value={{bookmarklist,setBookmarklist}}>
         <Router>
           <Header />
           <Routes>

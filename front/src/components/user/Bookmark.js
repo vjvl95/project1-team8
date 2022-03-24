@@ -2,7 +2,6 @@ import React, { useContext,useEffect, useState } from 'react';
 import { Container, Row,Card } from 'react-bootstrap';
 import * as Api from '../../api';
 import UserCard from './UserCard';
-import { DispatchContext } from "../../App";
 import { BookmarkListContext } from "../../App";
 
 
@@ -12,13 +11,13 @@ function Bookmark(){
 
 
     useEffect(() => {
-        async function getUser(){
+        async function getBookmark(){
           const bookmarklist=await Api.get('user/bookmarklist')
           const res=await Api.get('user/bookmarklist_data')
           setBookmarklist(bookmarklist.data)
           setUsers(res.data)
       }
-      getUser()
+      getBookmark()
       }, []);
     
     return (
