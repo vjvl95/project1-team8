@@ -2,16 +2,19 @@ import { useNavigate } from "react-router-dom";
 import { Card, Row, Col } from "react-bootstrap";
 import EditButton from "../common/EditButton";
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+function UserCard({ user, setIsEditing, isEditable, isNetwork, url }) {
   const navigate = useNavigate();
+
+  const index = Math.floor(Math.random() * 1500);
+
   return (
     <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
       <Card.Body>
         <Row className="justify-content-md-center">
           <Card.Img
-            style={{ width: "20rem", height: "8rem" }}
+            style={{ width: "10rem", height: "8rem" }}
             className="mb-3"
-            src="https://picsum.photos/250/250"
+            src={url + index}
           />
         </Row>
         <Card.Title>{user?.name}</Card.Title>
