@@ -54,7 +54,7 @@ const AwardListItem = ({
                 <EditButton setIsEditing={setIsEditing} />
               </Col>
               <Col className="col-lg-1">
-                <Button variant="outline-info" size="sm" onClick={HandleDelete}>
+                <Button variant="danger" size="sm" onClick={HandleDelete}>
                   삭제
                 </Button>
               </Col>
