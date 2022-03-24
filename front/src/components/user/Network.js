@@ -1,10 +1,11 @@
-import React, { useEffect, useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Container, Row } from 'react-bootstrap';
+import React, { useEffect, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Container, Row } from "react-bootstrap";
+import styles from "./Network.module.css";
 
-import * as Api from '../../api';
-import UserCard from './UserCard';
-import { SearchContext, UserStateContext, DispatchContext } from '../../App';
+import * as Api from "../../api";
+import UserCard from "./UserCard";
+import { SearchContext, UserStateContext, DispatchContext } from "../../App";
 
 function Network() {
   const navigate = useNavigate();
@@ -14,24 +15,24 @@ function Network() {
 
   const [users, setUsers] = useState([]);
   const searchInit = () => {
-    searchState.search !== '' &&
+    searchState.search !== "" &&
       searchDispatch({
-        type: 'DEFAULT',
+        type: "DEFAULT",
       });
   };
 
   useEffect(() => {
     // 만약 전역 상태의 user가 null이라면, 로그인 페이지로 이동함.
     if (!userState.user) {
-      navigate('/login');
+      navigate("/login");
       return;
     }
     searchInit();
-    if (searchState.category === 'all' && searchState.search === '') {
-      Api.get('userlist').then((res) => setUsers(res.data));
+    if (searchState.category === "all" && searchState.search === "") {
+      Api.get("userlist").then((res) => setUsers(res.data));
     } else {
       Api.get(
-        'userlist',
+        "userlist",
         `search?searchType=${searchState.category}&searchWord=${searchState.search}`
       )
         .then((res) => setUsers(res.data))
@@ -42,8 +43,8 @@ function Network() {
   }, [userState, navigate, searchState]);
 
   return (
-    <Container fluid>
-      <Row xs='auto' className='justify-content-center'>
+    <Container fluid className={styles["network"]}>
+      <Row xs="auto" className="justify-content-center">
         {users.map((user) => (
           <UserCard key={user.id} user={user} isNetwork />
         ))}
