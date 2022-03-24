@@ -26,7 +26,6 @@ function Network() {
       navigate('/login');
       return;
     }
-    searchInit();
     if (searchState.category === 'all' && searchState.search === '') {
       Api.get('userlist').then((res) => setUsers(res.data));
     } else {
@@ -36,10 +35,12 @@ function Network() {
       )
         .then((res) => setUsers(res.data))
         .catch((e) =>
-          alert(`${searchState.search}에 해당하는 검색 결과가 없습니다.  `)
+          alert(`"${searchState.search}"에 해당하는 검색 결과가 없습니다.  `)
         );
     }
   }, [userState, navigate, searchState]);
+
+  useEffect(() => searchInit(), []);
 
   return (
     <Container fluid>
