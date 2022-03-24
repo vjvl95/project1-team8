@@ -244,6 +244,7 @@ userRouter.get("/userlist/search", async function (req, res, next) {
     const { searchType, searchWord } = req.query;
     // 해당 user의 전체 수상내역 목록을 얻음
     const foundList = await userService.searchUserList({ searchType, searchWord });
+
     res.status(200).send(foundList);
   } catch (error) {
     next(error);

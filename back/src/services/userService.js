@@ -239,6 +239,7 @@ class userService {
     const userIdList = await userArr.map(v => {
       return {id: v}
     })
+
     const userList = await User.findByIdList({ userIdList })
 
     return userList;    
