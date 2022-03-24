@@ -15,6 +15,8 @@ function Header() {
   const userState = useContext(UserStateContext);
   const { userDispatch } = useContext(DispatchContext);
 
+  const [show, setShow] = useState(false);
+
   // 전역상태에서 user가 null이 아니라면 로그인 성공 상태임.
   const isLogin = !!userState.user;
 
