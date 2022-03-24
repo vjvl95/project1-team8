@@ -14,11 +14,15 @@ import Portfolio from './components/Portfolio';
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
 export const BookmarkListContext=createContext(null)
+
+
 function App() {
   const [userState, dispatch] = useReducer(loginReducer, {
     user: null,
   });
   const [bookmarklist,setBookmarklist]=useState(null)
+  const [toggle,setToggle]=useState(false)
+
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const fetchCurrentUser = async () => {
     try {
@@ -50,7 +54,7 @@ function App() {
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>
-        <BookmarkListContext.Provider value={{bookmarklist,setBookmarklist}}>
+        <BookmarkListContext.Provider value={{bookmarklist,setBookmarklist,toggle,setToggle}}>
         <Router>
           <Header />
           <Routes>

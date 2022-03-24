@@ -5,16 +5,15 @@ import * as Api from '../../api';
 import UserCard from './UserCard';
 import { UserStateContext } from '../../App';
 import { BookmarkListContext } from "../../App";
+import { DispatchContext } from "../../App";
 
 function Network() {
   const {bookmarklist,setBookmarklist}=useContext(BookmarkListContext)
-
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
   // useState 훅을 통해 users 상태를 생성함.
   const [users, setUsers] = useState([]);
   const [top3,setTop3]=useState([])
-  const randomColor=['lightblue' , 'aquamarine','blanchedalmond','lightpink',' gainsboro','powderblue','azure','papayawhip','navajowhite','lavender','honeydew','lightcyan','pink','lavenderblush']
 
   useEffect(  () => {
     if (!userState.user) {
@@ -24,9 +23,8 @@ function Network() {
     async function getUser(){
       const top3=await Api.get('user/bookmarktop3')
       const res= await Api.get('userlist')
-      const bookmarklist=await Api.get('user/bookmarklist')
-      console.log(top3)
-      setBookmarklist(bookmarklist.data)
+      const new_bookmarklist=await Api.get('user/bookmarklist')
+      setBookmarklist(new_bookmarklist.data)
       setUsers(res.data)
       setTop3(top3.data)
 
@@ -46,8 +44,8 @@ function Network() {
             </Row>
       </div>
       <Row className='jusify-content-center' style={{marginLeft:"5%"}}>
-        {users.map((user,index) => (
-          <UserCard key={user.id} user={user} color={randomColor[index%14]} isNetwork bookmarklist={bookmarklist}/>
+        {users.map((user) => (
+          <UserCard key={user.id} user={user} isNetwork bookmarklist={bookmarklist}/>
         ))}
       </Row>
 
