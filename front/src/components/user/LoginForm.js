@@ -59,6 +59,13 @@ function LoginForm() {
     }
   };
 
+  const OAuthButton = () => {
+    const onClick = () =>
+      window.open('http://localhost:5001/auth/google', '_blank');
+    return <button onClick={onClick}>oAuth 버튼</button>;
+  };
+  
+
   return (
     <Container>
       <Row className='justify-content-md-center mt-5'>
@@ -107,6 +114,7 @@ function LoginForm() {
                 <Button variant='light' onClick={() => navigate('/register')}>
                   회원가입하기
                 </Button>
+                <OAuthButton/>
               </Col>
             </Form.Group>
           </Form>
