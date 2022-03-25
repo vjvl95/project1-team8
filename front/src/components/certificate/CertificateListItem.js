@@ -1,7 +1,7 @@
 import { Col, Row, Button } from "react-bootstrap";
 import { useState } from "react";
 import CertificateEditForm from "./CertificateEditForm";
-import EditButton from "../EditButton";
+import EditButton from "../common/EditButton";
 import * as API from "../../api";
 
 function CertificateListItem({ id, isEditable, item, getCertificateList }) {
@@ -13,7 +13,7 @@ function CertificateListItem({ id, isEditable, item, getCertificateList }) {
   const HandleDelete = async () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
-       await API.delete(`certificates/${id}`);
+        await API.delete(`certificates/${id}`);
         getCertificateList();
       } catch (err) {
         console.log("삭제 실패하였습니다.", err);
@@ -54,7 +54,7 @@ function CertificateListItem({ id, isEditable, item, getCertificateList }) {
                 <EditButton setIsEditing={setIsEditing} />
               </Col>
               <Col className="col-lg-1">
-                <Button variant="outline-info" size="sm" onClick={HandleDelete}>
+                <Button variant="danger" size="sm" onClick={HandleDelete}>
                   삭제
                 </Button>
               </Col>

@@ -4,7 +4,9 @@ import {AiOutlineStar,AiTwotoneStar}  from "react-icons/ai"
 import {useContext, useEffect, useState} from "react"
 import * as Api from "../../api";
 import { BookmarkListContext } from "../../App";
-function UserCard({portfolioOwnerId,user, setIsEditing, isEditable, isNetwork,num,size,padding}) {
+import EditButton from "../common/EditButton";
+
+function UserCard({portfolioOwnerId,user, setIsEditing, isEditable,bookmarkMargin, isNetwork,num,size,padding}) {
   const navigate = useNavigate();
   const [toggle,setToggle]= useState()
   const [count,setCount]=useState(0)
@@ -49,7 +51,7 @@ function UserCard({portfolioOwnerId,user, setIsEditing, isEditable, isNetwork,nu
   }
   
   return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width:size||"20rem", border:`5px solid #edf2fb`,borderRadius: "50px"  }}>
+    <Card className="mb-2 ms-3 mr-5" style={{ width:size||"20rem", border:`5px solid #edf2fb`,borderRadius: "50px", marginTop:bookmarkMargin||"0px" }}>
       <Card.Title style={{fontWeight:"bolder",textAlign:"center", marginTop:"10px"}} >{num}</Card.Title>
       <Card.Body>
         <Row className="justify-content-md-center">

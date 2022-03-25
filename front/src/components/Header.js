@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Nav from 'react-bootstrap/Nav';
-import { UserStateContext, DispatchContext } from '../App';
-import SearchBox from '../components/common/SearchBox';
-import Comment from './comment/Comment';
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import Nav from "react-bootstrap/Nav";
+import { UserStateContext, DispatchContext } from "../App";
+import SearchBox from "../components/common/SearchBox";
+import Comment from "./comment/Comment";
+import styles from "./Header.module.css";
 
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
-  
-  const [path, setPath] = useState('');
+
+  const [path, setPath] = useState("");
   useEffect(() => setPath(location.pathname.substring(1)), [location]);
 
   const userState = useContext(UserStateContext);
@@ -29,28 +30,31 @@ function Header() {
   };
 
   return (
-    <Nav activeKey={location.pathname} style={{backgroundColor:"ivory",justifyContent:"right"}}>
-      
-      {path === 'network' && (
-        <Nav.Item>
-          <SearchBox></SearchBox>
-        </Nav.Item>
-      )}
-      <Nav.Item className="mt-2">
-        <Nav.Link onClick={() => navigate('/')}>나의 페이지</Nav.Link>
-      </Nav.Item>
-      <Nav.Item className="mt-2">
-        <Nav.Link onClick={() => navigate("/bookmark")}>내 북마크</Nav.Link>
-      </Nav.Item>
-      <Nav.Item className="mt-2">
-        <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
-      </Nav.Item>
-      <Nav.Item className="mt-2">
-        <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
-      </Nav.Item>
+    <Nav className={styles["nav-list"]} activeKey={location.pathname} >
       {isLogin && (
         <>
-          <Nav.Item className="mt-2">
+          <Nav.Item className="me-auto">
+            <img
+              alt="헤더로고"
+              src="/image/header_image.png"
+              style={{ width: "200px", paddingLeft: "25px" }}
+            />
+          </Nav.Item>
+          {path === "network" && (
+            <Nav.Item>
+              <SearchBox></SearchBox>
+            </Nav.Item>
+          )}
+          <Nav.Item>
+        <Nav.Link onClick={() => navigate("/bookmark")}>내 북마크</Nav.Link>
+      </Nav.Item>
+          <Nav.Item>
+            <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
             <Nav.Link onClick={logout}>로그아웃</Nav.Link>
           </Nav.Item>
           <Nav.Item>

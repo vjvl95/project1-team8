@@ -3,7 +3,7 @@ import AwardList from "./AwardList";
 import AwardEditForm from "./AwardEditForm";
 import { useState, useEffect, useCallback } from "react";
 import * as Api from "../../api";
-import PlusButton from "../PlusButton";
+import PlusButton from "../common/PlusButton";
 
 function Award({ portfolioOwnerId, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -22,7 +22,7 @@ function Award({ portfolioOwnerId, isEditable }) {
   }, [getAwardList]);
 
   return (
-    <Card>
+    <Card className="mb-3">
       <Card.Body>
         <Card.Title>수상이력</Card.Title>
         <AwardList

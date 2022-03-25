@@ -1,7 +1,7 @@
 import { Col, Row, Button } from "react-bootstrap";
 import { useState } from "react";
 import ProjectEditForm from "./ProjectEditForm";
-import EditButton from "../EditButton";
+import EditButton from "../common/EditButton";
 import * as API from "../../api";
 
 function ProjectListItem({ id, isEditable, item, getProjectList }) {
@@ -41,7 +41,7 @@ function ProjectListItem({ id, isEditable, item, getProjectList }) {
         />
       ) : (
         <Row className="align-items-center mb-3">
-          <Col>
+          <Col className="me-50">
             <span>{newTitle}</span>
             <br />
             <span className="text-muted">{newDescription}</span>
@@ -58,7 +58,7 @@ function ProjectListItem({ id, isEditable, item, getProjectList }) {
                 <EditButton setIsEditing={setIsEditing} />
               </Col>
               <Col className="col-lg-1">
-                <Button variant="outline-info" size="sm" onClick={HandleDelete}>
+                <Button variant="danger" size="sm" onClick={HandleDelete}>
                   삭제
                 </Button>
               </Col>

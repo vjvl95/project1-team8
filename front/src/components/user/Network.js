@@ -1,10 +1,11 @@
-import React, { useEffect, useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Container, Row,Card } from 'react-bootstrap';
-import * as Api from '../../api';
-import UserCard from './UserCard';
-import { SearchContext, UserStateContext, DispatchContext } from '../../App';
+import React, { useEffect, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Container, Row,Card} from "react-bootstrap";
+import styles from "./Network.module.css";
 import { BookmarkListContext } from "../../App";
+import * as Api from "../../api";
+import UserCard from "./UserCard";
+import { SearchContext, UserStateContext, DispatchContext } from "../../App";
 
 function Network() {
   const {setBookmarklist}=useContext(BookmarkListContext)
@@ -15,9 +16,9 @@ function Network() {
 
   const [users, setUsers] = useState([]);
   const searchInit = () => {
-    searchState.search !== '' &&
+    searchState.search !== "" &&
       searchDispatch({
-        type: 'DEFAULT',
+        type: "DEFAULT",
       });
   };
   const [top3,setTop3]=useState([])
@@ -25,15 +26,15 @@ function Network() {
 
   useEffect(  () => {
     if (!userState.user) {
-      navigate('/login');
+      navigate("/login");
       return;
     }
     searchInit();
-    if (searchState.category === 'all' && searchState.search === '') {
-      Api.get('userlist').then((res) => setUsers(res.data));
+    if (searchState.category === "all" && searchState.search === "") {
+      Api.get("userlist").then((res) => setUsers(res.data));
     } else {
       Api.get(
-        'userlist',
+        "userlist",
         `search?searchType=${searchState.category}&searchWord=${searchState.search}`
       )
         .then((res) => setUsers(res.data))
@@ -58,9 +59,9 @@ function Network() {
 
   return (
     <Container fluid>
-      <div style={{backgroundColor:"#FFDDEE" ,borderRadius: "60px" , opacity: 0.95, paddingBottom:"10px", marginTop:"30px",marginBottom:"30px", paddingTop:"10px",paddingLeft:"30px",paddingRight:"30px"}}>
+      <div style={{backgroundColor:"#F0F0F0", opacity: 0.95, padding:"30PX 30PX 10px 30PX",margin:"30px 0 30PX 0"}}>
       <div style={{marginBottom:"70px" }}>
-        <h1 style={{marginBottom:"30px", marginTop:"40px"}}>인기 많은 포토폴리오</h1>
+        <h1 style={{marginBottom:"30px", marginTop:"40px" , justifyItems:"center"}}>인기 많은 포토폴리오</h1>
             <Row className="justify-content-between">
             {top3.map((top,index)=>
             (

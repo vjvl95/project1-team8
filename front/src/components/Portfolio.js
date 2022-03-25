@@ -1,15 +1,16 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Container, Col, Row } from 'react-bootstrap';
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Container, Col, Row, Spinner } from "react-bootstrap";
+import styles from "./Portfolio.module.css";
 
-import { UserStateContext } from '../App';
+import { UserStateContext } from "../App";
 
-import * as Api from '../api';
-import User from './user/User';
-import Award from './award/Award';
-import Education from './education/Education';
-import Project from './project/Project';
-import Certificate from './certificate/Certificate';
+import * as Api from "../api";
+import User from "./user/User";
+import Award from "./award/Award";
+import Education from "./education/Education";
+import Project from "./project/Project";
+import Certificate from "./certificate/Certificate";
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function Portfolio() {
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const userState = useContext(UserStateContext);
   const fetchPorfolioOwner = async (ownerId) => {
-    const res = await Api.get('users', ownerId);
+    const res = await Api.get("users", ownerId);
     const ownerData = res.data;
     setPortfolioOwner(ownerData);
     setIsFetchCompleted(true);
@@ -26,7 +27,7 @@ function Portfolio() {
 
   useEffect(() => {
     if (!userState.user) {
-      navigate('/login', { replace: true });
+      navigate("/login", { replace: true });
       return;
     }
 
@@ -40,20 +41,20 @@ function Portfolio() {
   }, [params, userState, navigate]);
 
   if (!isFetchCompleted) {
-    return 'loading...';
+    return <Spinner animation="border" variant="primary" />;
   }
 
   return (
-    <Container fluid>
+    <Container fluid className={styles["portfolio"]}>
       <Row>
-        <Col md='3' lg='3'>
-          <User 
+        <Col md="3" lg="3">
+          <User
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
         </Col>
-        <Col>
-          <Education 
+        <Col className={styles["mvp"]}>
+          <Education
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />

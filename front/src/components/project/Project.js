@@ -3,7 +3,7 @@ import ProjectList from "./ProjectList";
 import ProjectEditForm from "./ProjectEditForm";
 import { useState, useEffect, useCallback } from "react";
 import * as Api from "../../api";
-import PlusButton from "../PlusButton";
+import PlusButton from "../common/PlusButton";
 
 function Project({ portfolioOwnerId, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -22,7 +22,7 @@ function Project({ portfolioOwnerId, isEditable }) {
   }, [getProjectList]);
 
   return (
-    <Card>
+    <Card className="mb-3">
       <Card.Body>
         <Card.Title>프로젝트</Card.Title>
         <ProjectList

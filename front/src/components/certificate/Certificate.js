@@ -3,7 +3,7 @@ import CertificateList from "./CertificateList";
 import CertificateEditForm from "./CertificateEditForm";
 import { useState, useEffect, useCallback } from "react";
 import * as Api from "../../api";
-import PlusButton from "../PlusButton";
+import PlusButton from "../common/PlusButton";
 
 function Certificate({ portfolioOwnerId, isEditable }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -22,7 +22,7 @@ function Certificate({ portfolioOwnerId, isEditable }) {
   }, [getCertificateList]);
 
   return (
-    <Card>
+    <Card className="mb-3">
       <Card.Body>
         <Card.Title>자격증</Card.Title>
         <CertificateList
