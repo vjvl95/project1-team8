@@ -251,4 +251,17 @@ userRouter.get("/userlist/search", async function (req, res, next) {
   }
 });
 
+userRouter.get(
+  '/userlist/notop3',
+  login_required,
+  async function (req, res, next) {
+    try {
+      const users = await userService.getNoTop3();
+      res.status(200).send(users);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export { userRouter };

@@ -194,6 +194,24 @@ class userService {
     return users;
   }
 
+  static async getNoTop3() {
+    const fieldToSort = ["bookMarked"]
+    const sortType = [-1]
+    const sortBy = {}
+    for (let i = 0; i < fieldToSort.length; i++) {
+      sortBy[fieldToSort[i]]=sortType[i]
+    }
+    let users = await User.sort({ sortBy });
+    users.splice(0,3)
+
+    if (users===[]) {
+      const errorMessage = listError
+      return { errorMessage };
+    }
+
+    return users;
+  }
+
   static async getBookmarkUsers({ user_id }) {
     const user = await User.findById({ user_id });
 
