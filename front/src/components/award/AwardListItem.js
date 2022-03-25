@@ -16,10 +16,11 @@ const AwardListItem = ({
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
 
-  const HandleDelete = () => {
+  const HandleDelete = async () => {
+    
     if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
-        API.delete(`awards/${id}`);
+        await API.delete(`awards/${id}`);
         getAwardList();
       } catch (err) {
         console.log("삭제 실패하였습니다.", err);
