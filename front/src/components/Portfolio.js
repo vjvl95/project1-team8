@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Col, Row } from "react-bootstrap";
+import { Container, Col, Row, Spinner } from "react-bootstrap";
 import styles from "./Portfolio.module.css";
 
 import { UserStateContext } from "../App";
@@ -42,7 +42,7 @@ function Portfolio() {
   }, [params, userState, navigate]);
 
   if (!isFetchCompleted) {
-    return "loading...";
+    return <Spinner animation="border" variant="primary" />;
   }
 
   return (
