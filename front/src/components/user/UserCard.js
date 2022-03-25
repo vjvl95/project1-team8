@@ -4,10 +4,13 @@ import {AiOutlineStar,AiTwotoneStar}  from "react-icons/ai"
 import {useContext, useEffect, useState} from "react"
 import * as Api from "../../api";
 import { BookmarkListContext } from "../../App";
+import axios from "axios";
+
 function UserCard({portfolioOwnerId,user, setIsEditing, isEditable, isNetwork,num,size,padding}) {
   const navigate = useNavigate();
   const [toggle,setToggle]= useState()
   const [count,setCount]=useState(0)
+  const [imgUrl,setImgUrl]=useState(0)
   const {bookmarklist}=useContext(BookmarkListContext)
 
    const toggleHander = async() => {
@@ -51,7 +54,17 @@ function UserCard({portfolioOwnerId,user, setIsEditing, isEditable, isNetwork,nu
   const randomNum = Math.random() * 50;
   const randomInt = Math.floor(randomNum);
   const imgurl = `https://i.pravatar.cc/200?img=${randomInt}`
-
+  const getImg = async () => {
+    const res = await axios.get("https://api.thecatapi.com/v1/images/search")
+    console.log(res)
+    setImgUrl(res.data[0]["url"])
+    console.log(imgUrl)
+  }
+  
+  useEffect(() => {
+    getImg()
+  }, []);
+  
   return (
     <Card className="mb-2 ms-3 mr-5" style={{ width:size||"20rem",paddingLeft:padding||"0px",paddingRight:padding||"0px", border:`5px solid #edf2fb`,borderRadius: "50px"  }}>
       <Card.Title style={{fontWeight:"bolder",textAlign:"center", marginTop:"10px"}} >{num}</Card.Title>
