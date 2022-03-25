@@ -21,17 +21,20 @@ function Network() {
     }
     async function getUser(){
       const top3=await Api.get('user/bookmarktop3')
-      const res= await Api.get('userlist')
+      const res= await Api.get('userlist/notop3')
       const new_bookmarklist=await Api.get('user/bookmarklist')
       setBookmarklist(new_bookmarklist.data)
       setTop3(top3.data)
+      console.log(res)
       setUsers(res.data)
+      
   }
   getUser()
   }, [userState, navigate]);
 
   return (
     <Container fluid>
+      <div style={{backgroundColor:"gray" ,borderRadius: "30px"}}>
       <div style={{marginLeft:"20%",marginRight:"20%",marginBottom:"70px" }}>
         <h1 style={{marginBottom:"30px", marginTop:"40px"}}>인기 많은 포토폴리오</h1>
             <Row className="justify-content-between">
@@ -40,6 +43,7 @@ function Network() {
             <UserCard key={top.id} user={top} isNetwork num={index+1} />
             ))}
             </Row>
+      </div>
       </div>
       <Row className='jusify-content-center' style={{marginLeft:"5%"}}>
         {users.map((user) => (

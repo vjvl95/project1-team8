@@ -204,6 +204,20 @@ class userAuthService {
     return resultList
   }
 
+  static async getNoTop3() {
+    const fieldToSort = ["bookMarked"]
+    const sortType = [-1]
+    let users = await User.sort({ fieldToSort, sortType });
+    users = users.filter(user=>user.bookMarked>0);
+    users.splice(0,3)
+    if (users===[]) {
+      const errorMessage =
+        "아직 아무도 북마크되지 않았습니다.";
+      return { errorMessage };
+  
+    }
+    return users;
+}
 }
 
 export { userAuthService };

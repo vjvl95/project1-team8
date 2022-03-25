@@ -249,5 +249,16 @@ userAuthRouter.get("/users/:id/bookmarklist", login_required, async function (re
   }
 })
 
-
+userAuthRouter.get(
+  '/userlist/notop3',
+  login_required,
+  async function (req, res, next) {
+    try {
+      const users = await userAuthService.getNoTop3();
+      res.status(200).send(users);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 export { userAuthRouter };
