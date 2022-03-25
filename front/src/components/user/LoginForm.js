@@ -61,7 +61,7 @@ function LoginForm() {
 
   return (
     <>
-      <Container>
+      <Container >
         <Row className="justify-content-md-center mt-5">
           <img alt="로고" src="/image/logo.png" style={{ width: "25%" }} />
         </Row>
@@ -76,7 +76,7 @@ function LoginForm() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                {!isEmailValid && (
+                {!isEmailValid && email.length!==0 && (
                   <Form.Text className="text-success">
                     이메일 형식이 올바르지 않습니다.
                   </Form.Text>
@@ -91,7 +91,7 @@ function LoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                {!isPasswordValid && (
+                {!isPasswordValid && password.length!==0 && (
                   <Form.Text className="text-success">
                     비밀번호는 4글자 이상입니다.
                   </Form.Text>

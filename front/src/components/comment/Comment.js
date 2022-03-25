@@ -53,7 +53,7 @@ const Comment = () => {
         </Offcanvas.Body>
 
         <Offcanvas.Title>
-          <CommentInput
+          <CommentInput 
             inputValue={inputValue}
             setInputValue={setInputValue}
             getCommentList={getCommentList}

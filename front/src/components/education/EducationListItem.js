@@ -17,10 +17,10 @@ const EducationListItem = ({
   const [newMajor, setNewMajor] = useState(major);
   const [newPosition, setNewPostion] = useState(position);
 
-  const HandleDelete = () => {
+  const HandleDelete = async() => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
-        API.delete(`educations/${id}`);
+        await API.delete(`educations/${id}`);
         getEducationList();
       } catch (err) {
         console.log("삭제 실패하였습니다.", err);
