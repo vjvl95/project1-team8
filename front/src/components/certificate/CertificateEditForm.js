@@ -32,7 +32,7 @@ function CertificateEditForm({
       setNewWhenDate(whenDate);
       setIsEditing(false);
     } catch (err) {
-      console.log("수상내역을 수정하는데 실패하였습니다", err);
+      console.log("자격증내역을 수정하는데 실패하였습니다", err);
     }
   };
 
@@ -47,7 +47,7 @@ function CertificateEditForm({
       });
       getCertificateList();
     } catch (err) {
-      console.log("수상내역을 입력하는데 실패하였습니다", err);
+      console.log("자격증내역을 수정하는데 실패하였습니다", err);
     }
   };
 

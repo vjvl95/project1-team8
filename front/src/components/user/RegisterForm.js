@@ -69,7 +69,7 @@ function RegisterForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              {!isEmailValid && (
+              {!isEmailValid && email.length!==0 && (
                 <Form.Text className='text-success'>
                   이메일 형식이 올바르지 않습니다.
                 </Form.Text>
@@ -84,7 +84,7 @@ function RegisterForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              {!isPasswordValid && (
+              {!isPasswordValid && password.length!==0 && (
                 <Form.Text className='text-success'>
                   비밀번호는 4글자 이상으로 설정해 주세요.
                 </Form.Text>
@@ -99,7 +99,7 @@ function RegisterForm() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              {!isPasswordSame && (
+              {!isPasswordSame && confirmPassword!==0&&(
                 <Form.Text className='text-success'>
                   비밀번호가 일치하지 않습니다.
                 </Form.Text>
@@ -114,7 +114,7 @@ function RegisterForm() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              {!isNameValid && (
+              {!isNameValid && name.length!==0 && (
                 <Form.Text className='text-success'>
                   이름은 2글자 이상으로 설정해 주세요.
                 </Form.Text>

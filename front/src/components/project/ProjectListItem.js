@@ -11,10 +11,10 @@ function ProjectListItem({ id, isEditable, item, getProjectList }) {
   const [newFromDate, setNewFromDate] = useState(new Date(item.from_date));
   const [newToDate, setNewToDate] = useState(new Date(item.to_date));
 
-  const HandleDelete = () => {
+  const HandleDelete = async() => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
-        API.delete(`projects/${id}`);
+       await API.delete(`projects/${id}`);
         getProjectList();
       } catch (err) {
         console.log("삭제 실패하였습니다.", err);

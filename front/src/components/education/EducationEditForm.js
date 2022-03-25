@@ -31,7 +31,7 @@ function EducationEditForm({
       setNewPosition(position);
       setIsEditing(false);
     } catch (err) {
-      console.log("수상내역을 수정하는데 실패하였습니다", err);
+      console.log("학력내역을 수정하는데 실패하였습니다", err);
     }
   };
 
@@ -46,7 +46,7 @@ function EducationEditForm({
       });
       getEducationList();
     } catch (err) {
-      console.log("수상내역을 입력하는데 실패하였습니다", err);
+      console.log("학력내역을 수정하는데 실패하였습니다", err);
     }
   };
 
