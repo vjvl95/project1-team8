@@ -59,7 +59,7 @@ function Network() {
 
   return (
     <Container fluid>
-      <div style={{backgroundColor:"#F0F0F0", opacity: 0.95, padding:"30PX 30PX 10px 30PX",margin:"30px 0 30PX 0"}}>
+      <div style={{backgroundColor:"#F0F0F0", opacity: 0.95, padding:"30PX 30PX 10px 30PX",margin:"30px 0 30PX 0",borderRadius:"0px 0px 50px 50px"}}>
       <div style={{marginBottom:"70px" }}>
         <h1 style={{marginBottom:"30px", marginTop:"40px" , justifyItems:"center"}}>인기 많은 포토폴리오</h1>
             <Row className="justify-content-between">

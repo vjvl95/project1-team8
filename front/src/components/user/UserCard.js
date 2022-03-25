@@ -5,7 +5,7 @@ import {useContext, useEffect, useState} from "react"
 import * as Api from "../../api";
 import { BookmarkListContext } from "../../App";
 import EditButton from "../common/EditButton";
-
+import {GiLaurelsTrophy} from "react-icons/gi"
 function UserCard({portfolioOwnerId,user, setIsEditing, isEditable,bookmarkMargin, isNetwork,num,size,padding}) {
   const navigate = useNavigate();
   const [toggle,setToggle]= useState()
@@ -51,8 +51,10 @@ function UserCard({portfolioOwnerId,user, setIsEditing, isEditable,bookmarkMargi
   }
   
   return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width:size||"20rem", border:`5px solid #edf2fb`,borderRadius: "50px", marginTop:bookmarkMargin||"0px" }}>
-      <Card.Title style={{fontWeight:"bolder",textAlign:"center", marginTop:"10px"}} >{num}</Card.Title>
+    <Card className="mb-2 ms-3 mr-5" style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",width:size||"20rem",borderRadius: "30px", marginTop:bookmarkMargin||"10px" }}>
+      <Card.Title style={{fontWeight:"bolder",textAlign:"center", marginTop:"10px"}} >
+        {num===1?<GiLaurelsTrophy style={{color:"gold", size:"30"}} />:num===2?<GiLaurelsTrophy style={{backgroundColor:"silver"}} />:<GiLaurelsTrophy style={{backgroundColor:"gold"}} />}
+        </Card.Title>
       <Card.Body>
         <Row className="justify-content-md-center">
           <Card.Img
