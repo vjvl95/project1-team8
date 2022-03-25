@@ -14,6 +14,7 @@ passport.use(new GoogleStrategy({
     callbackURL: `http://localhost:${process.env.SERVER_PORT}/auth/google/callback`
   },
   async function(accessToken, refreshToken, profile, done) {
+    console.log(profile)
     await userAuthService.findOrCreate({ profile })
     const user = await userAuthService.getUser({ email: profile._json.email, password: profile.id })
     done(null, user)
