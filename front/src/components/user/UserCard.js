@@ -49,7 +49,7 @@ function UserCard({portfolioOwnerId,user, setIsEditing, isEditable, isNetwork,nu
   }
   
   return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width:size||"20rem",paddingLeft:padding||"0px",paddingRight:padding||"0px", border:`5px solid #edf2fb`,borderRadius: "50px"  }}>
+    <Card className="mb-2 ms-3 mr-5" style={{ width:size||"20rem", border:`5px solid #edf2fb`,borderRadius: "50px"  }}>
       <Card.Title style={{fontWeight:"bolder",textAlign:"center", marginTop:"10px"}} >{num}</Card.Title>
       <Card.Body>
         <Row className="justify-content-md-center">

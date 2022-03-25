@@ -29,7 +29,7 @@ function Header() {
   };
 
   return (
-    <Nav activeKey={location.pathname} style={{backgroundColor:"ivory",justifyContent:"center"}}>
+    <Nav activeKey={location.pathname} style={{backgroundColor:"ivory",justifyContent:"right"}}>
       
       {path === 'network' && (
         <Nav.Item>

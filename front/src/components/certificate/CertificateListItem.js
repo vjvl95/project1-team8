@@ -10,10 +10,10 @@ function CertificateListItem({ id, isEditable, item, getCertificateList }) {
   const [newDescription, setNewDescription] = useState(item.description);
   const [newWhenDate, setNewWhenDate] = useState(new Date(item.when_date));
 
-  const HandleDelete = () => {
+  const HandleDelete = async () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
-        API.delete(`certificates/${id}`);
+       await API.delete(`certificates/${id}`);
         getCertificateList();
       } catch (err) {
         console.log("삭제 실패하였습니다.", err);
