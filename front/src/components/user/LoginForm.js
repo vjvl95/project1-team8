@@ -61,7 +61,7 @@ function LoginForm() {
 
   return (
     <>
-      <Container style={{ with: "100vw", height: "100vh" }}>
+      <Container>
         <Row className="justify-content-md-center mt-5">
           <img alt="로고" src="/image/logo.png" style={{ width: "25%" }} />
         </Row>
