@@ -1,14 +1,14 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row,Card} from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import styles from "./Network.module.css";
 import { BookmarkListContext } from "../../App";
 import * as Api from "../../api";
 import UserCard from "./UserCard";
 import { SearchContext, UserStateContext, DispatchContext } from "../../App";
-import UserTable from "./UserTable"
+import UserTable from "./UserTable";
 function Network() {
-  const {setBookmarklist}=useContext(BookmarkListContext)
+  const { setBookmarklist } = useContext(BookmarkListContext);
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
   const searchState = useContext(SearchContext);
@@ -21,10 +21,9 @@ function Network() {
         type: "DEFAULT",
       });
   };
-  const [top3,setTop3]=useState([])
-  const randomColor=['#edf2fb' , '#e2eafc','#d7e3fc','#ccdbfd','#c1d3fe','#b6ccfe','#abc4ff']
+  const [top3, setTop3] = useState([]);
 
-  useEffect(  () => {
+  useEffect(() => {
     if (!userState.user) {
       navigate("/login");
       return;
@@ -43,34 +42,40 @@ function Network() {
         );
     }
 
-    async function getUser(){
-      const top3=await Api.get('user/bookmarktop3')
-      const res= await Api.get('userlist/notop3')
-      const new_bookmarklist=await Api.get('user/bookmarklist')
-      setBookmarklist(new_bookmarklist.data)
-      setTop3(top3.data)
-      console.log(res)
-      setUsers(res.data)
+    async function getUser() {
+      const bookmarkTop3 = await Api.get("user/bookmarktop3");
+      const res = await Api.get("userlist/notop3");
+      const new_bookmarklist = await Api.get("user/bookmarklist");
+      setBookmarklist(new_bookmarklist.data);
+      setTop3(bookmarkTop3.data);
+      console.log(res);
+      setUsers(res.data);
     }
-    
-    getUser()
-  }, [userState, navigate, searchState]);
 
+    getUser();
+  }, [userState, navigate, searchState]);
 
   return (
     <Container fluid>
-      <div style={{backgroundColor:"#F0F0F0", opacity: 0.95, padding:"30PX 30PX 10px 30PX",margin:"30px 0 30PX 0",borderRadius:"0px 0px 50px 50px"}}>
-      <div style={{marginBottom:"70px" }}>
-        <UserTable/>
+      <div
+        style={{
+          backgroundColor: "#F0F0F0",
+          opacity: 0.95,
+          padding: "30px 0 10px 0",
+          margin: "30px 0 120px 0",
+          borderRadius: "0px 0px 50px 50px",
+          boxShadow:
+            "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+        }}
+      >
+        <UserTable />
       </div>
-      </div>
-      <Row xs="auto"  className="justify-content-center">
-        {users.map((user,index) => (
-          <UserCard key={user.id} user={user} isNetwork color={randomColor[index%7]} />
+
+      <Row xs="auto" className="justify-content-center">
+        {users.map((user) => (
+          <UserCard key={user.id} user={user} isNetwork />
         ))}
       </Row>
-
-
     </Container>
   );
 }
