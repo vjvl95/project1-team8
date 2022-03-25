@@ -58,7 +58,7 @@ function Network() {
 
   return (
     <Container fluid>
-      <div style={{backgroundColor:"#FFDDEE" ,borderRadius: "60px" , opacity: 0.95, paddingBottom:"10px", marginTop:"30px",marginBottom:"30px", paddingTop:"10px",paddingLeft:"30px",paddingRight:"30px"}}>
+      <div style={{backgroundColor:"bronze" ,borderRadius: "30px" , opacity: 0.95, paddingBottom:"10px", marginTop:"30px",marginBottom:"30px", paddingTop:"10px",paddingLeft:"30px",paddingRight:"30px", width:"100%"}}>
       <div style={{marginBottom:"70px" }}>
         <h1 style={{marginBottom:"30px", marginTop:"40px"}}>인기 많은 포토폴리오</h1>
             <Row className="justify-content-between">
