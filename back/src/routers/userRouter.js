@@ -228,15 +228,23 @@ userRouter.get("/user/bookmarktop3", login_required, async function (req, res, n
 })
 
 
+<<<<<<< HEAD
 userRouter.get("/user/bookmarklist_data", login_required, async function (req, res, next) {
   try {
     const user_id = req.currentUserId;
     const result = await userService.getBookmarkUsers({ user_id });
+=======
+userAuthRouter.get("/user/bookmarklist_data", login_required, async function (req, res, next) {
+  try {
+    const user_id = req.currentUserId;
+    const result = await userAuthService.getBookmarkUsers({ user_id });
+>>>>>>> origin/feauter-bookmark-front
     res.status(200).json(result);
   } catch (error) {
     next(error);
   }
 })
+<<<<<<< HEAD
 
 userRouter.get("/userlist/search", async function (req, res, next) {
   try {
@@ -252,16 +260,39 @@ userRouter.get("/userlist/search", async function (req, res, next) {
 });
 
 userRouter.get(
+=======
+userAuthRouter.get("/users/:id/bookmarklist", login_required, async function (req, res, next) {
+  try {
+    const user_id = req.params.id
+
+    const User = await userAuthService.getUserInfo({ user_id });
+    const bookMarkList = User.bookMarkList;
+    res.status(200).json(bookMarkList);
+  } catch (error) {
+    next(error);
+  }
+})
+
+userAuthRouter.get(
+>>>>>>> origin/feauter-bookmark-front
   '/userlist/notop3',
   login_required,
   async function (req, res, next) {
     try {
+<<<<<<< HEAD
       const users = await userService.getNoTop3();
+=======
+      const users = await userAuthService.getNoTop3();
+>>>>>>> origin/feauter-bookmark-front
       res.status(200).send(users);
     } catch (error) {
       next(error);
     }
   }
 );
+<<<<<<< HEAD
 
 export { userRouter };
+=======
+export { userAuthRouter };
+>>>>>>> origin/feauter-bookmark-front

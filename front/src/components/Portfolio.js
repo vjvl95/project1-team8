@@ -17,7 +17,6 @@ function Portfolio() {
   const [portfolioOwner, setPortfolioOwner] = useState(null);
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
   const userState = useContext(UserStateContext);
-
   const fetchPorfolioOwner = async (ownerId) => {
     const res = await Api.get('users', ownerId);
     const ownerData = res.data;
@@ -48,17 +47,17 @@ function Portfolio() {
     <Container fluid>
       <Row>
         <Col md='3' lg='3'>
-          <User
+          <User 
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
         </Col>
         <Col>
-          <Education
+          <Education 
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
-          <Award
+          <Award 
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />

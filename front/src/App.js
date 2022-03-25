@@ -7,17 +7,21 @@ import { loginReducer, searchReducer } from './reducer';
 import Header from './components/Header';
 import LoginForm from './components/user/LoginForm';
 import Network from './components/user/Network';
+import Bookmark from './components/user/Bookmark';
 import RegisterForm from './components/user/RegisterForm';
 import Portfolio from './components/Portfolio';
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
 export const SearchContext = createContext(null);
+export const BookmarkListContext=createContext(null)
+
 
 function App() {
   const [userState, userDispatch] = useReducer(loginReducer, {
     user: null,
   });
+  const [bookmarklist,setBookmarklist]=useState(null)
 
   const [searchState, searchDispatch] = useReducer(searchReducer, {
     category: 'all',
@@ -56,6 +60,7 @@ function App() {
     <DispatchContext.Provider value={{ userDispatch, searchDispatch }}>
       <UserStateContext.Provider value={userState}>
         <SearchContext.Provider value={searchState}>
+          <BookmarkListContext.Provider value={{bookmarklist,setBookmarklist}}>
           <Router>
             <Header />
             <Routes>
@@ -67,6 +72,8 @@ function App() {
               <Route path='*' element={<Portfolio />} />
             </Routes>
           </Router>
+          </BookmarkListContext.Provider>
+
         </SearchContext.Provider>
       </UserStateContext.Provider>
     </DispatchContext.Provider>
