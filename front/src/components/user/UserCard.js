@@ -4,13 +4,11 @@ import {AiOutlineStar,AiTwotoneStar}  from "react-icons/ai"
 import {useContext, useEffect, useState} from "react"
 import * as Api from "../../api";
 import { BookmarkListContext } from "../../App";
-function UserCard({aa,portfolioOwnerId,user, setIsEditing, isEditable, isNetwork,num}) {
+function UserCard({portfolioOwnerId,user, setIsEditing, isEditable, isNetwork,num,color}) {
   const navigate = useNavigate();
   const [toggle,setToggle]= useState()
   const [count,setCount]=useState(0)
-  const randomColor=['lightblue' , 'aquamarine','blanchedalmond','lightpink',' gainsboro','powderblue','azure','papayawhip','navajowhite','lavender','honeydew','lightcyan','pink','lavenderblush']
   const {bookmarklist}=useContext(BookmarkListContext)
-  const index=Math.floor(Math.random()*14)
 
    const toggleHander = async() => {
     await Api.put("user/bookmark",{
@@ -28,7 +26,6 @@ function UserCard({aa,portfolioOwnerId,user, setIsEditing, isEditable, isNetwork
       user===null ?res=await Api.get(`users/${portfolioOwnerId}/bookmarkcount`) :res=await Api.get(`users/${user.id}/bookmarkcount`)
       setCount(res.data)     
     }
-    console.log(index)
 
     getCount()     
     
@@ -52,7 +49,7 @@ function UserCard({aa,portfolioOwnerId,user, setIsEditing, isEditable, isNetwork
   }
   
   return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem",backgroundColor:randomColor[index] }}>
+    <Card className="mb-2 ms-3 mr-5" style={{ width: "20rem", border:`5px solid #edf2fb`,borderRadius: "50px"  }}>
       <Card.Title style={{fontWeight:"bolder",textAlign:"center", marginTop:"10px"}} >{num}</Card.Title>
       <Card.Body>
         <Row className="justify-content-md-center">

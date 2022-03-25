@@ -25,7 +25,7 @@ function Bookmark(){
           <Row className='jusify-content-center' style={{marginLeft:"5%"}}>
             { users.length===0?<h1 style={{marginTop:"400px", marginLeft:"650px"}}>북마크한 포토폴리오가 없습니다</h1>  
                         : users.map((user) => (
-                        <UserCard key={user.id} user={user} isNetwork/>))}
+                        <UserCard key={user?.id} user={user} isNetwork/>))}
           </Row>
         </Container>
       );
