@@ -29,24 +29,26 @@ function Header() {
 
   return (
     <Nav activeKey={location.pathname} className={styles["nav-list"]}>
-      
-      {path === "network" && (
-        <Nav.Item>
-          <SearchBox></SearchBox>
-        </Nav.Item>
-      )}
-     
       {isLogin && (
         <>
-        <Nav.Item className="me-auto">
-        <Nav.Link disabled>안녕하세요, 포트폴리오 공유 서비스입니다.</Nav.Link>
-      </Nav.Item>
-         <Nav.Item>
-        <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
-      </Nav.Item>
+          <Nav.Item className="me-auto">
+            <img
+              alt="헤더로고"
+              src="/image/header_image.png"
+              style={{ width: "200px", paddingLeft: "25px" }}
+            />
+          </Nav.Item>
+          {path === "network" && (
+            <Nav.Item>
+              <SearchBox></SearchBox>
+            </Nav.Item>
+          )}
+          <Nav.Item>
+            <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
+          </Nav.Item>
           <Nav.Item>
             <Nav.Link onClick={logout}>로그아웃</Nav.Link>
           </Nav.Item>

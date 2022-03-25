@@ -22,7 +22,7 @@ function Certificate({ portfolioOwnerId, isEditable }) {
   }, [getCertificateList]);
 
   return (
-    <Card>
+    <Card className="mb-3">
       <Card.Body>
         <Card.Title>자격증</Card.Title>
         <CertificateList

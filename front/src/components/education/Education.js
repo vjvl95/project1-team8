@@ -24,7 +24,7 @@ const Education = ({ portfolioOwnerId, isEditable }) => {
   }, [getEducationList]);
 
   return (
-    <Card>
+    <Card className="mb-3">
       <Card.Body>
         <Card.Title className="mb-3">학력</Card.Title>
         <EducationList

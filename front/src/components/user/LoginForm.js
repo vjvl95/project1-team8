@@ -61,11 +61,14 @@ function LoginForm() {
 
   return (
     <>
-      <Container >
-        <Row className="justify-content-md-center mt-5">
+      <Container>
+        <Row
+          className="justify-content-md-center"
+          style={{ paddingTop: "60px" }}
+        >
           <img alt="로고" src="/image/logo.png" style={{ width: "25%" }} />
         </Row>
-        <Row className="justify-content-md-center mt-2 ">
+        <Row className="justify-content-md-center mt-4">
           <Col lg={8}>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="loginEmail">
@@ -76,7 +79,7 @@ function LoginForm() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                {!isEmailValid && email.length!==0 && (
+                {!isEmailValid && email.length !== 0 && (
                   <Form.Text className="text-success">
                     이메일 형식이 올바르지 않습니다.
                   </Form.Text>
@@ -91,7 +94,7 @@ function LoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                {!isPasswordValid && password.length!==0 && (
+                {!isPasswordValid && password.length !== 0 && (
                   <Form.Text className="text-success">
                     비밀번호는 4글자 이상입니다.
                   </Form.Text>

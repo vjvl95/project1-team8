@@ -22,7 +22,7 @@ function Award({ portfolioOwnerId, isEditable }) {
   }, [getAwardList]);
 
   return (
-    <Card>
+    <Card className="mb-3">
       <Card.Body>
         <Card.Title>수상이력</Card.Title>
         <AwardList
