@@ -223,6 +223,7 @@ class userService {
 
     return users;
   }
+
   static async getBookmarkUsers({ user_id }) {
     const user = await User.findById({ user_id });
 
@@ -273,7 +274,6 @@ class userService {
 
     return userList;    
   }
-
 }
 
 export { userService };

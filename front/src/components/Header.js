@@ -29,16 +29,14 @@ function Header() {
   };
 
   return (
-    <Nav activeKey={location.pathname} style={{backgroundColor:"ivory"}}>
-      <Nav.Item className="me-auto">
-        <Nav.Link disabled ><h2>안녕하세요, 포트폴리오 공유 서비스입니다.</h2></Nav.Link>
-      </Nav.Item>
+    <Nav activeKey={location.pathname} style={{backgroundColor:"ivory",justifyContent:"center"}}>
+      
       {path === 'network' && (
         <Nav.Item>
           <SearchBox></SearchBox>
         </Nav.Item>
       )}
-      <Nav.Item>
+      <Nav.Item className="mt-2">
         <Nav.Link onClick={() => navigate('/')}>나의 페이지</Nav.Link>
       </Nav.Item>
       <Nav.Item className="mt-2">

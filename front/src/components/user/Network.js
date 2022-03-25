@@ -58,13 +58,13 @@ function Network() {
 
   return (
     <Container fluid>
-      <div style={{backgroundColor:"#FFDDEE" ,borderRadius: "60px" , opacity: 0.95, paddingBottom:"10px", marginTop:"30px",marginBottom:"30px", paddingTop:"10px"}}>
-      <div style={{marginLeft:"20%",marginRight:"20%",marginBottom:"70px" }}>
+      <div style={{backgroundColor:"#FFDDEE" ,borderRadius: "60px" , opacity: 0.95, paddingBottom:"10px", marginTop:"30px",marginBottom:"30px", paddingTop:"10px",paddingLeft:"30px",paddingRight:"30px"}}>
+      <div style={{marginBottom:"70px" }}>
         <h1 style={{marginBottom:"30px", marginTop:"40px"}}>인기 많은 포토폴리오</h1>
             <Row className="justify-content-between">
             {top3.map((top,index)=>
             (
-            <UserCard key={top.id} user={top} isNetwork num={index+1} />
+            <UserCard key={top.id} user={top} isNetwork num={index+1} size={"23rem"} />
             ))}
             </Row>
       </div>
