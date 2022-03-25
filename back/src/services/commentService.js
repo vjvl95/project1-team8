@@ -10,18 +10,13 @@ class commentService {
 
     // db에 저장
     const createdNewComment = await Comment.create({ newComment });
+    createdNewComment.errorMessage = null;
 
     return createdNewComment;
   }
 
   static async getCommentList() {
-    // commentId가 comment db에 존재 여부 확인
     const commentList = await Comment.findCommentList();
-    if (!commentList) {
-      const errorMessage = findError("댓글")
-      return { errorMessage };
-    }
-
     return commentList;
   }
 

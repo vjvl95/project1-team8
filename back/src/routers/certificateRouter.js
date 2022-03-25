@@ -16,20 +16,24 @@ certificateRouter.post(
           headerError
         );
       }
-
+      // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
+      const user_id = req.currentUserId;
       // req (request) 에서 데이터 가져오기
-      const user_id = req.body.user_id;
       const title = req.body.title;
       const description = req.body.description;
       const when_date = req.body.when_date;
 
-      // 위 데이터를 유저 db에 추가하기
+      // 위 데이터를 certificate db에 추가하기
       const newCertificate = await certificateService.addCertificate({
         user_id,
         title,
         description,
         when_date,
       });
+
+      if (newCertificate.errorMessage) {
+        throw new Error(newCertificate.errorMessage);
+      }
 
       res.status(201).end();
     } catch (error) {
@@ -40,17 +44,14 @@ certificateRouter.post(
 
 certificateRouter.get('/certificates/:id', async function (req, res, next) {
   try {
-    // URI로부터 certificateId를 추출함.
     const certificateId = req.params.id;
-    const certificate = await certificateService.getCertificate({
-      certificateId,
-    });
+    const foundCertificate = await certificateService.getCertificate({ certificateId });
 
-    if (certificate.errorMessage) {
-      throw new Error(certificate.errorMessage);
+    if (foundCertificate.errorMessage) {
+      throw new Error(foundCertificate.errorMessage);
     }
 
-    res.status(200).send(certificate);
+    res.status(200).send(foundCertificate);
   } catch (error) {
     next(error);
   }
@@ -58,16 +59,13 @@ certificateRouter.get('/certificates/:id', async function (req, res, next) {
 
 certificateRouter.put("/certificates/:id", async function (req, res, next) {
   try {
-    // URI로부터 certificateId를 추출함.
     const certificateId = req.params.id;
-    // body data 로부터 업데이트할 사용자 정보를 추출함.
     const title = req.body.title ?? null;
     const description = req.body.description ?? null;
     const when_date = req.body.when_date ?? null;
 
     const toUpdate = { title, description, when_date };
 
-    // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
     const updatedCertificate = await certificateService.setCertificate({
       certificateId,
       toUpdate,
@@ -83,16 +81,11 @@ certificateRouter.put("/certificates/:id", async function (req, res, next) {
   }
 });
 
-certificateRouter.get(
-  "/certificatelist/:user_id",
-  async function (req, res, next) {
+certificateRouter.get("/certificatelist/:user_id", async function (req, res, next) {
     try {
-      // URI로부터 user_id를 추출함.
       const user_id = req.params.user_id;
-      // 해당 user의 전체 수상내역 목록을 얻음
-      const foundList = await certificateService.getCertificateList({
-        user_id,
-      });
+      const foundList = await certificateService.getCertificateList({ user_id });
+
       res.status(200).send(foundList);
     } catch (error) {
       next(error);
@@ -102,11 +95,8 @@ certificateRouter.get(
 
 certificateRouter.delete('/certificates/:id', async function (req, res, next) {
   try {
-    // URI로부터 certificateId를 추출함.
     const certificateId = req.params.id;
-    const deletedResult = await certificateService.deleteCertificate({
-      certificateId,
-    });
+    const deletedResult = await certificateService.deleteCertificate({ certificateId });
 
     if (deletedResult.errorMessage) {
       throw new Error(deletedResult.errorMessage);

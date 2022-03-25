@@ -1,6 +1,6 @@
 import passport from 'passport'
 import google from 'passport-google-oauth20';
-import { userAuthService } from '../services/userService';
+import { userService } from '../services/userService';
 const GoogleStrategy = google.Strategy
 
 passport.serializeUser((user, done)=>{
@@ -15,8 +15,8 @@ passport.use(new GoogleStrategy({
   },
   async function(accessToken, refreshToken, profile, done) {
     console.log(profile)
-    await userAuthService.findOrCreate({ profile })
-    const user = await userAuthService.getUser({ email: profile._json.email, password: profile.id })
+    await userService.findOrCreate({ profile })
+    const user = await userService.getUser({ email: profile._json.email, password: profile.id })
     done(null, user)
   }
 ));

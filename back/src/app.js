@@ -1,9 +1,7 @@
 import cors from "cors";
 import express from "express";
-
-import { userAuthRouter } from "./routers/userRouter";
 import { googleAuthRouter } from "./routers/google";
-
+import { userRouter } from "./routers/userRouter";
 import { awardRouter } from "./routers/awardRouter";
 import { certificateRouter } from "./routers/certificateRouter";
 import { educationRouter } from "./routers/educationRouter";
@@ -28,10 +26,9 @@ app.get("/", (req, res) => {
   res.send("안녕하세요, 레이서 프로젝트 API 입니다.");
 });
 
-// router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
-app.use(userAuthRouter);
+// router, service 구현 (userRouter는 맨 위에 있어야 함.)
+app.use(userRouter);
 app.use(googleAuthRouter);
-
 app.use(awardRouter)
 app.use(certificateRouter)
 app.use(educationRouter);

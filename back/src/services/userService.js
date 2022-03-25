@@ -2,10 +2,10 @@ import { User, Award, Certificate, Education, Project } from "../db"; // from을
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
-import { existError, matchError, findError } from "../utils/errorMessages"
-import { searchFunc } from "../utils/serviceFuction"
+import { existError, matchError, findError, addError, removeError, listError } from "../utils/errorMessages"
+import { searchFunc } from "../utils/serviceFunction"
 
-class userAuthService {
+class userService {
   static async addUser({ name, email, password }) {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email });
@@ -131,7 +131,7 @@ class userAuthService {
       console.log(target)
       if (toUpdate.bookMarked) {
         if (user.bookMarkList.includes(targetId)){
-          const errorMessage = "이미 즐겨찾기 등록한 유저입니다.";
+          const errorMessage = addError
           return {errorMessage}
         } else {
           const newValue = [...user.bookMarkList, toUpdate.bookMarkList];
@@ -144,7 +144,7 @@ class userAuthService {
         }
       } else if (!toUpdate.bookMarked) {
         if (!user.bookMarkList.includes(targetId)){
-          const errorMessage = "즐겨찾기 목록에 없는 유저입니다."
+          const errorMessage = removeError
           return {errorMessage}
         } else {
           const newValue = user.bookMarkList.filter(user_id => user_id!==targetId);
@@ -190,13 +190,34 @@ class userAuthService {
   static async getTop3() {
     const fieldToSort = ["bookMarked"]
     const sortType = [-1]
-    let users = await User.sort({ fieldToSort, sortType });
+    const sortBy = {}
+    for (let i = 0; i < fieldToSort.length; i++) {
+      sortBy[fieldToSort[i]]=sortType[i]
+    }
+    let users = await User.sort({ sortBy });
     users = users.filter(user=>user.bookMarked>0);
     users = users.splice(0,3)
 
     if (users===[]) {
-      const errorMessage =
-        "아직 아무도 북마크되지 않았습니다.";
+      const errorMessage = listError
+      return { errorMessage };
+    }
+
+    return users;
+  }
+
+  static async getNoTop3() {
+    const fieldToSort = ["bookMarked"]
+    const sortType = [-1]
+    const sortBy = {}
+    for (let i = 0; i < fieldToSort.length; i++) {
+      sortBy[fieldToSort[i]]=sortType[i]
+    }
+    let users = await User.sort({ sortBy });
+    users.splice(0,3)
+
+    if (users===[]) {
+      const errorMessage = listError
       return { errorMessage };
     }
 
@@ -222,8 +243,8 @@ class userAuthService {
 
   static async searchUserList({ searchType, searchWord }) {
     let userAll = []
+    let searchOpt = searchFunc(searchType, searchWord)
     if (searchType === "all") {
-      let searchOpt = searchFunc(searchType, searchWord)
       const userList1 = await Award.findBySearchWord({ searchOpt })
       const userList2 = await Certificate.findBySearchWord({ searchOpt })
       const userList3 = await Project.findBySearchWord({ searchOpt })
@@ -233,29 +254,26 @@ class userAuthService {
       userAll = [...userList1, ...userList2, ...userList3, ...userList4]
     }
     else if (searchType === "award") {
-      const searchOpt = searchFunc(searchType, searchWord)
       userAll = await Award.findBySearchWord({ searchOpt })
     } else if (searchType === "certificate") {
-      const searchOpt = searchFunc(searchType, searchWord)
       userAll = await Certificate.findBySearchWord({ searchOpt })
     } else if (searchType === "education") {
-      const searchOpt = searchFunc(searchType, searchWord)
       userAll = await Education.findBySearchWord({ searchOpt })
     } else if (searchType === "project") {
-      const searchOpt = searchFunc(searchType, searchWord)
       userAll = await Project.findBySearchWord({ searchOpt })
     }
-
+    // user_id 중복 제거
     const set = new Set(userAll);
     const userArr = [...set]
     // [ {id: user_id}, {id: user_id} ... ] 만들기
     const userIdList = await userArr.map(v => {
       return {id: v}
     })
+
     const userList = await User.findByIdList({ userIdList })
 
     return userList;    
   }
 }
 
-export { userAuthService };
+export { userService };
