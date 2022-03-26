@@ -3,15 +3,17 @@ import * as Api from "../../api";
 import React, { useEffect, useState,useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Network.module.css";
+<<<<<<< HEAD
 import {FaMedal,} from "react-icons/fa"
+=======
+import { FaMedal } from "react-icons/fa";
+>>>>>>> 07dcafba5aeccd180948dd89bc3653f393810226
 import { BookmarkListContext } from "../../App";
 import {AiTwotoneStar,AiOutlineStar} from "react-icons/ai"
 
 function UserTable() {
   const [top3, setTop3] = useState([]);
   const navigate = useNavigate();
-  const [toggle, setToggle] = useState();
-  const { bookmarklist } = useContext(BookmarkListContext);
 
 
   useEffect(() => {
@@ -23,6 +25,7 @@ function UserTable() {
     getTop3();
   }, []);
 
+<<<<<<< HEAD
 
 
 
@@ -37,6 +40,18 @@ function UserTable() {
   
 
   
+=======
+  function medal(num) {
+    return num === 1 ? (
+      <FaMedal size="30" style={{ color: "gold" }} />
+    ) : num === 2 ? (
+      <FaMedal size="30" style={{ color: "#D3D3D3" }} />
+    ) : (
+      <FaMedal size="30" style={{ color: "#cd7f32" }} />
+    );
+  }
+
+>>>>>>> 07dcafba5aeccd180948dd89bc3653f393810226
   return (
     <div
       style={{
@@ -72,9 +87,7 @@ function UserTable() {
               <td className="table_style">{email}</td>
               <td className="table_style">{bookMarked}</td>
               <td className="table_style">
-                <Button onClick={() => navigate(`/users/${id}`)}>
-                  상세보기
-                </Button>
+                <Button onClick={() => navigate(`/users/${id}`)}>DETAIL</Button>
               </td>
             </tr>
           ))}

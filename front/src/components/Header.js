@@ -30,14 +30,14 @@ function Header() {
   };
 
   return (
-    <Nav className={styles["nav-list"]} activeKey={location.pathname} >
+    <Nav className={styles["nav-list"]} activeKey={location.pathname}>
       {isLogin && (
         <>
-          <Nav.Item className="me-auto">
+          <Nav.Item className="me-auto" onClick={() => navigate("/network")}>
             <img
               alt="헤더로고"
               src="/image/header_image.png"
-              style={{ width: "200px", paddingLeft: "25px" }}
+              style={{ width: "200px", paddingLeft: "25px", cursor: "pointer" }}
             />
           </Nav.Item>
           {path === "network" && (
@@ -46,8 +46,8 @@ function Header() {
             </Nav.Item>
           )}
           <Nav.Item>
-        <Nav.Link onClick={() => navigate("/bookmark")}>내 북마크</Nav.Link>
-      </Nav.Item>
+            <Nav.Link onClick={() => navigate("/bookmark")}>내 북마크</Nav.Link>
+          </Nav.Item>
           <Nav.Item>
             <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
           </Nav.Item>
