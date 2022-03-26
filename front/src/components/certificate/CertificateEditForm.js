@@ -58,7 +58,7 @@ function CertificateEditForm({
           <Form.Group controlId="useEditName" className="mb-3">
             <Form.Control
               type="text"
-              placeholder="프로젝트 제목"
+              placeholder="자격증 제목"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
