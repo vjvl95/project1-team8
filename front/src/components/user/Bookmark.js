@@ -7,7 +7,7 @@ import { BookmarkListContext } from "../../App";
 function Bookmark() {
   const [users, setUsers] = useState([]);
   const { setBookmarklist } = useContext(BookmarkListContext);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function getBookmark() {
@@ -16,16 +16,26 @@ function Bookmark() {
       const newData = data.filter((user) => user);
       setBookmarklist(bookmarklist.data);
       setUsers(newData);
-
     }
     getBookmark();
-    setIsLoading(true);
+    setIsLoading(false);
   }, []);
   function bookmark_user() {
     return users.length === 0 ? (
-      <h1 style={{ marginTop: "400px", marginLeft: "650px" }}>
-        북마크한 포토폴리오가 없습니다
-      </h1>
+      <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Spinner
+            animation="border"
+            variant="primary"
+            style={{ marginTop: "300px", justifyContent: "center" }}
+          />
+        </div>
     ) : (
       users.map((user) => (
         <UserCard
@@ -40,24 +50,7 @@ function Bookmark() {
   return (
     <Container fluid>
       <Row className="jusify-content-center">
-        {isLoading === true ? (
-          bookmark_user()
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Spinner
-              animation="border"
-              variant="primary"
-              style={{ marginTop: "300px", justifyContent: "center" }}
-            />
-          </div>
-        )}
+        {bookmark_user()}
       </Row>
     </Container>
   );

@@ -36,7 +36,6 @@ function UserCard({
         ? (res = await Api.get(`users/${portfolioOwnerId}/bookmarkcount`))
         : (res = await Api.get(`users/${user.id}/bookmarkcount`));
       setCount(res.data);
-      console.log(user)
     }
 
     getCount();
