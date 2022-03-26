@@ -1,5 +1,5 @@
 import is from "@sindresorhus/is";
-import { userService } from "../services/userService";
+import { certificateService } from "../services/certificateService";
 import { headerError } from "../utils/errorMessages"
 
 class certificateController {

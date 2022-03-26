@@ -45,7 +45,7 @@ class commentController {
         }
     }
 
-    async deleteComment (req, res, next) {
+    static async deleteComment (req, res, next) {
         try {
           const commentId = req.params.id;
           const deletedResult = await commentService.deleteComment({ commentId });
