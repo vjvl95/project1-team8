@@ -83,11 +83,7 @@ function UserCard({
         width: "20rem",
         borderRadius: "10px",
         marginTop: bookmarkMargin || "10px",
-<<<<<<< HEAD
-        background:"linear-gradient(gray 50%,white 50%)"
-=======
         background: "linear-gradient(	#c0c0c0 50%, white 50%)",
->>>>>>> refact-style-front3
       }}
     >
     
