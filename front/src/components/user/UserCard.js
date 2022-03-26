@@ -80,7 +80,7 @@ function UserCard({
         boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
         width: "20rem",
         borderRadius: "10px",
-        marginTop: bookmarkMargin || "10px",
+        marginTop: bookmarkMargin,
         background: "linear-gradient(	#c0c0c0 50%, white 50%)",
       }}
     >
@@ -97,7 +97,7 @@ function UserCard({
                   </Row>
         <Card.Title>{user?.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
-        <Card.Text>{user?.description}</Card.Text>
+        <Card.Text>{user?.description.length>=10 && isNetwork===true ?<span>{user?.description.slice(0,17)} ...</span>:user?.description}</Card.Text>
 
         {isEditable && (
           <Col>
