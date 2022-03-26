@@ -2,7 +2,7 @@ import { User, Award, Certificate, Education, Project } from "../db"; // from을
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
-import { existError, matchError, findError, addError, removeError, listError } from "../utils/errorMessages"
+import { existError, matchError, findError, bookmark, removeError, listError } from "../utils/errorMessages"
 import { searchFunc } from "../utils/serviceFunction"
 
 class userService {
@@ -131,7 +131,7 @@ class userService {
       console.log(target)
       if (toUpdate.bookMarked) {
         if (user.bookMarkList.includes(targetId)){
-          const errorMessage = addError
+          const errorMessage = bookmarkError
           return {errorMessage}
         } else {
           const newValue = [...user.bookMarkList, toUpdate.bookMarkList];
