@@ -57,14 +57,14 @@ function RegisterForm() {
 
   return (
     <Container>
-      <div>
-        <img src="/image/login_header.png" style={{ width: "15%" }} />
+      <div style={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:"70px",cursor:"pointer"}} >
+        <img src="/image/login_header.png" style={{ width: "15%" }}  onClick={()=>navigate("/login")}/>
       </div>
 
-      <Row className="justify-content-md-center mt-5">
-        <Col lg={8} className="align-content-md-center mt-5">
+      <Row className="justify-content-md-center mt-3">
+        <Col lg={8} className="align-content-md-center mt-3">
           <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="registerEmail" className="mt-5">
+            <Form.Group controlId="registerEmail">
               <Form.Label>이메일 주소</Form.Label>
               <Form.Control
                 type="email"

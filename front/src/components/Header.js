@@ -46,16 +46,16 @@ function Header() {
             </Nav.Item>
           )}
           <Nav.Item>
-            <Nav.Link onClick={() => navigate("/bookmark")}>내 북마크</Nav.Link>
+            <Nav.Link onClick={() => navigate("/bookmark")} className={styles["nav-item"]}>내 북마크</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
+            <Nav.Link onClick={() => navigate("/")} className={styles["nav-item"]}>나의 페이지</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
+            <Nav.Link onClick={() => navigate("/network")} className={styles["nav-item"]}>네트워크</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link onClick={logout}>로그아웃</Nav.Link>
+            <Nav.Link onClick={logout} className={styles["nav-item"]}>로그아웃</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Comment />

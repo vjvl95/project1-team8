@@ -39,7 +39,7 @@ const Comment = () => {
 
   return (
     <>
-      <Button variant="outline-primary" onClick={handleShow}>
+      <Button style={{border:"0", marginTop:"4px"}} variant="outline-success" onClick={handleShow}>
         <HiOutlineChatAlt2 size="25" />
       </Button>
 

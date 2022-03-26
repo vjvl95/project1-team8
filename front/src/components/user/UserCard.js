@@ -52,24 +52,23 @@ function UserCard({
 
   function togglemodule() {
     return (
-      <>
+      <div style={{justifyContent:"center",display:"flex"}}>
         {toggle ? (
           <AiTwotoneStar
-            style={{ fontSize: "30px", marginLeft: "90px" }}
+            style={{ fontSize: "30px"}}
             onClick={toggleHander}
           />
         ) : (
           <AiOutlineStar
-            style={{ fontSize: "30px", marginLeft: "90px" }}
+            style={{ fontSize: "30px"}}
             onClick={toggleHander}
           />
         )}
-        <span
-          style={{ fontSize: "20px", marginLeft: "5px", marginTop: "15px" }}
-        >
-          {count}
-        </span>
-      </>
+        
+
+        
+          {count} 
+      </div>
     );
   }
 
@@ -110,12 +109,13 @@ function UserCard({
         )}
 
         {isNetwork && (
-          <>
+          <div style={{display:"flex",flexDirection:"row",justifyContent:"space-evenly"}}>
             <Button onClick={() => navigate(`/users/${user.id}`)}>
               상세보기
             </Button>
             {togglemodule()}
-          </>
+
+          </div>
         )}
 
         {!isNetwork && !isEditable && <>{togglemodule()}</>}
