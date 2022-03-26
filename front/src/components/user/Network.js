@@ -15,12 +15,6 @@ function Network() {
   const { searchDispatch } = useContext(DispatchContext);
 
   const [users, setUsers] = useState([]);
-  const searchInit = () => {
-    searchState.search !== '' &&
-      searchDispatch({
-        type: 'DEFAULT',
-      });
-  };
 
   const [top3, setTop3] = useState([]);
 
@@ -40,7 +34,15 @@ function Network() {
     getUser();
   }, [userState, navigate]);
 
-  useEffect(() => searchInit(), [searchInit]);
+  useEffect(() => {
+    const searchInit = () => {
+      searchState.search !== '' &&
+        searchDispatch({
+          type: 'DEFAULT',
+        });
+    };
+    searchInit();
+  }, []);
 
   useEffect(() => {
     if (searchState.category === 'all' && searchState.search === '') {
@@ -51,9 +53,10 @@ function Network() {
         `search?searchType=${searchState.category}&searchWord=${searchState.search}`
       )
         .then((res) => setUsers(res.data))
-        .catch((e) =>
-          alert(`"${searchState.search}"에 해당하는 검색 결과가 없습니다.  `)
-        );
+        .catch((e) => {
+          alert(`"${searchState.search}"에 해당하는 검색 결과가 없습니다.`);
+          Api.get('userlist').then((res) => setUsers(res.data));
+        });
     }
   }, [searchState]);
 
