@@ -10,17 +10,20 @@ const GoogleLoading = () => {
   const parsedHash = new URLSearchParams(window.location.hash.substring(1));
   const accessToken = parsedHash.get('access_token');
   const googleLogin = async () => {
-    const {
-      data: { user },
-    } = await Api.post('loading/google', { accessToken });
-    const jwtToken = user.token;
-    console.log(jwtToken);
-    sessionStorage.setItem('userToken', jwtToken);
-    userDispatch({
-      type: 'LOGIN_SUCCESS',
-      payload: user,
-    });
-    navigate('/', { replace: true });
+    try {
+      const {
+        data: { user },
+      } = await Api.post('loading/google', { accessToken });
+      const jwtToken = user.token;
+      sessionStorage.setItem('userToken', jwtToken);
+      userDispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: user,
+      });
+      navigate('/', { replace: true });
+    } catch (e) {
+      console.log(e);
+    }
   };
   googleLogin();
 
