@@ -55,10 +55,10 @@ userRouter.post('/user/login', async function (req, res, next) {
   }
 });
 
+awardRouter.use(login_required);
+
 userRouter.get(
-  '/userlist',
-  login_required,
-  async function (req, res, next) {
+  '/userlist', async function (req, res, next) {
     try {
       // 전체 사용자 목록을 얻음
       const users = await userService.getUsers();
@@ -70,9 +70,7 @@ userRouter.get(
 );
 
 userRouter.get(
-  '/user/current',
-  login_required,
-  async function (req, res, next) {
+  '/user/current', async function (req, res, next) {
     try {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
       const user_id = req.currentUserId;
@@ -92,9 +90,7 @@ userRouter.get(
 );
 
 userRouter.put(
-  '/users/:id',
-  login_required,
-  async function (req, res, next) {
+  '/users/:id', async function (req, res, next) {
     try {
       // URI로부터 사용자 id를 추출함.
       const user_id = req.params.id;
@@ -123,9 +119,7 @@ userRouter.put(
 );
 
 userRouter.get(
-  '/users/:id',
-  login_required,
-  async function (req, res, next) {
+  '/users/:id', async function (req, res, next) {
     try {
       const user_id = req.params.id;
       const currentUserInfo = await userService.getUserInfo({ user_id });
@@ -142,7 +136,7 @@ userRouter.get(
 );
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userRouter.get('/afterlogin', login_required, function (req, res, next) {
+userRouter.get('/afterlogin', function (req, res, next) {
   res
     .status(200)
     .send(
@@ -166,7 +160,7 @@ userRouter.delete('/users/:id', async function (req, res, next) {
   }
 });
 
-userRouter.put("/user/bookmark", login_required, async function (req, res, next) {
+userRouter.put("/user/bookmark", async function (req, res, next) {
   try {
     const me = req.currentUserId
     const { target, toggle } = req.body
@@ -194,7 +188,7 @@ userRouter.put("/user/bookmark", login_required, async function (req, res, next)
   }
 });
 
-userRouter.get("/user/bookmarklist", login_required, async function (req, res, next) {
+userRouter.get("/user/bookmarklist", async function (req, res, next) {
   try {
     const user_id = req.currentUserId
 
@@ -206,7 +200,7 @@ userRouter.get("/user/bookmarklist", login_required, async function (req, res, n
   }
 })
 
-userRouter.get("/users/:id/bookmarkcount", login_required, async function (req, res, next) {
+userRouter.get("/users/:id/bookmarkcount", async function (req, res, next) {
   try {
     const user_id = req.params.id
 
@@ -218,7 +212,7 @@ userRouter.get("/users/:id/bookmarkcount", login_required, async function (req, 
   }
 })
 
-userRouter.get("/user/bookmarktop3", login_required, async function (req, res, next) {
+userRouter.get("/user/bookmarktop3", async function (req, res, next) {
   try {
     const result = await userService.getTop3();
     res.status(200).json(result);
@@ -228,7 +222,7 @@ userRouter.get("/user/bookmarktop3", login_required, async function (req, res, n
 })
 
 
-userRouter.get("/user/bookmarklist_data", login_required, async function (req, res, next) {
+userRouter.get("/user/bookmarklist_data", async function (req, res, next) {
   try {
     const user_id = req.currentUserId;
     const result = await userService.getBookmarkUsers({ user_id });
@@ -238,23 +232,7 @@ userRouter.get("/user/bookmarklist_data", login_required, async function (req, r
   }
 })
 
-userRouter.get("/userlist/search", async function (req, res, next) {
-  try {
-    // URI로부터 user_id를 추출함.
-    const { searchType, searchWord } = req.query;
-    // 해당 user의 전체 수상내역 목록을 얻음
-    const foundList = await userService.searchUserList({ searchType, searchWord });
-
-    res.status(200).send(foundList);
-  } catch (error) {
-    next(error);
-  }
-});
-
-userRouter.get(
-  '/userlist/notop3',
-  login_required,
-  async function (req, res, next) {
+userRouter.get('/userlist/notop3', async function (req, res, next) {
     try {
       const users = await userService.getNoTop3();
       res.status(200).send(users);
@@ -263,5 +241,16 @@ userRouter.get(
     }
   }
 );
+
+userRouter.get("/userlist/search", async function (req, res, next) {
+  try {
+    const { searchType, searchWord } = req.query;
+    const foundList = await userService.searchUserList({ searchType, searchWord });
+
+    res.status(200).send(foundList);
+  } catch (error) {
+    next(error);
+  }
+});
 
 export { userRouter };
