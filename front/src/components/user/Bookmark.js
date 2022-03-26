@@ -49,7 +49,7 @@ function Bookmark() {
   }
   return (
     <Container fluid>
-      <Row className="jusify-content-center">
+      <Row xs='auto' className='justify-content-center'>
         {bookmark_user()}
       </Row>
     </Container>
