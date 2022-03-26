@@ -31,8 +31,16 @@ function UserCard({
   };
 
   useEffect(() => {
-   
+    let res = "";
+    async function getCount() {
+      user === null
+        ? (res = await Api.get(`users/${portfolioOwnerId}/bookmarkcount`))
+        : (res = await Api.get(`users/${user.id}/bookmarkcount`));
+      setCount(res.data);
+      console.log(user)
+    }
 
+    getCount();
 
     if (bookmarklist !== undefined) {
       bookmarklist?.includes(user?.id) ? setToggle(true) : setToggle(false);
@@ -61,7 +69,7 @@ function UserCard({
         <span
           style={{ fontSize: "20px", marginLeft: "5px", marginTop: "15px" }}
         >
-          {user.bookMarked}
+          {count}
         </span>
       </>
     );

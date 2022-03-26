@@ -1,16 +1,18 @@
 import { Table, Button } from "react-bootstrap";
 import * as Api from "../../api";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Network.module.css";
-import {FaMedal} from "react-icons/fa"
+import {FaMedal,} from "react-icons/fa"
 import { BookmarkListContext } from "../../App";
+import {AiTwotoneStar,AiOutlineStar} from "react-icons/ai"
 
 function UserTable() {
   const [top3, setTop3] = useState([]);
   const navigate = useNavigate();
   const [toggle, setToggle] = useState();
   const { bookmarklist } = useContext(BookmarkListContext);
+
 
   useEffect(() => {
     async function getTop3() {
@@ -19,20 +21,8 @@ function UserTable() {
     }
 
     getTop3();
-    console.log(top3);
   }, []);
 
-  useEffect(() => {
-
-    if (bookmarklist !== undefined) {
-      bookmarklist?.includes(user?.id) ? setToggle(true) : setToggle(false);
-    }
-    if (isEditable === false) {
-      bookmarklist?.includes(portfolioOwnerId)
-        ? setToggle(true)
-        : setToggle(false);
-    }
-  }, [bookmarklist]);
 
 
 
@@ -44,29 +34,9 @@ function UserTable() {
     )
   }
 
-  function bookmark(bookmarked){
+  
 
-    return (
-      <>
-        {toggle ? (
-          <AiTwotoneStar
-            style={{ fontSize: "30px", marginLeft: "90px" }}
-            onClick={toggleHander}
-          />
-        ) : (
-          <AiOutlineStar
-            style={{ fontSize: "30px", marginLeft: "90px" }}
-            onClick={toggleHander}
-          />
-        )}
-        <span
-          style={{ fontSize: "20px", marginLeft: "5px", marginTop: "15px" }}
-        >
-          {bookmarked}
-        </span>
-      </>
-
-  }
+  
   return (
     <div
       style={{
@@ -100,7 +70,7 @@ function UserTable() {
               <td className="table_style">{medal(index + 1)}</td>
               <td className="table_style">{name}</td>
               <td className="table_style">{email}</td>
-              <td className="table_style">{bookmark(bookMarked)}</td>
+              <td className="table_style">{bookMarked}</td>
               <td className="table_style">
                 <Button onClick={() => navigate(`/users/${id}`)}>
                   상세보기
