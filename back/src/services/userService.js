@@ -1,16 +1,23 @@
-import { User, Award, Certificate, Education, Project } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
-import bcrypt from "bcrypt";
-import { v4 as uuidv4 } from "uuid";
-import jwt from "jsonwebtoken";
-import { existError, matchError, findError, addError, removeError, listError } from "../utils/errorMessages"
-import { searchFunc } from "../utils/serviceFunction"
+import { User, Award, Certificate, Education, Project } from '../db'; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid';
+import jwt from 'jsonwebtoken';
+import {
+  existError,
+  matchError,
+  findError,
+  addError,
+  removeError,
+  listError,
+} from '../utils/errorMessages';
+import { searchFunc } from '../utils/serviceFunction';
 
 class userService {
   static async addUser({ name, email, password }) {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email });
     if (user) {
-      const errorMessage = existError("이메일")
+      const errorMessage = existError('이메일');
       return { errorMessage };
     }
 
@@ -32,7 +39,7 @@ class userService {
     // 이메일 db에 존재 여부 확인
     const user = await User.findByEmail({ email });
     if (!user) {
-      const errorMessage = findError("이메일")
+      const errorMessage = findError('이메일');
       return { errorMessage };
     }
 
@@ -43,12 +50,12 @@ class userService {
       correctPasswordHash
     );
     if (!isPasswordCorrect) {
-      const errorMessage = matchError("비밀번호")
+      const errorMessage = matchError('비밀번호');
       return { errorMessage };
     }
 
     // 로그인 성공 -> JWT 웹 토큰 생성
-    const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+    const secretKey = process.env.JWT_SECRET_KEY || 'jwt-secret-key';
     const token = jwt.sign({ user_id: user.id }, secretKey);
 
     // 반환할 loginuser 객체를 위한 변수 설정
@@ -68,16 +75,18 @@ class userService {
     return loginUser;
   }
 
-  static async findOrCreate({ profile }) {
-    const email = profile._json.email
-    const name = profile._json.name
-    const password = profile.id
+  static async findOrCreate({ data }) {
+    const email = data.email;
+    const name = data.name;
+    const password = data.id;
     let user = await User.findByEmail({ email });
 
     if (!user) {
-      user = await this.addUser({ email, name, password });
+      await this.addUser({ email, name, password });
     }
-    return user
+
+    const userinfo = await this.getUser({ email, password });
+    return userinfo;
   }
 
   static async getUsers() {
@@ -91,70 +100,79 @@ class userService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      const errorMessage = findError("가입")
+      const errorMessage = findError('가입');
       return { errorMessage };
     }
 
     // 업데이트 대상에 name이 있다면, 즉 name 값이 null 이 아니라면 업데이트 진행
     if (toUpdate.name) {
-      const fieldToUpdate = "name";
+      const fieldToUpdate = 'name';
       const newValue = toUpdate.name;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
     if (toUpdate.email) {
-      const fieldToUpdate = "email";
+      const fieldToUpdate = 'email';
       const newValue = toUpdate.email;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
     if (toUpdate.password) {
-      const fieldToUpdate = "password";
+      const fieldToUpdate = 'password';
       const newValue = toUpdate.password;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
     if (toUpdate.description) {
-      const fieldToUpdate = "description";
+      const fieldToUpdate = 'description';
       const newValue = toUpdate.description;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
-    
+
     if (toUpdate.bookMarkList) {
+      const targetId = toUpdate.bookMarkList;
 
-      const targetId = toUpdate.bookMarkList
+      const fieldToUpdate = 'bookMarkList';
+      const targetField = 'bookMarked';
 
-      const fieldToUpdate = "bookMarkList";
-      const targetField = "bookMarked";
-
-      const target = await User.findById({ user_id: targetId })
-      console.log(target)
+      const target = await User.findById({ user_id: targetId });
+      console.log(target);
       if (toUpdate.bookMarked) {
-        if (user.bookMarkList.includes(targetId)){
-          const errorMessage = addError
-          return {errorMessage}
+        if (user.bookMarkList.includes(targetId)) {
+          const errorMessage = addError;
+          return { errorMessage };
         } else {
           const newValue = [...user.bookMarkList, toUpdate.bookMarkList];
           const targetNewValue = target.bookMarked + 1;
           const result = await Promise.all([
-          User.update({ user_id, fieldToUpdate, newValue }),
-          User.update({ user_id: targetId, fieldToUpdate: targetField, newValue: targetNewValue})
-        ])
-        return result
+            User.update({ user_id, fieldToUpdate, newValue }),
+            User.update({
+              user_id: targetId,
+              fieldToUpdate: targetField,
+              newValue: targetNewValue,
+            }),
+          ]);
+          return result;
         }
       } else if (!toUpdate.bookMarked) {
-        if (!user.bookMarkList.includes(targetId)){
-          const errorMessage = removeError
-          return {errorMessage}
+        if (!user.bookMarkList.includes(targetId)) {
+          const errorMessage = removeError;
+          return { errorMessage };
         } else {
-          const newValue = user.bookMarkList.filter(user_id => user_id!==targetId);
+          const newValue = user.bookMarkList.filter(
+            (user_id) => user_id !== targetId
+          );
           const targetNewValue = target.bookMarked - 1;
           const result = await Promise.all([
             User.update({ user_id, fieldToUpdate, newValue }),
-            User.update({ user_id: targetId, fieldToUpdate: targetField, newValue: targetNewValue})
+            User.update({
+              user_id: targetId,
+              fieldToUpdate: targetField,
+              newValue: targetNewValue,
+            }),
           ]);
-          return result
-          }
+          return result;
+        }
       }
     }
 
@@ -166,7 +184,7 @@ class userService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      const errorMessage = findError("이메일")
+      const errorMessage = findError('이메일');
       return { errorMessage };
     }
 
@@ -181,25 +199,25 @@ class userService {
       Award.deleteByUserId({ user_id }),
       Certificate.deleteByUserId({ user_id }),
       Education.deleteByUserId({ user_id }),
-      Project.deleteByUserId({ user_id })
+      Project.deleteByUserId({ user_id }),
     ]);
 
     return deletedResult;
   }
 
   static async getTop3() {
-    const fieldToSort = ["bookMarked"]
-    const sortType = [-1]
-    const sortBy = {}
+    const fieldToSort = ['bookMarked'];
+    const sortType = [-1];
+    const sortBy = {};
     for (let i = 0; i < fieldToSort.length; i++) {
-      sortBy[fieldToSort[i]]=sortType[i]
+      sortBy[fieldToSort[i]] = sortType[i];
     }
     let users = await User.sort({ sortBy });
-    users = users.filter(user=>user.bookMarked>0);
-    users = users.splice(0,3)
+    users = users.filter((user) => user.bookMarked > 0);
+    users = users.splice(0, 3);
 
-    if (users===[]) {
-      const errorMessage = listError
+    if (users === []) {
+      const errorMessage = listError;
       return { errorMessage };
     }
 
@@ -207,17 +225,17 @@ class userService {
   }
 
   static async getNoTop3() {
-    const fieldToSort = ["bookMarked"]
-    const sortType = [-1]
-    const sortBy = {}
+    const fieldToSort = ['bookMarked'];
+    const sortType = [-1];
+    const sortBy = {};
     for (let i = 0; i < fieldToSort.length; i++) {
-      sortBy[fieldToSort[i]]=sortType[i]
+      sortBy[fieldToSort[i]] = sortType[i];
     }
     let users = await User.sort({ sortBy });
-    users.splice(0,3)
+    users.splice(0, 3);
 
-    if (users===[]) {
-      const errorMessage = listError
+    if (users === []) {
+      const errorMessage = listError;
       return { errorMessage };
     }
 
@@ -228,51 +246,52 @@ class userService {
     const user = await User.findById({ user_id });
 
     if (!user) {
-      const errorMessage = findError("이메일")
+      const errorMessage = findError('이메일');
       return { errorMessage };
     }
 
-    const list = user.bookMarkList
-    const resultList = []
-    await Promise.all(list.map(async (user_id)=>{
-      const info = await User.findById({ user_id })
-      resultList.push(info)
-    }))
-    return resultList
+    const list = user.bookMarkList;
+    const resultList = [];
+    await Promise.all(
+      list.map(async (user_id) => {
+        const info = await User.findById({ user_id });
+        resultList.push(info);
+      })
+    );
+    return resultList;
   }
 
   static async searchUserList({ searchType, searchWord }) {
-    let userAll = []
-    let searchOpt = searchFunc(searchType, searchWord)
-    if (searchType === "all") {
-      const userList1 = await Award.findBySearchWord({ searchOpt })
-      const userList2 = await Certificate.findBySearchWord({ searchOpt })
-      const userList3 = await Project.findBySearchWord({ searchOpt })
-      searchOpt = searchFunc("education", searchWord)
-      const userList4 = await Education.findBySearchWord({ searchOpt })
+    let userAll = [];
+    let searchOpt = searchFunc(searchType, searchWord);
+    if (searchType === 'all') {
+      const userList1 = await Award.findBySearchWord({ searchOpt });
+      const userList2 = await Certificate.findBySearchWord({ searchOpt });
+      const userList3 = await Project.findBySearchWord({ searchOpt });
+      searchOpt = searchFunc('education', searchWord);
+      const userList4 = await Education.findBySearchWord({ searchOpt });
       // user 합치기
-      userAll = [...userList1, ...userList2, ...userList3, ...userList4]
-    }
-    else if (searchType === "award") {
-      userAll = await Award.findBySearchWord({ searchOpt })
-    } else if (searchType === "certificate") {
-      userAll = await Certificate.findBySearchWord({ searchOpt })
-    } else if (searchType === "education") {
-      userAll = await Education.findBySearchWord({ searchOpt })
-    } else if (searchType === "project") {
-      userAll = await Project.findBySearchWord({ searchOpt })
+      userAll = [...userList1, ...userList2, ...userList3, ...userList4];
+    } else if (searchType === 'award') {
+      userAll = await Award.findBySearchWord({ searchOpt });
+    } else if (searchType === 'certificate') {
+      userAll = await Certificate.findBySearchWord({ searchOpt });
+    } else if (searchType === 'education') {
+      userAll = await Education.findBySearchWord({ searchOpt });
+    } else if (searchType === 'project') {
+      userAll = await Project.findBySearchWord({ searchOpt });
     }
     // user_id 중복 제거
     const set = new Set(userAll);
-    const userArr = [...set]
+    const userArr = [...set];
     // [ {id: user_id}, {id: user_id} ... ] 만들기
-    const userIdList = await userArr.map(v => {
-      return {id: v}
-    })
+    const userIdList = await userArr.map((v) => {
+      return { id: v };
+    });
 
-    const userList = await User.findByIdList({ userIdList })
+    const userList = await User.findByIdList({ userIdList });
 
-    return userList;    
+    return userList;
   }
 }
 
