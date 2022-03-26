@@ -11,10 +11,12 @@ function Bookmark() {
 
   useEffect(() => {
     async function getBookmark() {
-      const bookmarklist = await Api.get("user/bookmarklist");
-      const res = await Api.get("user/bookmarklist_data");
+      const bookmarklist = await Api.get("user/bookmarklist");      
+      const { data } = await Api.get('user/bookmarklist_data');
+      const newData = data.filter((user) => user);
       setBookmarklist(bookmarklist.data);
-      setUsers(res.data);
+      setUsers(newData);
+
     }
     getBookmark();
     setIsLoading(true);

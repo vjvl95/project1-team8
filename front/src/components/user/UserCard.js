@@ -5,7 +5,6 @@ import { useContext, useEffect, useState } from "react";
 import * as Api from "../../api";
 import { BookmarkListContext } from "../../App";
 import EditButton from "../common/EditButton";
-import { GiLaurelsTrophy } from "react-icons/gi";
 function UserCard({
   portfolioOwnerId,
   user,

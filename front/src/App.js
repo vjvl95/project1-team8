@@ -69,6 +69,7 @@ function App() {
                 <Route path='/login' element={<LoginForm />} />
                 <Route path='/test' element={<GoogleLoading />} />
                 <Route path='/register' element={<RegisterForm />} />
+                <Route path='/users/:userId' element={<Portfolio />} />
                 <Route path='/network' element={<Network />} />
                 <Route path='/bookmark' element={<Bookmark />} />
                 <Route path='*' element={<Portfolio />} />

@@ -15,7 +15,6 @@ function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   //useState로 name 상태를 생성함.
   const [name, setName] = useState('');
-
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
     return email
@@ -61,7 +60,7 @@ function RegisterForm() {
       <Row className='justify-content-md-center mt-5'>
         <Col lg={8}>
           <Form onSubmit={handleSubmit}>
-            <Form.Group controlId='registerEmail'>
+            <Form.Group controlId='registerEmail' className='mt-5'>
               <Form.Label>이메일 주소</Form.Label>
               <Form.Control
                 type='email'
