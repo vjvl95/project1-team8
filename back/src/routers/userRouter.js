@@ -36,7 +36,7 @@ userRouter.post("/users/user", async function (req, res, next) {
   }
 });
 
-userRouter.post('/user/login', async function (req, res, next) {
+userRouter.post("/user/login", async function (req, res, next) {
   try {
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
@@ -58,7 +58,7 @@ userRouter.post('/user/login', async function (req, res, next) {
 awardRouter.use(login_required);
 
 userRouter.get(
-  '/userlist', async function (req, res, next) {
+  "/userlist", async function (req, res, next) {
     try {
       // 전체 사용자 목록을 얻음
       const users = await userService.getUsers();
@@ -70,7 +70,7 @@ userRouter.get(
 );
 
 userRouter.get(
-  '/user/current', async function (req, res, next) {
+  "/user/current", async function (req, res, next) {
     try {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
       const user_id = req.currentUserId;
@@ -90,7 +90,7 @@ userRouter.get(
 );
 
 userRouter.put(
-  '/users/:id', async function (req, res, next) {
+  "/users/:id", async function (req, res, next) {
     try {
       // URI로부터 사용자 id를 추출함.
       const user_id = req.params.id;
@@ -119,7 +119,7 @@ userRouter.put(
 );
 
 userRouter.get(
-  '/users/:id', async function (req, res, next) {
+  "/users/:id", async function (req, res, next) {
     try {
       const user_id = req.params.id;
       const currentUserInfo = await userService.getUserInfo({ user_id });
@@ -136,7 +136,7 @@ userRouter.get(
 );
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userRouter.get('/afterlogin', function (req, res, next) {
+userRouter.get("/afterlogin", function (req, res, next) {
   res
     .status(200)
     .send(
@@ -145,7 +145,7 @@ userRouter.get('/afterlogin', function (req, res, next) {
 });
 
 // :id는 user_id 임.
-userRouter.delete('/users/:id', async function (req, res, next) {
+userRouter.delete("/users/:id", async function (req, res, next) {
   try {
     const user_id = req.params.id;
     const deletedResult = await userService.deleteUser({ user_id });
@@ -232,7 +232,7 @@ userRouter.get("/user/bookmarklist_data", async function (req, res, next) {
   }
 })
 
-userRouter.get('/userlist/notop3', async function (req, res, next) {
+userRouter.get("/userlist/notop3", async function (req, res, next) {
     try {
       const users = await userService.getNoTop3();
       res.status(200).send(users);
