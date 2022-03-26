@@ -31,15 +31,8 @@ function UserCard({
   };
 
   useEffect(() => {
-    let res = "";
-    async function getCount() {
-      user === null
-        ? (res = await Api.get(`users/${portfolioOwnerId}/bookmarkcount`))
-        : (res = await Api.get(`users/${user.id}/bookmarkcount`));
-      setCount(res.data);
-    }
+   
 
-    getCount();
 
     if (bookmarklist !== undefined) {
       bookmarklist?.includes(user?.id) ? setToggle(true) : setToggle(false);
@@ -68,7 +61,7 @@ function UserCard({
         <span
           style={{ fontSize: "20px", marginLeft: "5px", marginTop: "15px" }}
         >
-          {count}
+          {user.bookMarked}
         </span>
       </>
     );
@@ -82,28 +75,20 @@ function UserCard({
         width: "20rem",
         borderRadius: "10px",
         marginTop: bookmarkMargin || "10px",
+        background:"linear-gradient(gray 50%,white 50%)"
       }}
     >
-      <Card.Title
-        style={{ fontWeight: "bolder", textAlign: "center", marginTop: "10px" }}
-      >
-        {/* {num === 1 ? (
-          <GiLaurelsTrophy style={{ color: "gold", size: "30" }} />
-        ) : num === 2 ? (
-          <GiLaurelsTrophy style={{ backgroundColor: "silver" }} />
-        ) : (
-          <GiLaurelsTrophy style={{ backgroundColor: "gold" }} />
-        )} */}
-      </Card.Title>
+    
       <Card.Body>
-        <Row className="justify-content-md-center">
+       
+          <Row className="justify-content-md-center">
           <Card.Img
             style={{ width: "10rem", height: "8rem" }}
             className="mb-3"
             src="/image/profile.PNG"
             alt="프로필 사진"
           />
-        </Row>
+                  </Row>
         <Card.Title>{user?.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
         <Card.Text>{user?.description}</Card.Text>
