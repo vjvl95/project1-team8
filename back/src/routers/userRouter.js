@@ -1,8 +1,5 @@
-import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
-import { userService } from "../services/userService";
-import { headerError } from "../utils/errorMessages"
 
 const userRouter = Router();
 
@@ -55,7 +52,7 @@ userRouter.post("/user/login", async function (req, res, next) {
   }
 });
 
-awardRouter.use(login_required);
+userRouter.use(login_required);
 
 userRouter.get(
   "/userlist", async function (req, res, next) {
