@@ -100,8 +100,8 @@ function UserCard({
           <Card.Img
             style={{ width: "10rem", height: "8rem" }}
             className="mb-3"
-            src="http://placekitten.com/200/200"
-            alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
+            src="/image/profile.PNG"
+            alt="프로필 사진"
           />
         </Row>
         <Card.Title>{user?.name}</Card.Title>
@@ -112,13 +112,7 @@ function UserCard({
           <Col>
             <Row className="mt-3 text-center text-info">
               <Col sm={{ span: 20 }}>
-                <Button
-                  variant="outline-info"
-                  size="sm"
-                  onClick={() => setIsEditing(true)}
-                >
-                  편집
-                </Button>
+                <EditButton setIsEditing={setIsEditing} />
               </Col>
             </Row>
           </Col>

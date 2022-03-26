@@ -23,7 +23,6 @@ function UserTable() {
       style={{
         display: "flex",
         flexDirection: "column",
-        // justifyContent: "center",
         alignItems: "center",
         marginBottom: "20px",
       }}
