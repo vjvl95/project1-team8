@@ -37,6 +37,7 @@ function UserCard({
         ? (res = await Api.get(`users/${portfolioOwnerId}/bookmarkcount`))
         : (res = await Api.get(`users/${user.id}/bookmarkcount`));
       setCount(res.data);
+      console.log(user)
     }
 
     getCount();
@@ -82,28 +83,24 @@ function UserCard({
         width: "20rem",
         borderRadius: "10px",
         marginTop: bookmarkMargin || "10px",
+<<<<<<< HEAD
+        background:"linear-gradient(gray 50%,white 50%)"
+=======
+        background: "linear-gradient(	#c0c0c0 50%, white 50%)",
+>>>>>>> refact-style-front3
       }}
     >
-      <Card.Title
-        style={{ fontWeight: "bolder", textAlign: "center", marginTop: "10px" }}
-      >
-        {/* {num === 1 ? (
-          <GiLaurelsTrophy style={{ color: "gold", size: "30" }} />
-        ) : num === 2 ? (
-          <GiLaurelsTrophy style={{ backgroundColor: "silver" }} />
-        ) : (
-          <GiLaurelsTrophy style={{ backgroundColor: "gold" }} />
-        )} */}
-      </Card.Title>
+    
       <Card.Body>
-        <Row className="justify-content-md-center">
+       
+          <Row className="justify-content-md-center">
           <Card.Img
-            style={{ width: "10rem", height: "8rem" }}
+            style={{ width: "160px", height: "130px" }}
             className="mb-3"
             src="/image/profile.PNG"
             alt="프로필 사진"
           />
-        </Row>
+                  </Row>
         <Card.Title>{user?.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
         <Card.Text>{user?.description}</Card.Text>

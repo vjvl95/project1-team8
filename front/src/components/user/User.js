@@ -35,7 +35,6 @@ function User({ portfolioOwnerId, isEditable }) {
       ) : (
         <UserCard 
           user={user}
-          aa={11}
           portfolioOwnerId={portfolioOwnerId}
           bookmarklist={bookmarklist}
           setIsEditing={setIsEditing}
