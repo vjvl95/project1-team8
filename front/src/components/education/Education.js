@@ -35,7 +35,7 @@ const Education = ({ portfolioOwnerId, isEditable }) => {
         />
 
         {isEditable && (
-          <Row className="mt-3 text-center mb-4">
+          <Row className="mt-3 text-center text-info">
             <Col sm={{ span: 20 }}>
               <PlusButton setIsEditing={setIsEditing} />
             </Col>
