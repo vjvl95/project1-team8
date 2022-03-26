@@ -1,6 +1,5 @@
 import cors from "cors";
-import express from "express";
-import { googleAuthRouter } from "./routers/google";
+import express from "express";;
 import { userRouter } from "./routers/userRouter";
 import { awardRouter } from "./routers/awardRouter";
 import { certificateRouter } from "./routers/certificateRouter";
@@ -28,7 +27,6 @@ app.get("/", (req, res) => {
 
 // router, service 구현 (userRouter는 맨 위에 있어야 함.)
 app.use(userRouter);
-app.use(googleAuthRouter);
 app.use(awardRouter)
 app.use(certificateRouter)
 app.use(educationRouter);

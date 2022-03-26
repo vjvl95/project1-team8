@@ -1,16 +1,9 @@
-import { User, Award, Certificate, Education, Project } from '../db'; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
-import bcrypt from 'bcrypt';
-import { v4 as uuidv4 } from 'uuid';
-import jwt from 'jsonwebtoken';
-import {
-  existError,
-  matchError,
-  findError,
-  addError,
-  removeError,
-  listError,
-} from '../utils/errorMessages';
-import { searchFunc } from '../utils/serviceFunction';
+import { User, Award, Certificate, Education, Project } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
+import jwt from "jsonwebtoken";
+import { existError, matchError, findError, bookmark, removeError, listError } from "../utils/errorMessages"
+import { searchFunc } from "../utils/serviceFunction"
 
 class userService {
   static async addUser({ name, email, password }) {
@@ -138,9 +131,9 @@ class userService {
       const target = await User.findById({ user_id: targetId });
       console.log(target);
       if (toUpdate.bookMarked) {
-        if (user.bookMarkList.includes(targetId)) {
-          const errorMessage = addError;
-          return { errorMessage };
+        if (user.bookMarkList.includes(targetId)){
+          const errorMessage = bookmarkError
+          return {errorMessage}
         } else {
           const newValue = [...user.bookMarkList, toUpdate.bookMarkList];
           const targetNewValue = target.bookMarked + 1;
