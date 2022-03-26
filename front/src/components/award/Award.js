@@ -24,7 +24,7 @@ function Award({ portfolioOwnerId, isEditable }) {
   return (
     <Card className="mb-3">
       <Card.Body>
-        <Card.Title>수상이력</Card.Title>
+        <Card.Title className="mb-3">수상이력</Card.Title>
         <AwardList
           isEditing={isEditing}
           isEditable={isEditable}

@@ -56,7 +56,7 @@ function LoginForm() {
       // 기본 페이지로 이동함.
       navigate("/network", { replace: true });
     } catch (err) {
-      console.log("이메일 또는 비밀번호가 유효하지 않습니다.");
+      alert("이메일 또는 비밀번호가 유효하지 않습니다.");
     }
   };
 

@@ -41,15 +41,15 @@ const Education = ({ portfolioOwnerId, isEditable }) => {
             </Col>
           </Row>
         )}
-      </Card.Body>
 
-      {isEditing && (
-        <EducationEditForm
-          portfolioOwnerId={portfolioOwnerId}
-          setIsEditing={setIsEditing}
-          getEducationList={getEducationList}
-        />
-      )}
+        {isEditing && (
+          <EducationEditForm
+            portfolioOwnerId={portfolioOwnerId}
+            setIsEditing={setIsEditing}
+            getEducationList={getEducationList}
+          />
+        )}
+      </Card.Body>
     </Card>
   );
 };
