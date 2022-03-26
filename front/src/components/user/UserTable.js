@@ -65,9 +65,7 @@ function UserTable() {
               <td className="table_style">{email}</td>
               <td className="table_style">{bookMarked}</td>
               <td className="table_style">
-                <Button onClick={() => navigate(`/users/${id}`)}>
-                  상세보기
-                </Button>
+                <Button onClick={() => navigate(`/users/${id}`)}>DETAIL</Button>
               </td>
             </tr>
           ))}
