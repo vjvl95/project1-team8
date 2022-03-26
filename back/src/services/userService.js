@@ -185,7 +185,12 @@ class userService {
   }
 
   static async deleteUser({ user_id }) {
-    // awardId db에 존재 여부 확인
+    // 유저가 북마크한 타유저의 북마크 수 1개씩 줄임
+    const user = await User.findById({ user_id });
+    user.bookMarkList.map(async(user_id)=>{
+      const { bookMarked } = await User.findById({ user_id })
+      await User.update({ user_id, fieldToUpdate: "bookMarked", newValue: bookMarked-1 });
+    })
 
     const deletedResult = await Promise.all([
       User.deleteByUserId({ user_id }),
