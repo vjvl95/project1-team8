@@ -1,5 +1,5 @@
 import React, { useContext,useEffect, useState } from 'react';
-import { Container, Row,Card } from 'react-bootstrap';
+import { Container, Row,Spinner } from 'react-bootstrap';
 import * as Api from '../../api';
 import UserCard from './UserCard';
 import { BookmarkListContext } from "../../App";
@@ -28,8 +28,8 @@ function Bookmark(){
     }
     return (
         <Container fluid>
-          <Row className='jusify-content-center' style={{marginLeft:"5%"}}>
-            {isLoading?bookmark_user():<div>로딩중</div>}
+          <Row className='jusify-content-center'>
+            {isLoading  ?<div style={{display:'flex',flexDirection:"column",justifyContent:"center", alignItems:"center"}}><Spinner animation="border" variant="primary" style={{marginTop:"300px",justifyContent:"center"}} /> </div>: <div>3</div>}
           </Row>
         </Container>
       );

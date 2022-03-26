@@ -3,7 +3,7 @@ import * as Api from "../../api";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Network.module.css";
-
+import {FaMedal} from "react-icons/fa"
 function UserTable() {
   const [top3, setTop3] = useState([]);
   const navigate = useNavigate();
@@ -17,6 +17,16 @@ function UserTable() {
     getTop3();
     console.log(top3);
   }, []);
+
+  function medal(num){
+    return (
+
+      
+        num===1 ?<FaMedal size="30"style={{color:"gold"}}/>:num===2?< FaMedal size="30" style={{color:"#D3D3D3"}}/>:<FaMedal size="30" style={{color:"#cd7f32"}}/>
+    )
+    
+
+  }
 
   return (
     <div
@@ -48,7 +58,7 @@ function UserTable() {
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
               }}
             >
-              <td className="table_style">{index + 1}</td>
+              <td className="table_style">{medal(index + 1)}</td>
               <td className="table_style">{name}</td>
               <td className="table_style">{email}</td>
               <td className="table_style">{bookMarked}</td>

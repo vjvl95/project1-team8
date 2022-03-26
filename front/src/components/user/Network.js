@@ -38,7 +38,7 @@ function Network() {
       )
         .then((res) => setUsers(res.data))
         .catch((e) =>
-          alert(`${searchState.search}에 해당하는 검색 결과가 없습니다.  `)
+          alert(`"${searchState.search}"에 해당하는 검색 결과가 없습니다.  `)
         );
     }
 
@@ -54,6 +54,8 @@ function Network() {
 
     getUser();
   }, [userState, navigate, searchState]);
+
+  useEffect(() => searchInit(), []);
 
   return (
     <Container fluid>

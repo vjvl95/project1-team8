@@ -12,29 +12,42 @@ import { DispatchContext } from '../../App';
 
 const SearchBox = () => {
   const category = {
+    'All': 'all',
+    '학력': 'education',
     '수상이력': 'award',
     '프로젝트': 'project',
     '자격증': 'certificate',
-    '학력사항': 'education',
   };
 
   const { searchDispatch } = useContext(DispatchContext);
 
   const [title, setTitle] = useState('All');
-  const onClick = (e) => {
+  const [input, setInput] = useState({});
+
+  const onTitleClick = (e) => {
     setTitle(e.target.innerText);
   };
+
   const onSubmit = (e) => {
     e.preventDefault();
-    const categoryValue = category[title] || 'all';
-    const searchValue = e.target.search.value;
-    searchDispatch({
-      type: 'SEARCH',
-      payload: {
-        categoryValue,
-        searchValue,
-      },
-    });
+    const newCategoryValue = category[title];
+    const newSearchValue = e.target.search.value;
+    if (
+      input['categoryValue'] !== newCategoryValue ||
+      input['searchValue'] !== newSearchValue
+    ) {
+      setInput({
+        categoryValue: newCategoryValue,
+        searchValue: newSearchValue,
+      });
+      searchDispatch({
+        type: 'SEARCH',
+        payload: {
+          categoryValue: newCategoryValue,
+          searchValue: newSearchValue,
+        },
+      });
+    }
   };
 
   return (
@@ -60,12 +73,12 @@ const SearchBox = () => {
           id='input-group-dropdown-2'
           align='end'
         >
-          <Dropdown.Item onClick={onClick}>All</Dropdown.Item>
+          <Dropdown.Item onClick={onTitleClick}>All</Dropdown.Item>
           <Dropdown.Divider />
-          <Dropdown.Item onClick={onClick}>학력</Dropdown.Item>
-          <Dropdown.Item onClick={onClick}>수상이력</Dropdown.Item>
-          <Dropdown.Item onClick={onClick}>프로젝트</Dropdown.Item>
-          <Dropdown.Item onClick={onClick}>자격증</Dropdown.Item>
+          <Dropdown.Item onClick={onTitleClick}>학력</Dropdown.Item>
+          <Dropdown.Item onClick={onTitleClick}>수상이력</Dropdown.Item>
+          <Dropdown.Item onClick={onTitleClick}>프로젝트</Dropdown.Item>
+          <Dropdown.Item onClick={onTitleClick}>자격증</Dropdown.Item>
         </DropdownButton>
       </InputGroup>
     </Form>
